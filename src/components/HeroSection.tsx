@@ -1,6 +1,7 @@
 "use client"
 
 import { motion, useTransform } from "framer-motion"
+import { useState, useEffect } from "react"
 import GlowButton from "./GlowButton"
 import GradientText from "./GradientText"
 import LiquidGlassBg from "./LiquidGlassBg"
@@ -11,6 +12,11 @@ export default function HeroSection({
   scrollProgress: import("framer-motion").MotionValue<number>
 }) {
   const opacity = useTransform(scrollProgress, [0, 0.15, 0.2], [1, 1, 0])
+  const [isMobile, setIsMobile] = useState(true)
+
+  useEffect(() => {
+    setIsMobile(window.innerWidth < 768)
+  }, [])
 
   const letters = "EVOLECT".split("")
 
@@ -30,11 +36,11 @@ export default function HeroSection({
               fontFamily: "var(--font-display), sans-serif",
               textShadow: "0 0 30px rgba(139, 92, 246, 0.5), 0 0 60px rgba(139, 92, 246, 0.3)",
             }}
-            initial={{ opacity: 0, y: 30 }}
+            initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{
-              duration: 0.5,
-              delay: 0.2 + i * 0.05,
+              duration: 0.4,
+              delay: isMobile ? 0 : 0.2 + i * 0.05,
               ease: "easeOut",
             }}
           >
@@ -46,9 +52,9 @@ export default function HeroSection({
       {/* Tagline */}
       <motion.p
         className="relative z-10 text-base sm:text-lg md:text-2xl text-blue-900 max-w-4xl mb-3 font-medium leading-relaxed"
-        initial={{ opacity: 0, y: 20 }}
+        initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.6 }}
+        transition={{ duration: 0.4, delay: isMobile ? 0 : 0.5 }}
       >
         Events need volunteers. Volunteers need opportunities.
         <br />
@@ -58,9 +64,9 @@ export default function HeroSection({
       {/* Description */}
       <motion.p
         className="relative z-10 text-xs sm:text-sm md:text-base text-blue-800 max-w-xl mb-8 leading-relaxed px-2"
-        initial={{ opacity: 0, y: 15 }}
+        initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.8 }}
+        transition={{ duration: 0.4, delay: isMobile ? 0 : 0.7 }}
       >
         Evolect is a platform connecting event organizers with reliable
         volunteers — making it easier to find the right volunteer, manage
@@ -69,9 +75,9 @@ export default function HeroSection({
 
       {/* CTA */}
       <motion.div
-        initial={{ opacity: 0, y: 15 }}
+        initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 1 }}
+        transition={{ duration: 0.4, delay: isMobile ? 0 : 0.9 }}
       >
         <GlowButton>Join the Early Community</GlowButton>
       </motion.div>

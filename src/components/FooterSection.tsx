@@ -120,6 +120,12 @@ export default function FooterSection({
         </p>
         <p className="text-slate-400 text-sm">Where events meet volunteers</p>
       </motion.div>
+
+      <div className="mt-16 text-center">
+        <p className="text-xs text-slate-400">
+          dev by <span className="font-semibold text-slate-500">that.jainam</span>
+        </p>
+      </div>
     </motion.section>
   )
 }
