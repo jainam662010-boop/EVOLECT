@@ -1,11 +1,18 @@
 "use client"
 
-import { useRef, useEffect } from "react"
+import { useRef, useEffect, useState } from "react"
 
 export default function LiquidGlassBg() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
+  const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
+    setIsMobile(window.innerWidth < 768)
+  }, [])
+
+  useEffect(() => {
+    if (isMobile) return
+
     const canvas = canvasRef.current
     if (!canvas) return
 
@@ -19,8 +26,8 @@ export default function LiquidGlassBg() {
     const resize = () => {
       const parent = canvas.parentElement
       if (!parent) return
-      w = canvas.width = parent.offsetWidth
-      h = canvas.height = parent.offsetHeight
+      w = canvas.width = parent.offsetWidth / 2
+      h = canvas.height = parent.offsetHeight / 2
       gl.viewport(0, 0, w, h)
     }
 
@@ -98,7 +105,16 @@ export default function LiquidGlassBg() {
       cancelAnimationFrame(raf)
       ro.disconnect()
     }
-  }, [])
+  }, [isMobile])
+
+  if (isMobile) {
+    return (
+      <div
+        className="absolute inset-0 overflow-hidden pointer-events-none"
+        style={{ background: "linear-gradient(135deg, #0c1426, #162040)" }}
+      />
+    )
+  }
 
   return (
     <div

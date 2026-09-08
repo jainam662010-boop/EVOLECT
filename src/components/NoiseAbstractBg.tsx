@@ -1,9 +1,14 @@
 "use client"
 
-import { useRef, useEffect, useCallback } from "react"
+import { useRef, useEffect, useCallback, useState } from "react"
 
 export default function NoiseAbstractBg() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    setIsMobile(window.innerWidth < 768)
+  }, [])
 
   const draw = useCallback(
     (ctx: CanvasRenderingContext2D, w: number, h: number, t: number) => {
@@ -35,6 +40,8 @@ export default function NoiseAbstractBg() {
   )
 
   useEffect(() => {
+    if (isMobile) return
+
     const canvas = canvasRef.current
     if (!canvas) return
 
@@ -48,8 +55,8 @@ export default function NoiseAbstractBg() {
     const resize = () => {
       const parent = canvas.parentElement
       if (!parent) return
-      w = canvas.width = parent.offsetWidth
-      h = canvas.height = parent.offsetHeight
+      w = canvas.width = parent.offsetWidth / 2
+      h = canvas.height = parent.offsetHeight / 2
     }
 
     resize()
@@ -67,7 +74,13 @@ export default function NoiseAbstractBg() {
       cancelAnimationFrame(raf)
       ro.disconnect()
     }
-  }, [draw])
+  }, [draw, isMobile])
+
+  if (isMobile) {
+    return (
+      <div className="absolute inset-0 overflow-hidden pointer-events-none bg-gradient-to-br from-slate-50 to-slate-100" />
+    )
+  }
 
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
