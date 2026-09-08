@@ -27,7 +27,7 @@ export default function Navbar() {
             <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
                 <a href="#" className="flex items-center gap-3 group">
                     <img
-                        src="/logo.svg"
+                        src="/EVOLECT/logo.svg"
                         alt="Evolect"
                         className="w-9 h-9 rounded-lg group-hover:scale-105 transition-transform duration-300"
                     />
