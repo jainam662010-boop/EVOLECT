@@ -1,2 +1,3 @@
-import { redirect } from "next/navigation"
-export default function AboutPage() { redirect("/") }
+"use client"
+import { useEffect } from "react"
+export default function AboutPage() { useEffect(() => { window.location.href = "/#about" }, []); return null }

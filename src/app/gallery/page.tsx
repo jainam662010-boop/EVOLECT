@@ -1,2 +1,3 @@
-import { redirect } from "next/navigation"
-export default function GalleryPage() { redirect("/") }
+"use client"
+import { useEffect } from "react"
+export default function GalleryPage() { useEffect(() => { window.location.href = "/#gallery" }, []); return null }
