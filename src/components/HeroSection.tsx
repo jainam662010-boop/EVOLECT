@@ -4,7 +4,6 @@ import { motion, useTransform } from "framer-motion"
 import { useState, useEffect } from "react"
 import GlowButton from "./GlowButton"
 import GradientText from "./GradientText"
-import LiquidGlassBg from "./LiquidGlassBg"
 
 export default function HeroSection({
   scrollProgress,
@@ -22,10 +21,9 @@ export default function HeroSection({
 
   return (
     <motion.section
-      className="relative min-h-screen flex flex-col items-center justify-center text-center px-4"
+      className="relative min-h-screen flex flex-col items-center justify-center text-center px-4 z-10"
       style={{ opacity }}
     >
-      <LiquidGlassBg />
       {/* EVOLECT Title */}
       <div className="relative z-10 flex items-center gap-[1px] md:gap-1 mb-4">
         {letters.map((letter, i) => (
@@ -51,19 +49,19 @@ export default function HeroSection({
 
       {/* Tagline */}
       <motion.p
-        className="relative z-10 text-base sm:text-lg md:text-2xl text-blue-900 max-w-4xl mb-3 font-medium leading-relaxed"
+        className="relative z-10 text-base sm:text-lg md:text-2xl text-white/90 max-w-4xl mb-3 font-medium leading-relaxed"
         initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, delay: isMobile ? 0 : 0.5 }}
       >
         Events need volunteers. Volunteers need opportunities.
         <br />
-        <GradientText>We are building the bridge.</GradientText>
+        <span className="text-blue-300">We are building the bridge.</span>
       </motion.p>
 
       {/* Description */}
       <motion.p
-        className="relative z-10 text-xs sm:text-sm md:text-base text-blue-800 max-w-xl mb-8 leading-relaxed px-2"
+        className="relative z-10 text-xs sm:text-sm md:text-base text-white/70 max-w-xl mb-8 leading-relaxed px-2"
         initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, delay: isMobile ? 0 : 0.7 }}
@@ -75,6 +73,7 @@ export default function HeroSection({
 
       {/* CTA */}
       <motion.div
+        className="relative z-10"
         initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, delay: isMobile ? 0 : 0.9 }}
@@ -84,8 +83,8 @@ export default function HeroSection({
 
       {/* Scroll indicator */}
       <div className="relative z-10 absolute bottom-8 left-1/2 -translate-x-1/2">
-        <div className="w-5 h-8 border-2 border-blue-900/30 rounded-full flex justify-center">
-          <div className="w-1 h-2 bg-blue-900/40 rounded-full mt-2 animate-bounce" />
+        <div className="w-5 h-8 border-2 border-white/30 rounded-full flex justify-center">
+          <div className="w-1 h-2 bg-white/50 rounded-full mt-2 animate-bounce" />
         </div>
       </div>
     </motion.section>

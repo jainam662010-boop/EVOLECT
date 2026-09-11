@@ -17,16 +17,14 @@ const syne = Syne({
 
 export const metadata: Metadata = {
   title: "Evolect — Where events meet volunteers",
-  description:
-    "Connecting event organizers with reliable volunteers. Find the right volunteer, manage teams, and create better events.",
-  keywords: ["volunteers", "events", "organizers", "community", "platform"],
+  description: "Connecting event organizers with reliable volunteers.",
 }
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
-  themeColor: "#ffffff",
+  themeColor: "#0a0a0a",
 }
 
 export default function RootLayout({
@@ -36,12 +34,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${inter.variable} ${syne.variable}`}>
-      <head>
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-      </head>
-      <body className="min-h-screen bg-white text-slate-900 antialiased will-change-transform">
-        {children}
-      </body>
+      <body className="min-h-screen bg-[#0a0a0a] antialiased">{children}</body>
     </html>
   )
 }
