@@ -308,7 +308,7 @@ function HomePage({ onRegister, onNavigate }: { onRegister: () => void; onNaviga
   }
 
   return (
-    <div className="w-full h-full flex flex-col items-center justify-center px-6 relative overflow-y-auto overflow-x-hidden" onMouseMove={onMouseMove}>
+    <div className="w-full min-h-full flex flex-col items-center justify-center px-4 sm:px-6 py-16 sm:py-0 relative overflow-y-auto overflow-x-hidden" onMouseMove={onMouseMove}>
       {/* Premium background */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute inset-0 bg-gradient-to-br from-[#08090d] via-[#0c0e14] to-[#0a0b10]" />
@@ -331,7 +331,7 @@ function HomePage({ onRegister, onNavigate }: { onRegister: () => void; onNaviga
           {"EVOLECT".split("").map((letter, i) => (
             <motion.span
               key={i}
-              className="text-5xl sm:text-7xl md:text-8xl lg:text-[10rem] font-black tracking-tighter text-white cursor-default relative"
+              className="text-[2.2rem] sm:text-6xl md:text-8xl lg:text-[10rem] font-black tracking-tighter text-white cursor-default relative"
               style={{ fontFamily: "var(--font-display), sans-serif", transformStyle: "preserve-3d", textShadow: "0 0 0 transparent" }}
               initial={{ opacity: 0, y: 80, rotateX: -120, z: -200 }}
               animate={{ opacity: 1, y: 0, rotateX: 0, z: 0 }}
@@ -346,25 +346,24 @@ function HomePage({ onRegister, onNavigate }: { onRegister: () => void; onNaviga
 
         <motion.div className="mx-auto mb-6 h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent" initial={{ width: 0 }} animate={{ width: "180px" }} transition={{ delay: 1.2, duration: 0.8 }} />
 
-        <motion.p className="text-lg md:text-2xl text-white/60 max-w-2xl mx-auto mb-4 font-medium leading-relaxed" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.0 }}>
+        <motion.p className="text-base sm:text-lg md:text-2xl text-white/60 max-w-2xl mx-auto mb-3 sm:mb-4 font-medium leading-relaxed px-2" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.0 }}>
           Events need volunteers. Volunteers need opportunities.
         </motion.p>
-        <motion.p className="text-sm text-white/30 max-w-xl mx-auto mb-12" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.2 }}>
+        <motion.p className="text-xs sm:text-sm text-white/30 max-w-xl mx-auto mb-8 sm:mb-12 px-2" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.2 }}>
           We are building the bridge between event organizers and reliable volunteers.
         </motion.p>
 
-        <motion.div className="flex items-center justify-center gap-4 flex-wrap mb-16" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.4 }}>
-          <motion.button onClick={onRegister} className="relative px-8 py-3.5 bg-white text-black font-bold text-sm rounded-full overflow-hidden" whileHover={{ scale: 1.08, boxShadow: "0 0 60px rgba(255,255,255,0.15)" }} whileTap={{ scale: 0.95 }}>
+        <motion.div className="flex items-center justify-center gap-3 sm:gap-4 flex-wrap mb-10 sm:mb-16" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.4 }}>
+          <motion.button onClick={onRegister} className="relative px-6 sm:px-8 py-3 bg-white text-black font-bold text-xs sm:text-sm rounded-full" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
             <span className="relative z-10">Join Early Access</span>
           </motion.button>
-          <motion.button onClick={() => onNavigate(1)} className="px-8 py-3.5 border border-white/15 text-white/50 font-medium text-sm rounded-full" whileHover={{ scale: 1.08, borderColor: "rgba(255,255,255,0.4)" }} whileTap={{ scale: 0.95 }}>
-            Learn More
-            <motion.span className="inline-block ml-2" animate={{ x: [0, 4, 0] }} transition={{ duration: 1.5, repeat: Infinity }}>→</motion.span>
+          <motion.button onClick={() => onNavigate(1)} className="px-6 sm:px-8 py-3 border border-white/15 text-white/50 font-medium text-xs sm:text-sm rounded-full" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            Learn More →
           </motion.button>
         </motion.div>
 
         {/* 3D Feature cards with tilt */}
-        <div className="grid grid-cols-3 gap-5 max-w-2xl mx-auto" style={{ perspective: 1000 }}>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-5 max-w-2xl mx-auto" style={{ perspective: 1000 }}>
           {features.map((f, i) => (
             <motion.div key={i} initial={{ opacity: 0, y: 40, rotateX: -20 }} animate={{ opacity: 1, y: 0, rotateX: 0 }} transition={{ delay: 1.6 + i * 0.15, duration: 0.6 }} style={{ transformStyle: "preserve-3d" }}>
               <Card3D>
@@ -380,15 +379,15 @@ function HomePage({ onRegister, onNavigate }: { onRegister: () => void; onNaviga
         </div>
 
         {/* Floating stats preview */}
-        <motion.div className="mt-16 flex items-center justify-center gap-8 flex-wrap" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2.2 }}>
+        <motion.div className="mt-10 sm:mt-16 flex items-center justify-center gap-6 sm:gap-8 flex-wrap" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2.2 }}>
           {[
             { val: "75.7M", label: "volunteers" },
             { val: "4.99B", label: "hours" },
             { val: "$167.2B", label: "value" },
           ].map((s, i) => (
             <motion.div key={i} className="text-center" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 2.4 + i * 0.1 }}>
-              <div className="text-xl font-black text-white/15" style={{ fontFamily: "var(--font-display), sans-serif" }}>{s.val}</div>
-              <div className="text-[10px] text-white/10 uppercase tracking-wider">{s.label}</div>
+              <div className="text-lg sm:text-xl font-black text-white/15" style={{ fontFamily: "var(--font-display), sans-serif" }}>{s.val}</div>
+              <div className="text-[9px] sm:text-[10px] text-white/10 uppercase tracking-wider">{s.label}</div>
             </motion.div>
           ))}
         </motion.div>
