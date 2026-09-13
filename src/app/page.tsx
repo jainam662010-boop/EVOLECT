@@ -490,9 +490,9 @@ function HomePage({ onRegister }: { onRegister: (role?: "organizer" | "volunteer
         {/* Floating stats preview */}
         <motion.div className="mt-10 sm:mt-16 flex items-center justify-center gap-6 sm:gap-8 flex-wrap" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2.2 }}>
           {[
-            { val: "75.7M", label: "volunteers" },
-            { val: "4.99B", label: "hours" },
-            { val: "$167.2B", label: "value" },
+            { val: "5.8Cr", label: "volunteers in India" },
+            { val: "1.2L+", label: "NGOs seeking help" },
+            { val: "₹289/hr", label: "value per volunteer" },
           ].map((s, i) => (
             <motion.div key={i} className="text-center" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 2.4 + i * 0.1 }}>
               <div className="text-lg sm:text-xl font-black text-[var(--color-text-muted)]" style={{ fontFamily: "var(--font-display), sans-serif" }}>{s.val}</div>

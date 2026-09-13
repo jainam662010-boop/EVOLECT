@@ -24,7 +24,7 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
-  themeColor: "#0a0a0a",
+  themeColor: "#090d16",
 }
 
 export default function RootLayout({
@@ -34,7 +34,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${inter.variable} ${syne.variable}`}>
-      <body className="min-h-screen bg-[#0a0a0a] antialiased">{children}</body>
+      <body className="min-h-screen antialiased">{children}</body>
     </html>
   )
 }
