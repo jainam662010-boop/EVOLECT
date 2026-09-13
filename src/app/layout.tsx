@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next"
-import { Inter, Syne } from "next/font/google"
+import { Inter, Unbounded } from "next/font/google"
 import "./globals.css"
 
 const inter = Inter({
@@ -8,11 +8,11 @@ const inter = Inter({
   display: "swap",
 })
 
-const syne = Syne({
+const unbounded = Unbounded({
   variable: "--font-display",
   subsets: ["latin"],
   display: "swap",
-  weight: ["700", "800"],
+  weight: ["600", "700", "800", "900"],
 })
 
 export const metadata: Metadata = {
@@ -33,7 +33,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${syne.variable}`}>
+    <html lang="en" className={`${inter.variable} ${unbounded.variable}`}>
       <body className="min-h-screen antialiased">{children}</body>
     </html>
   )

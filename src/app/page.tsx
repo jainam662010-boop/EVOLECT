@@ -297,7 +297,6 @@ export default function Home() {
 
   useEffect(() => {
     function onWheel(e: WheelEvent) {
-      if (current === 0) return
       if (switching.current) return
       if (Math.abs(e.deltaX) < 10) return
       if (Math.abs(e.deltaX) < Math.abs(e.deltaY) * 1.5) return
@@ -340,8 +339,17 @@ export default function Home() {
   }
 
   return (
-    <div className={`relative w-screen h-screen ${current === 0 ? "overflow-y-auto overflow-x-hidden" : "overflow-hidden"}`} style={{ perspective: 1200, background: "#090d16" }}>
+    <div className="relative w-screen h-screen overflow-hidden" style={{ perspective: 1200 }}>
       <a href="#main-content" className="skip-link">Skip to content</a>
+
+      {/* Global background */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+        <div className="absolute inset-0 bg-[#090d16]" />
+        <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse 80% 55% at 15% -10%, rgba(99,102,241,0.16), transparent 60%), radial-gradient(ellipse 60% 45% at 90% 105%, rgba(6,182,212,0.13), transparent 60%), radial-gradient(ellipse 45% 35% at 75% 25%, rgba(245,158,11,0.07), transparent 60%)" }} />
+        <div className="absolute inset-0 opacity-[0.02]" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")" }} />
+        <div className="absolute inset-0 opacity-[0.025]" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)", backgroundSize: "80px 80px" }} />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/50" />
+      </div>
 
       {/* Nav */}
       <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-4 backdrop-blur-md bg-[#090d16]/70" role="banner">
@@ -367,7 +375,7 @@ export default function Home() {
       {/* Pages */}
       <main id="main-content" role="main">
         <AnimatePresence custom={direction} mode="wait">
-          <motion.div key={current} custom={direction} variants={pageVariants} initial="enter" animate="center" exit="exit" transition={{ type: "spring", stiffness: 200, damping: 25 }} className="absolute inset-0" style={{ transformStyle: "preserve-3d" }} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
+          <motion.div key={current} custom={direction} variants={pageVariants} initial="enter" animate="center" exit="exit" transition={{ type: "spring", stiffness: 200, damping: 25 }} className="absolute inset-0 overflow-y-auto overflow-x-hidden" style={{ transformStyle: "preserve-3d" }} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
             {current === 0 && <HomePage onRegister={openRegister} />}
             {current === 1 && <AboutPage />}
             {current === 2 && <GalleryPage />}
@@ -411,16 +419,11 @@ function HomePage({ onRegister }: { onRegister: (role?: "organizer" | "volunteer
   }
 
   return (
-    <section className="w-full min-h-screen flex flex-col items-center justify-start px-4 sm:px-6 pt-24 pb-16 relative" onMouseMove={onMouseMove} aria-label="Home">
-      {/* Premium background — fixed to viewport */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none -z-10" aria-hidden="true">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#08090d] via-[#0c0e14] to-[#0a0b10]" />
-        <div className="absolute inset-0 opacity-[0.015]" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")" }} />
-        <motion.div className="absolute w-[800px] h-[800px] rounded-full opacity-30" style={{ background: "radial-gradient(circle, rgba(148,163,184,0.08) 0%, transparent 70%)", top: "-20%", left: "-10%" }} animate={{ x: [0, 60, 0], y: [0, 40, 0] }} transition={{ duration: 30, repeat: Infinity, ease: "linear" }} />
-        <motion.div className="absolute w-[600px] h-[600px] rounded-full opacity-20" style={{ background: "radial-gradient(circle, rgba(203,213,225,0.06) 0%, transparent 70%)", bottom: "-15%", right: "-5%" }} animate={{ x: [0, -50, 0], y: [0, -30, 0] }} transition={{ duration: 25, repeat: Infinity, ease: "linear" }} />
-        <motion.div className="absolute w-[400px] h-[400px] rounded-full opacity-25" style={{ background: "radial-gradient(circle, rgba(148,163,184,0.05) 0%, transparent 70%)", top: "30%", right: "20%" }} animate={{ x: [0, 30, -20, 0], y: [0, -20, 30, 0] }} transition={{ duration: 20, repeat: Infinity, ease: "linear" }} />
-        <div className="absolute inset-0 opacity-[0.02]" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)", backgroundSize: "80px 80px" }} />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60" />
+    <section className="w-full min-h-full flex flex-col items-center justify-start px-4 sm:px-6 pt-24 pb-24 relative" onMouseMove={onMouseMove} aria-label="Home">
+      {/* Floating glow orbs — scoped to hero */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+        <motion.div className="absolute w-[500px] h-[500px] rounded-full opacity-40" style={{ background: "radial-gradient(circle, rgba(99,102,241,0.12) 0%, transparent 70%)", top: "-10%", left: "-15%" }} animate={{ x: [0, 60, 0], y: [0, 40, 0] }} transition={{ duration: 30, repeat: Infinity, ease: "linear" }} />
+        <motion.div className="absolute w-[400px] h-[400px] rounded-full opacity-30" style={{ background: "radial-gradient(circle, rgba(6,182,212,0.1) 0%, transparent 70%)", bottom: "-5%", right: "-10%" }} animate={{ x: [0, -50, 0], y: [0, -30, 0] }} transition={{ duration: 25, repeat: Infinity, ease: "linear" }} />
       </div>
 
       <motion.div className="relative z-10 text-center max-w-5xl" style={{ rotateX, rotateY, transformPerspective: 1000, transformStyle: "preserve-3d" }}>
@@ -517,7 +520,7 @@ function HomePage({ onRegister }: { onRegister: (role?: "organizer" | "volunteer
 // ==================== ABOUT (full content) ====================
 function AboutPage() {
   return (
-    <section className="w-full h-full overflow-y-auto overflow-x-hidden px-6 md:px-16 py-24" aria-label="About">
+    <section className="w-full min-h-full px-6 md:px-16 py-24" aria-label="About">
       <div className="max-w-6xl mx-auto">
         <motion.span className="text-xs font-semibold tracking-widest uppercase text-[var(--color-text-muted)] block mb-4" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>About</motion.span>
         <h1 className="text-4xl md:text-6xl font-black text-[var(--color-text-primary)] mb-6 tracking-tight" style={{ fontFamily: "var(--font-display), sans-serif" }}>
@@ -609,7 +612,7 @@ function GalleryPage() {
   const filtered = filter === "All" ? galleryItems : galleryItems.filter(g => g.cat === filter)
 
   return (
-    <section className="w-full h-full overflow-y-auto overflow-x-hidden px-6 md:px-16 py-24" aria-label="Gallery">
+    <section className="w-full min-h-full px-6 md:px-16 py-24" aria-label="Gallery">
       <div className="max-w-6xl mx-auto">
         <motion.span className="text-xs font-semibold tracking-widest uppercase text-[var(--color-text-muted)] block mb-4" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>Gallery</motion.span>
         <h1 className="text-4xl md:text-6xl font-black text-[var(--color-text-primary)] mb-6 tracking-tight" style={{ fontFamily: "var(--font-display), sans-serif" }}>
@@ -694,7 +697,7 @@ function ContactPage() {
   }
 
   return (
-    <section className="w-full h-full overflow-y-auto overflow-x-hidden px-6 md:px-16 py-24" aria-label="Contact">
+    <section className="w-full min-h-full px-6 md:px-16 py-24" aria-label="Contact">
       <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-12">
         <div>
           <motion.span className="text-xs font-semibold tracking-widest uppercase text-[var(--color-text-muted)] block mb-4" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>Contact</motion.span>
