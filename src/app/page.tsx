@@ -52,17 +52,17 @@ const timeline = [
 ]
 
 const values = [
-  { icon: "🤝", title: "Bharosa First", desc: "Every interaction builds reputation. Verified profiles, transparent reviews." },
-  { icon: "⚡", title: "Seedha Sa", desc: "Three steps: Post, Match, Manage. No drama." },
+  { icon: "🤝", title: "Trust First", desc: "Every interaction builds reputation. Verified profiles, transparent reviews." },
+  { icon: "⚡", title: "Simplicity", desc: "Three steps: Post, Match, Manage. No complexity." },
   { icon: "🌍", title: "Community", desc: "More than an app. A network of people who actually show up." },
   { icon: "📈", title: "Growth", desc: "Every event you do adds to your portfolio. Credibility follows you." },
 ]
 
 const loopSteps = [
-  { label: "Dhoondo", desc: "Browse events matching your interests" },
-  { label: "Join", desc: "Apply, get confirmed, show up" },
-  { label: "Seekho", desc: "Build your portfolio and skills" },
-  { label: "Bharosa", desc: "Earn ratings that follow you everywhere" },
+  { label: "Discover", desc: "Browse events matching your interests" },
+  { label: "Participate", desc: "Apply, get confirmed, show up" },
+  { label: "Gain Experience", desc: "Build your portfolio and skills" },
+  { label: "Build Trust", desc: "Earn ratings that follow you everywhere" },
 ]
 
 const organizerBenefits = [
@@ -164,7 +164,7 @@ function RegisterModalInner({ onClose, prefillRole }: { onClose: () => void; pre
       if (res.ok) {
         setStep(3)
       } else {
-        setError("Kuch gadbad hui. Try again.")
+        setError("Something went wrong. Try again.")
       }
     } catch {
       setError("Network error. Check your connection and try again.")
@@ -193,16 +193,16 @@ function RegisterModalInner({ onClose, prefillRole }: { onClose: () => void; pre
 
             {step === 1 && (
               <div>
-                <h2 className="text-2xl font-black text-[var(--color-text-primary)] mb-2" style={{ fontFamily: "var(--font-display), sans-serif" }}>Evolect mein shamil ho</h2>
+                <h2 className="text-2xl font-black text-[var(--color-text-primary)] mb-2" style={{ fontFamily: "var(--font-display), sans-serif" }}>Join Evolect</h2>
                 <p className="text-[var(--color-text-body)] text-sm mb-8">Choose how you want to participate.</p>
                 <div className="space-y-3">
                   <button onClick={() => { setRole("organizer"); setStep(2) }} className="w-full p-4 rounded-xl border border-white/10 hover:border-[var(--color-accent-amber)]/50 text-left transition-all min-h-[44px] focus-visible:ring-2 focus-visible:ring-[var(--color-accent-amber)] focus-visible:ring-offset-2">
                     <span className="text-[var(--color-text-primary)] font-bold block">Event Organizer</span>
-                    <span className="text-[var(--color-text-body)] text-sm">Apna event post karo, volunteers dhundho</span>
+                    <span className="text-[var(--color-text-body)] text-sm">Post events, find volunteers, manage teams</span>
                   </button>
                   <button onClick={() => { setRole("volunteer"); setStep(2) }} className="w-full p-4 rounded-xl border border-white/10 hover:border-[var(--color-accent-cyan)]/50 text-left transition-all min-h-[44px] focus-visible:ring-2 focus-visible:ring-[var(--color-accent-cyan)] focus-visible:ring-offset-2">
                     <span className="text-[var(--color-text-primary)] font-bold block">Volunteer</span>
-                    <span className="text-[var(--color-text-body)] text-sm">Events dhundho, apna portfolio build karo</span>
+                    <span className="text-[var(--color-text-body)] text-sm">Discover events, build your reputation</span>
                   </button>
                 </div>
               </div>
@@ -214,7 +214,7 @@ function RegisterModalInner({ onClose, prefillRole }: { onClose: () => void; pre
                 <h2 className="text-2xl font-black text-[var(--color-text-primary)] mb-2" style={{ fontFamily: "var(--font-display), sans-serif" }}>
                   {role === "organizer" ? "Organizer" : "Volunteer"} Signup
                 </h2>
-                <p className="text-[var(--color-text-body)] text-sm mb-6">Bas 30 second lagenge. No credit card needed.</p>
+                <p className="text-[var(--color-text-body)] text-sm mb-6">Takes 30 seconds. No credit card needed.</p>
                 <form className="space-y-4" onSubmit={handleSubmit}>
                   <input type="hidden" name="access_key" value={WEB3FORMS_KEY} />
                   <input type="hidden" name="subject" value={`New ${role} Join Request — Evolect`} />
@@ -261,7 +261,7 @@ function RegisterModalInner({ onClose, prefillRole }: { onClose: () => void; pre
                   <svg className="w-8 h-8 text-[var(--color-accent-success)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
                 </motion.div>
                 <h2 className="text-2xl font-black text-[var(--color-text-primary)] mb-2" style={{ fontFamily: "var(--font-display), sans-serif" }}>Welcome!</h2>
-                <p className="text-[var(--color-text-body)] text-sm mb-6">You are in. Hum launch hone pe bata denge. 🎉</p>
+                <p className="text-[var(--color-text-body)] text-sm mb-6">You are in. We will notify you when we launch.</p>
                 <button onClick={handleClose} className="px-8 py-3 bg-white text-black font-bold text-sm rounded-full hover:bg-white/90 transition-colors min-h-[44px]">Done</button>
               </div>
             )}
@@ -340,11 +340,11 @@ export default function Home() {
   }
 
   return (
-    <div className={`relative w-screen h-screen ${current === 0 ? "overflow-y-auto overflow-x-hidden" : "overflow-hidden"}`} style={{ perspective: 1200 }}>
+    <div className={`relative w-screen h-screen ${current === 0 ? "overflow-y-auto overflow-x-hidden" : "overflow-hidden"}`} style={{ perspective: 1200, background: "#090d16" }}>
       <a href="#main-content" className="skip-link">Skip to content</a>
 
       {/* Nav */}
-      <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-4" role="banner">
+      <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-4 backdrop-blur-md bg-[#090d16]/70" role="banner">
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 rounded bg-white flex items-center justify-center"><span className="text-black font-black text-sm">E</span></div>
           <span className="text-[var(--color-text-primary)] font-black text-lg tracking-tight" style={{ fontFamily: "var(--font-display), sans-serif" }}>EVOLECT</span>
@@ -412,8 +412,8 @@ function HomePage({ onRegister }: { onRegister: (role?: "organizer" | "volunteer
 
   return (
     <section className="w-full min-h-screen flex flex-col items-center justify-start px-4 sm:px-6 pt-24 pb-16 relative" onMouseMove={onMouseMove} aria-label="Home">
-      {/* Premium background */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+      {/* Premium background — fixed to viewport */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none -z-10" aria-hidden="true">
         <div className="absolute inset-0 bg-gradient-to-br from-[#08090d] via-[#0c0e14] to-[#0a0b10]" />
         <div className="absolute inset-0 opacity-[0.015]" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")" }} />
         <motion.div className="absolute w-[800px] h-[800px] rounded-full opacity-30" style={{ background: "radial-gradient(circle, rgba(148,163,184,0.08) 0%, transparent 70%)", top: "-20%", left: "-10%" }} animate={{ x: [0, 60, 0], y: [0, 40, 0] }} transition={{ duration: 30, repeat: Infinity, ease: "linear" }} />
@@ -459,10 +459,10 @@ function HomePage({ onRegister }: { onRegister: (role?: "organizer" | "volunteer
         {/* Dual-persona CTAs */}
         <motion.div className="flex items-center justify-center gap-3 sm:gap-4 flex-wrap mb-10 sm:mb-16" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.4 }}>
           <motion.button onClick={() => onRegister("organizer")} className="relative px-6 sm:px-8 py-3 bg-[var(--color-accent-amber)] text-black font-bold text-xs sm:text-sm rounded-full min-h-[44px]" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-            <span className="relative z-10">Apna Event Post Karo →</span>
+            <span className="relative z-10">Post Your Event →</span>
           </motion.button>
           <motion.button onClick={() => onRegister("volunteer")} className="px-6 sm:px-8 py-3 border border-[var(--color-accent-cyan)]/40 text-[var(--color-accent-cyan)] font-medium text-xs sm:text-sm rounded-full min-h-[44px]" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-            Volunteer Bano
+            Become a Volunteer
           </motion.button>
         </motion.div>
 
@@ -684,7 +684,7 @@ function ContactPage() {
       if (res.ok) {
         setSubmitted(true)
       } else {
-        setError("Kuch gadbad hui. Try again.")
+        setError("Something went wrong. Try again.")
       }
     } catch {
       setError("Network error. Check your connection.")
@@ -699,9 +699,9 @@ function ContactPage() {
         <div>
           <motion.span className="text-xs font-semibold tracking-widest uppercase text-[var(--color-text-muted)] block mb-4" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>Contact</motion.span>
           <h1 className="text-4xl md:text-5xl font-black text-[var(--color-text-primary)] mb-6 tracking-tight" style={{ fontFamily: "var(--font-display), sans-serif" }}>
-            Let&apos;s <span className="text-[var(--color-accent-cyan)]">connect</span> karein
+            Let&apos;s <span className="text-[var(--color-accent-cyan)]">connect</span>
           </h1>
-          <p className="text-[var(--color-text-body)] mb-8 leading-relaxed">Organizer ho, volunteer ho, ya bas curious — humse baat karo, we love hearing from you.</p>
+          <p className="text-[var(--color-text-body)] mb-8 leading-relaxed">Whether you are an organizer, a volunteer, or just curious — we would love to hear from you.</p>
 
           <div className="space-y-4 mb-8">
             {[
@@ -720,7 +720,7 @@ function ContactPage() {
           <Card3D>
             <div className="p-5 rounded-xl bg-white/5 border border-white/10">
               <h3 className="text-[var(--color-text-primary)] font-bold mb-2">Early Access</h3>
-              <p className="text-[var(--color-text-body)] text-sm mb-4">Waitlist mein naam daal do, launch pe sabse pehle access milega.</p>
+              <p className="text-[var(--color-text-body)] text-sm mb-4">Join the waitlist and be among the first to access Evolect.</p>
               <form className="flex gap-2" onSubmit={async (e) => {
                 e.preventDefault()
                 const form = e.currentTarget
@@ -749,8 +749,8 @@ function ContactPage() {
                 <motion.div className="w-16 h-16 rounded-full bg-[var(--color-accent-success)]/20 flex items-center justify-center mx-auto mb-4" initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring", damping: 15 }}>
                   <svg className="w-8 h-8 text-[var(--color-accent-success)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
                 </motion.div>
-                <h2 className="text-2xl font-black text-[var(--color-text-primary)] mb-2" style={{ fontFamily: "var(--font-display), sans-serif" }}>Message chala gaya! 🎉</h2>
-                <p className="text-[var(--color-text-body)] text-sm">Hum 24 ghante mein reply karenge. Thanks for reaching out!</p>
+                <h2 className="text-2xl font-black text-[var(--color-text-primary)] mb-2" style={{ fontFamily: "var(--font-display), sans-serif" }}>Message Sent!</h2>
+                <p className="text-[var(--color-text-body)] text-sm">We will get back to you within 24 hours. Thanks for reaching out!</p>
               </div>
             ) : (
               <>
