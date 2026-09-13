@@ -123,7 +123,7 @@ export default function DashboardShowcase() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3 }}
-              className="rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-sm overflow-hidden"
+              className="glass rounded-2xl overflow-hidden"
             >
               <div className="p-6 border-b border-white/5">
                 <div className="flex items-center justify-between flex-wrap gap-4">
@@ -200,7 +200,7 @@ export default function DashboardShowcase() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3 }}
-              className="rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-sm overflow-hidden"
+              className="glass rounded-2xl overflow-hidden"
             >
               <div className="p-6 border-b border-white/5">
                 <div className="flex items-center gap-4 flex-wrap">
@@ -291,7 +291,7 @@ export default function DashboardShowcase() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3 }}
-              className="rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-sm overflow-hidden"
+              className="glass rounded-2xl overflow-hidden"
             >
               <div className="p-6 border-b border-white/5">
                     <h3 className="text-[var(--color-text-primary)] font-bold text-lg">Mumbai Marathon — Live Feed</h3>

@@ -183,7 +183,7 @@ function RegisterModalInner({ onClose, prefillRole }: { onClose: () => void; pre
         role="dialog"
         aria-modal="true"
         aria-label="Registration"
-        className="relative w-full max-w-md bg-[#111] rounded-2xl border border-white/10 p-8 overflow-hidden"
+        className="glass-strong relative w-full max-w-md rounded-2xl p-8 overflow-hidden"
         initial={{ scale: 0.9, y: 30 }}
         animate={{ scale: 1, y: 0 }}
         exit={{ scale: 0.9, y: 30 }}
@@ -223,20 +223,20 @@ function RegisterModalInner({ onClose, prefillRole }: { onClose: () => void; pre
                   <input type="checkbox" name="botcheck" className="hidden" style={{ display: "none" }} />
                   <div>
                     <label htmlFor="reg-name" className="sr-only">Full name</label>
-                    <input ref={firstInputRef} id="reg-name" name="name" type="text" placeholder="Full name" required className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-[var(--color-text-primary)] text-sm placeholder:text-[var(--color-text-muted)] focus:outline-none focus:border-[var(--color-accent-indigo)]/50 transition-colors min-h-[44px]" />
+                    <input ref={firstInputRef} id="reg-name" name="name" type="text" placeholder="Full name" required className="w-full px-4 py-3 rounded-xl glass text-[var(--color-text-primary)] text-sm placeholder:text-[var(--color-text-muted)] focus:outline-none focus:border-[var(--color-accent-indigo)]/50 transition-colors min-h-[44px]" />
                   </div>
                   <div>
                     <label htmlFor="reg-email" className="sr-only">Email</label>
-                    <input id="reg-email" name="email" type="email" placeholder="Email" required className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-[var(--color-text-primary)] text-sm placeholder:text-[var(--color-text-muted)] focus:outline-none focus:border-[var(--color-accent-indigo)]/50 transition-colors min-h-[44px]" />
+                    <input id="reg-email" name="email" type="email" placeholder="Email" required className="w-full px-4 py-3 rounded-xl glass text-[var(--color-text-primary)] text-sm placeholder:text-[var(--color-text-muted)] focus:outline-none focus:border-[var(--color-accent-indigo)]/50 transition-colors min-h-[44px]" />
                   </div>
                   <div>
                     <label htmlFor="reg-phone" className="sr-only">Phone</label>
-                    <input id="reg-phone" name="phone" type="tel" placeholder="Phone number" className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-[var(--color-text-primary)] text-sm placeholder:text-[var(--color-text-muted)] focus:outline-none focus:border-[var(--color-accent-indigo)]/50 transition-colors min-h-[44px]" />
+                    <input id="reg-phone" name="phone" type="tel" placeholder="Phone number" className="w-full px-4 py-3 rounded-xl glass text-[var(--color-text-primary)] text-sm placeholder:text-[var(--color-text-muted)] focus:outline-none focus:border-[var(--color-accent-indigo)]/50 transition-colors min-h-[44px]" />
                   </div>
                   {role === "volunteer" && (
                     <div>
                       <label htmlFor="reg-skills" className="sr-only">Skills</label>
-                      <select id="reg-skills" name="skills" className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-[var(--color-text-body)] text-sm focus:outline-none focus:border-[var(--color-accent-indigo)]/50 transition-colors min-h-[44px]">
+                      <select id="reg-skills" name="skills" className="w-full px-4 py-3 rounded-xl glass text-[var(--color-text-body)] text-sm focus:outline-none focus:border-[var(--color-accent-indigo)]/50 transition-colors min-h-[44px]">
                         <option>Skills (optional)</option>
                         <option>Event Management</option>
                         <option>Technical / AV</option>
@@ -484,7 +484,7 @@ function HomePage({ onRegister }: { onRegister: (role?: "organizer" | "volunteer
           {features.map((f, i) => (
             <motion.div key={i} initial={{ opacity: 0, y: 40, rotateX: -20 }} animate={{ opacity: 1, y: 0, rotateX: 0 }} transition={{ delay: 1.6 + i * 0.15, duration: 0.6 }} style={{ transformStyle: "preserve-3d" }}>
               <Card3D>
-                <div className="p-5 rounded-2xl bg-white/[0.03] border border-white/[0.06] hover:border-white/[0.12] transition-all duration-500 text-left group relative overflow-hidden backdrop-blur-sm">
+                <div className="glass p-5 rounded-2xl hover:border-white/20 transition-all duration-500 text-left group relative overflow-hidden">
                   <div className="absolute inset-0 bg-gradient-to-br from-white/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   <span className="text-[10px] font-mono text-[var(--color-text-muted)] tracking-wider">{f.num}</span>
                   <h3 className="text-[var(--color-text-primary)] font-bold text-base mt-2 mb-1.5 group-hover:text-[var(--color-text-primary)] transition-colors">{f.title}</h3>
@@ -530,7 +530,7 @@ function HomePage({ onRegister }: { onRegister: (role?: "organizer" | "volunteer
 // ==================== ABOUT (full content) ====================
 function AboutPage() {
   return (
-    <section className="w-full min-h-full px-6 md:px-16 py-24" aria-label="About">
+    <section className="w-full min-h-full px-5 md:px-16 py-16 md:py-24" aria-label="About">
       <div className="max-w-6xl mx-auto">
         <motion.span className="text-xs font-semibold tracking-widest uppercase text-[var(--color-text-muted)] block mb-4" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>About</motion.span>
         <h1 className="text-4xl md:text-6xl font-black text-[var(--color-text-primary)] mb-6 tracking-tight" style={{ fontFamily: "var(--font-display), sans-serif" }}>
@@ -543,7 +543,7 @@ function AboutPage() {
         <p className="text-[var(--color-text-muted)] text-sm mb-6">Source: NSSO, CSDS-Lokniti, GiveIndia, Ministry of Youth Affairs</p>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
           {problemStats.map((s, i) => (
-            <Card3D key={i}><div className="p-4 rounded-xl bg-white/5 border border-white/10">
+            <Card3D key={i}><div className="p-4 rounded-xl glass">
               <div className="text-2xl font-black text-[var(--color-text-primary)] mb-1">{s.value}</div>
               <div className="text-xs text-[var(--color-text-body)] leading-relaxed">{s.label}</div>
             </div></Card3D>
@@ -554,7 +554,7 @@ function AboutPage() {
         <h2 className="text-xl font-bold text-[var(--color-text-primary)] mb-4">Our Journey</h2>
         <div className="grid md:grid-cols-3 gap-4 mb-12">
           {timeline.map((t, i) => (
-            <Card3D key={i}><div className="p-4 rounded-xl bg-white/5 border border-white/10 h-full">
+            <Card3D key={i}><div className="p-4 rounded-xl glass h-full">
               <span className="text-xs font-mono text-[var(--color-accent-indigo)]">{t.year}</span>
               <h3 className="text-[var(--color-text-primary)] font-bold mt-1 mb-2">{t.title}</h3>
               <p className="text-[var(--color-text-body)] text-sm leading-relaxed">{t.desc}</p>
@@ -566,7 +566,7 @@ function AboutPage() {
         <h2 className="text-xl font-bold text-[var(--color-text-primary)] mb-4">Our Values</h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
           {values.map((v, i) => (
-            <Card3D key={i}><div className="p-4 rounded-xl bg-white/5 border border-white/10 text-center">
+            <Card3D key={i}><div className="p-4 rounded-xl glass text-center">
               <div className="text-2xl mb-2">{v.icon}</div>
               <h3 className="text-[var(--color-text-primary)] font-bold text-sm mb-1">{v.title}</h3>
               <p className="text-[var(--color-text-body)] text-xs leading-relaxed">{v.desc}</p>
@@ -579,7 +579,7 @@ function AboutPage() {
         <div className="flex items-center justify-center gap-3 flex-wrap mb-12">
           {loopSteps.map((step, i) => (
             <div key={i} className="flex items-center gap-3">
-              <div className="p-4 rounded-xl bg-white/5 border border-white/10 text-center w-32">
+              <div className="p-4 rounded-xl glass text-center w-32">
                 <span className="text-[var(--color-text-primary)] font-semibold text-sm block">{step.label}</span>
                 <span className="text-[var(--color-text-muted)] text-xs">{step.desc}</span>
               </div>
@@ -590,11 +590,11 @@ function AboutPage() {
 
         {/* Benefits */}
         <div className="grid md:grid-cols-2 gap-4 mb-12">
-          <Card3D><div className="p-6 rounded-xl bg-white/5 border border-white/10 h-full">
+          <Card3D><div className="p-6 rounded-xl glass h-full">
             <h3 className="text-[var(--color-text-primary)] font-bold mb-3">For Organizers</h3>
             <ul className="space-y-2 text-sm text-[var(--color-text-body)]">{organizerBenefits.map((b, i) => <li key={i}>• {b}</li>)}</ul>
           </div></Card3D>
-          <Card3D><div className="p-6 rounded-xl bg-white/5 border border-white/10 h-full">
+          <Card3D><div className="p-6 rounded-xl glass h-full">
             <h3 className="text-[var(--color-text-primary)] font-bold mb-3">For Volunteers</h3>
             <ul className="space-y-2 text-sm text-[var(--color-text-body)]">{volunteerBenefits.map((b, i) => <li key={i}>• {b}</li>)}</ul>
           </div></Card3D>
@@ -604,7 +604,7 @@ function AboutPage() {
         <h2 className="text-xl font-bold text-[var(--color-text-primary)] mb-4">The Team</h2>
         <div className="grid md:grid-cols-3 gap-4">
           {[{ name: "Eshaan Nahar", role: "Founder", init: "E" }, { name: "Jainam Karnawat", role: "Developer", init: "J" }, { name: "Community", role: "Early Members", init: "C" }].map((m, i) => (
-            <Card3D key={i}><div className="p-5 rounded-xl bg-white/5 border border-white/10 text-center">
+            <Card3D key={i}><div className="p-5 rounded-xl glass text-center">
               <div className="w-12 h-12 rounded-full bg-[var(--color-accent-indigo)]/20 flex items-center justify-center text-[var(--color-accent-indigo)] font-bold mx-auto mb-3">{m.init}</div>
               <h3 className="text-[var(--color-text-primary)] font-bold">{m.name}</h3>
               <p className="text-[var(--color-text-body)] text-sm">{m.role}</p>
@@ -622,7 +622,7 @@ function GalleryPage() {
   const filtered = filter === "All" ? galleryItems : galleryItems.filter(g => g.cat === filter)
 
   return (
-    <section className="w-full min-h-full px-6 md:px-16 py-24" aria-label="Gallery">
+    <section className="w-full min-h-full px-5 md:px-16 py-16 md:py-24" aria-label="Gallery">
       <div className="max-w-6xl mx-auto">
         <motion.span className="text-xs font-semibold tracking-widest uppercase text-[var(--color-text-muted)] block mb-4" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>Gallery</motion.span>
         <h1 className="text-4xl md:text-6xl font-black text-[var(--color-text-primary)] mb-6 tracking-tight" style={{ fontFamily: "var(--font-display), sans-serif" }}>
@@ -636,12 +636,12 @@ function GalleryPage() {
           ))}
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-12" role="tabpanel" aria-label="Gallery items">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-12" role="tabpanel" aria-label="Gallery items">
           <AnimatePresence mode="popLayout">
             {filtered.map((item, i) => (
               <motion.div key={item.title} layout initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.9 }} transition={{ delay: i * 0.05 }}>
                 <Card3D>
-                  <div className="p-5 rounded-xl bg-white/5 border border-white/10 hover:border-white/20 transition-colors cursor-pointer group">
+                  <div className="p-5 rounded-xl glass hover:border-white/20 transition-colors cursor-pointer group">
                     <div className="flex items-center justify-between mb-3">
                       <span className="text-[10px] font-semibold uppercase tracking-wider text-[var(--color-text-muted)]">{item.cat}</span>
                       <span className="text-xs text-[var(--color-text-muted)]">{item.vol} vol</span>
@@ -664,7 +664,7 @@ function GalleryPage() {
             { val: "1.2L+", label: "NGOs actively seeking volunteers across India right now" },
           ].map((s, i) => (
             <Card3D key={i}>
-              <div className="p-5 rounded-xl bg-white/5 border border-white/10">
+              <div className="p-5 rounded-xl glass">
                 <div className="text-2xl font-black text-[var(--color-text-primary)] mb-1">{s.val}</div>
                 <p className="text-[var(--color-text-body)] text-sm leading-relaxed">{s.label}</p>
               </div>
@@ -707,7 +707,7 @@ function ContactPage() {
   }
 
   return (
-    <section className="w-full min-h-full px-6 md:px-16 py-24" aria-label="Contact">
+    <section className="w-full min-h-full px-5 md:px-16 py-16 md:py-24" aria-label="Contact">
       <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-12">
         <div>
           <motion.span className="text-xs font-semibold tracking-widest uppercase text-[var(--color-text-muted)] block mb-4" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>Contact</motion.span>
@@ -731,10 +731,10 @@ function ContactPage() {
           </div>
 
           <Card3D>
-            <div className="p-5 rounded-xl bg-white/5 border border-white/10">
+            <div className="p-5 rounded-xl glass">
               <h3 className="text-[var(--color-text-primary)] font-bold mb-2">Early Access</h3>
               <p className="text-[var(--color-text-body)] text-sm mb-4">Join the waitlist and be among the first to access Evolect.</p>
-              <form className="flex gap-2" onSubmit={async (e) => {
+              <form className="flex flex-col gap-2 sm:flex-row" onSubmit={async (e) => {
                 e.preventDefault()
                 const form = e.currentTarget
                 const data = new FormData(form)
@@ -748,7 +748,7 @@ function ContactPage() {
                 <input type="hidden" name="subject" value="New Waitlist Join — Evolect" />
                 <input type="checkbox" name="botcheck" className="hidden" style={{ display: "none" }} />
                 <label htmlFor="waitlist-email" className="sr-only">Email</label>
-                <input id="waitlist-email" name="email" type="email" placeholder="you@email.com" required className="flex-1 px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-[var(--color-text-primary)] text-sm placeholder:text-[var(--color-text-muted)] focus:outline-none focus:border-[var(--color-accent-indigo)]/50 transition-colors min-h-[44px]" />
+                <input id="waitlist-email" name="email" type="email" placeholder="you@email.com" required className="flex-1 px-3 py-2 rounded-lg glass text-[var(--color-text-primary)] text-sm placeholder:text-[var(--color-text-muted)] focus:outline-none focus:border-[var(--color-accent-indigo)]/50 transition-colors min-h-[44px]" />
                 <button type="submit" className="px-4 py-2 bg-white text-black text-xs font-bold rounded-lg hover:bg-white/90 transition-colors min-h-[44px]">Join</button>
               </form>
             </div>
@@ -756,7 +756,7 @@ function ContactPage() {
         </div>
 
         <Card3D>
-          <div className="p-6 rounded-xl bg-white/5 border border-white/10">
+          <div className="p-6 rounded-xl glass">
             {submitted ? (
               <div className="text-center py-8" aria-live="polite">
                 <motion.div className="w-16 h-16 rounded-full bg-[var(--color-accent-success)]/20 flex items-center justify-center mx-auto mb-4" initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring", damping: 15 }}>
@@ -775,19 +775,19 @@ function ContactPage() {
                   <input type="checkbox" name="botcheck" className="hidden" style={{ display: "none" }} />
                   <div>
                     <label htmlFor="contact-name" className="sr-only">Name</label>
-                    <input id="contact-name" name="name" type="text" placeholder="Name" required className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-[var(--color-text-primary)] text-sm placeholder:text-[var(--color-text-muted)] focus:outline-none focus:border-[var(--color-accent-indigo)]/50 transition-colors min-h-[44px]" />
+                    <input id="contact-name" name="name" type="text" placeholder="Name" required className="w-full px-4 py-3 rounded-xl glass text-[var(--color-text-primary)] text-sm placeholder:text-[var(--color-text-muted)] focus:outline-none focus:border-[var(--color-accent-indigo)]/50 transition-colors min-h-[44px]" />
                   </div>
                   <div>
                     <label htmlFor="contact-email" className="sr-only">Email</label>
-                    <input id="contact-email" name="email" type="email" placeholder="Email" required className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-[var(--color-text-primary)] text-sm placeholder:text-[var(--color-text-muted)] focus:outline-none focus:border-[var(--color-accent-indigo)]/50 transition-colors min-h-[44px]" />
+                    <input id="contact-email" name="email" type="email" placeholder="Email" required className="w-full px-4 py-3 rounded-xl glass text-[var(--color-text-primary)] text-sm placeholder:text-[var(--color-text-muted)] focus:outline-none focus:border-[var(--color-accent-indigo)]/50 transition-colors min-h-[44px]" />
                   </div>
                   <div>
                     <label htmlFor="contact-phone" className="sr-only">Phone</label>
-                    <input id="contact-phone" name="phone" type="tel" placeholder="Phone (optional)" className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-[var(--color-text-primary)] text-sm placeholder:text-[var(--color-text-muted)] focus:outline-none focus:border-[var(--color-accent-indigo)]/50 transition-colors min-h-[44px]" />
+                    <input id="contact-phone" name="phone" type="tel" placeholder="Phone (optional)" className="w-full px-4 py-3 rounded-xl glass text-[var(--color-text-primary)] text-sm placeholder:text-[var(--color-text-muted)] focus:outline-none focus:border-[var(--color-accent-indigo)]/50 transition-colors min-h-[44px]" />
                   </div>
                   <div>
                     <label htmlFor="contact-role" className="sr-only">I am a</label>
-                    <select id="contact-role" name="role" className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-[var(--color-text-body)] text-sm focus:outline-none focus:border-[var(--color-accent-indigo)]/50 transition-colors min-h-[44px]">
+                    <select id="contact-role" name="role" className="w-full px-4 py-3 rounded-xl glass text-[var(--color-text-body)] text-sm focus:outline-none focus:border-[var(--color-accent-indigo)]/50 transition-colors min-h-[44px]">
                       <option>Event Organizer</option>
                       <option>Volunteer</option>
                       <option>Just curious</option>
@@ -795,7 +795,7 @@ function ContactPage() {
                   </div>
                   <div>
                     <label htmlFor="contact-message" className="sr-only">Message</label>
-                    <textarea id="contact-message" name="message" rows={4} placeholder="Message" required className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-[var(--color-text-primary)] text-sm placeholder:text-[var(--color-text-muted)] focus:outline-none focus:border-[var(--color-accent-indigo)]/50 transition-colors resize-none min-h-[44px]" />
+                    <textarea id="contact-message" name="message" rows={4} placeholder="Message" required className="w-full px-4 py-3 rounded-xl glass text-[var(--color-text-primary)] text-sm placeholder:text-[var(--color-text-muted)] focus:outline-none focus:border-[var(--color-accent-indigo)]/50 transition-colors resize-none min-h-[44px]" />
                   </div>
                   <motion.button type="submit" disabled={loading} className="w-full py-3 bg-white text-black font-bold text-sm rounded-full min-h-[44px] disabled:opacity-50 disabled:cursor-not-allowed" whileHover={{ scale: loading ? 1 : 1.02 }} whileTap={{ scale: loading ? 1 : 0.98 }}>
                     {loading ? "Sending..." : "Send Message"}
