@@ -297,6 +297,7 @@ export default function Home() {
 
   useEffect(() => {
     function onWheel(e: WheelEvent) {
+      if (current === 0) return
       if (switching.current) return
       if (Math.abs(e.deltaX) < 10) return
       if (Math.abs(e.deltaX) < Math.abs(e.deltaY) * 1.5) return
@@ -339,7 +340,7 @@ export default function Home() {
   }
 
   return (
-    <div className="relative w-screen h-screen overflow-hidden" style={{ perspective: 1200 }}>
+    <div className={`relative w-screen h-screen ${current === 0 ? "overflow-y-auto overflow-x-hidden" : "overflow-hidden"}`} style={{ perspective: 1200 }}>
       <a href="#main-content" className="skip-link">Skip to content</a>
 
       {/* Nav */}
@@ -410,7 +411,7 @@ function HomePage({ onRegister }: { onRegister: (role?: "organizer" | "volunteer
   }
 
   return (
-    <section className="w-full min-h-full flex flex-col items-center justify-center px-4 sm:px-6 py-16 sm:py-0 relative overflow-y-auto overflow-x-hidden" onMouseMove={onMouseMove} aria-label="Home">
+    <section className="w-full min-h-screen flex flex-col items-center justify-start px-4 sm:px-6 pt-24 pb-16 relative" onMouseMove={onMouseMove} aria-label="Home">
       {/* Premium background */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
         <div className="absolute inset-0 bg-gradient-to-br from-[#08090d] via-[#0c0e14] to-[#0a0b10]" />
