@@ -25,6 +25,7 @@ const features = [
   { num: "01", title: "Post", desc: "Create detailed event listings with specific role requirements." },
   { num: "02", title: "Connect", desc: "Browse verified events filtered by interest and availability." },
   { num: "03", title: "Manage", desc: "Review applications, build teams, and manage attendance." },
+  { num: "04", title: "Get Paid", desc: "Earn for your time. Payouts land in your account within 7 days." },
 ]
 
 const galleryItems = [
@@ -76,6 +77,7 @@ const organizerBenefits = [
 const volunteerBenefits = [
   "Personalized event recommendations based on your skills",
   "Transparent event details with organizer verification",
+  "Fast payouts — every event paid in full within 7 days",
   "Portable reputation that grows with every event",
   "Skill-based matching for roles that actually fit you",
   "Connect with like-minded volunteers across cities",
@@ -431,9 +433,14 @@ function HomePage({ onRegister }: { onRegister: (role?: "organizer" | "volunteer
 
       <motion.div className="relative z-10 text-center max-w-5xl" style={{ rotateX, rotateY, transformPerspective: 1000, transformStyle: "preserve-3d" }}>
         {/* Floating 3D tag */}
-        <motion.span className="text-xs font-semibold tracking-widest uppercase text-[var(--color-text-muted)] block mb-4" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }}>
-          Early Access — 2026
-        </motion.span>
+        <motion.div className="flex items-center justify-center gap-2 flex-wrap mb-4" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }}>
+          <span className="text-xs font-semibold tracking-widest uppercase text-[var(--color-text-muted)] px-3 py-1 rounded-full border border-white/10 bg-white/[0.03]">
+            Early Access — 2026
+          </span>
+          <span className="text-xs font-semibold tracking-wider uppercase text-[var(--color-accent-success)] px-3 py-1 rounded-full border border-[var(--color-accent-success)]/30 bg-[var(--color-accent-success)]/10">
+            ⚡ Paid within 7 days
+          </span>
+        </motion.div>
 
         {/* 3D Letters with depth */}
         <div className="flex items-center justify-center gap-[clamp(2px,0.7vw,8px)] mb-8" style={{ perspective: 800 }}>
@@ -473,7 +480,7 @@ function HomePage({ onRegister }: { onRegister: (role?: "organizer" | "volunteer
         </motion.div>
 
         {/* 3D Feature cards with tilt */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-5 max-w-2xl mx-auto" style={{ perspective: 1000 }}>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5 max-w-4xl mx-auto" style={{ perspective: 1000 }}>
           {features.map((f, i) => (
             <motion.div key={i} initial={{ opacity: 0, y: 40, rotateX: -20 }} animate={{ opacity: 1, y: 0, rotateX: 0 }} transition={{ delay: 1.6 + i * 0.15, duration: 0.6 }} style={{ transformStyle: "preserve-3d" }}>
               <Card3D>
