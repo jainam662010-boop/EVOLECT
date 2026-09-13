@@ -328,9 +328,9 @@ export default function Home() {
   }, [current])
 
   const pageVariants = {
-    enter: (d: number) => ({ x: d > 0 ? "50%" : "-50%", opacity: 0, rotateY: d > 0 ? -12 : 12, scale: 0.92 }),
+    enter: (d: number) => ({ x: d > 0 ? "50%" : "-50%", opacity: 0, rotateY: d > 0 ? -12 : 12, scale: 0.95 }),
     center: { x: 0, opacity: 1, rotateY: 0, scale: 1 },
-    exit: (d: number) => ({ x: d > 0 ? "-50%" : "50%", opacity: 0, rotateY: d > 0 ? 12 : -12, scale: 0.92 }),
+    exit: (d: number) => ({ x: d > 0 ? "-50%" : "50%", opacity: 0, rotateY: d > 0 ? 12 : -12, scale: 0.95 }),
   }
 
   function openRegister(role?: "organizer" | "volunteer") {
@@ -357,15 +357,16 @@ export default function Home() {
           <div className="w-8 h-8 rounded bg-white flex items-center justify-center"><span className="text-black font-black text-sm">E</span></div>
           <span className="text-[var(--color-text-primary)] font-black text-lg tracking-tight" style={{ fontFamily: "var(--font-display), sans-serif" }}>EVOLECT</span>
         </div>
-        <nav className="hidden md:flex items-center gap-6" role="navigation" aria-label="Main navigation">
+        <nav className="hidden md:flex items-center gap-1" role="navigation" aria-label="Main navigation">
           {pageLabels.map((label, i) => (
             <button
               key={label}
               onClick={() => goTo(i)}
               aria-current={i === current ? "page" : undefined}
-              className={`text-sm font-medium transition-all duration-300 min-h-[44px] min-w-[44px] flex items-center justify-center ${i === current ? "text-[var(--color-text-primary)]" : "text-[var(--color-text-muted)] hover:text-[var(--color-text-primary)]"}`}
+              className={`group relative text-sm font-medium transition-all duration-300 min-h-[44px] min-w-[44px] px-2 flex items-center justify-center ${i === current ? "text-[var(--color-text-primary)]" : "text-[var(--color-text-muted)] hover:text-[var(--color-text-primary)]"}`}
             >
               {label}
+              <span className={`absolute bottom-2 left-1/2 -translate-x-1/2 h-0.5 rounded-full bg-white transition-all duration-300 ${i === current ? "w-5" : "w-0 group-hover:w-3"}`} />
             </button>
           ))}
         </nav>
@@ -375,7 +376,7 @@ export default function Home() {
       {/* Pages */}
       <main id="main-content" role="main">
         <AnimatePresence custom={direction} mode="wait">
-          <motion.div key={current} custom={direction} variants={pageVariants} initial="enter" animate="center" exit="exit" transition={{ type: "spring", stiffness: 200, damping: 25 }} className="absolute inset-0 overflow-y-auto overflow-x-hidden" style={{ transformStyle: "preserve-3d" }} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
+          <motion.div key={current} custom={direction} variants={pageVariants} initial="enter" animate="center" exit="exit" transition={{ type: "spring", stiffness: 260, damping: 30 }} className="page-scroll absolute inset-0 overflow-y-auto overflow-x-hidden" style={{ transformStyle: "preserve-3d" }} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
             {current === 0 && <HomePage onRegister={openRegister} />}
             {current === 1 && <AboutPage />}
             {current === 2 && <GalleryPage />}
@@ -385,7 +386,7 @@ export default function Home() {
       </main>
 
       {/* Dots */}
-      <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex gap-2" role="tablist" aria-label="Page navigation">
+      <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 flex gap-1 px-2 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/10" role="tablist" aria-label="Page navigation">
         {pageLabels.map((label, i) => (
           <button
             key={i}
@@ -399,7 +400,7 @@ export default function Home() {
           </button>
         ))}
       </div>
-      <div className="fixed bottom-6 right-6 z-50 text-[var(--color-text-muted)] text-xs hidden md:block" aria-hidden="true">← swipe or arrow keys →</div>
+      <div className="fixed bottom-5 right-6 z-50 text-[var(--color-text-muted)] text-xs hidden md:block" aria-hidden="true">← arrow keys →</div>
 
       <RegisterModal open={registerOpen} onClose={() => setRegisterOpen(false)} prefillRole={prefillRole} />
     </div>
@@ -412,8 +413,10 @@ function HomePage({ onRegister }: { onRegister: (role?: "organizer" | "volunteer
   const mouseY = useMotionValue(0)
   const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [5, -5]), { stiffness: 150, damping: 20 })
   const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-5, 5]), { stiffness: 150, damping: 20 })
+  const isFinePointer = useRef(typeof window !== "undefined" && window.matchMedia("(pointer: fine)").matches)
 
   function onMouseMove(e: React.MouseEvent) {
+    if (!isFinePointer.current) return
     mouseX.set(e.clientX / window.innerWidth - 0.5)
     mouseY.set(e.clientY / window.innerHeight - 0.5)
   }
@@ -433,11 +436,11 @@ function HomePage({ onRegister }: { onRegister: (role?: "organizer" | "volunteer
         </motion.span>
 
         {/* 3D Letters with depth */}
-        <div className="flex items-center justify-center gap-[3px] md:gap-2 mb-8" style={{ perspective: 800 }}>
+        <div className="flex items-center justify-center gap-[clamp(2px,0.7vw,8px)] mb-8" style={{ perspective: 800 }}>
           {"EVOLECT".split("").map((letter, i) => (
             <motion.span
               key={i}
-              className="text-[2.2rem] sm:text-6xl md:text-8xl lg:text-[10rem] font-black tracking-tighter cursor-default relative"
+              className="text-[clamp(2rem,9vw,10rem)] font-black tracking-tight leading-none cursor-default relative"
               style={{ fontFamily: "var(--font-display), sans-serif", transformStyle: "preserve-3d", textShadow: "0 0 0 transparent", color: "var(--color-text-primary)" }}
               initial={{ opacity: 0, y: 80, rotateX: -120, z: -200 }}
               animate={{ opacity: 1, y: 0, rotateX: 0, z: 0 }}
@@ -461,7 +464,7 @@ function HomePage({ onRegister }: { onRegister: (role?: "organizer" | "volunteer
 
         {/* Dual-persona CTAs */}
         <motion.div className="flex items-center justify-center gap-3 sm:gap-4 flex-wrap mb-10 sm:mb-16" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.4 }}>
-          <motion.button onClick={() => onRegister("organizer")} className="relative px-6 sm:px-8 py-3 bg-[var(--color-accent-amber)] text-black font-bold text-xs sm:text-sm rounded-full min-h-[44px]" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+          <motion.button onClick={() => onRegister("organizer")} className="btn-shine relative px-6 sm:px-8 py-3 bg-[var(--color-accent-amber)] text-black font-bold text-xs sm:text-sm rounded-full min-h-[44px]" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
             <span className="relative z-10">Post Your Event →</span>
           </motion.button>
           <motion.button onClick={() => onRegister("volunteer")} className="px-6 sm:px-8 py-3 border border-[var(--color-accent-cyan)]/40 text-[var(--color-accent-cyan)] font-medium text-xs sm:text-sm rounded-full min-h-[44px]" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>

@@ -24,6 +24,17 @@ body {
   color: var(--color-text-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Kill tap highlight flash on mobile + stop text-select on UI chrome */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  overscroll-behavior: none;
 }
 
 ::selection {
@@ -61,7 +72,45 @@ body {
   animation: marquee 25s linear infinite;
 }
 
-/* Spotlight glow effect on hover */
+/* Page scroll containers — thin, elegant scrollbar */
+.page-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(148, 163, 184, 0.3) transparent;
+}
+.page-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+.page-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.page-scroll::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.25);
+  border-radius: 999px;
+}
+.page-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.45);
+}
+
+/* CTA shine sweep */
+.btn-shine {
+  position: relative;
+  overflow: hidden;
+}
+.btn-shine::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(105deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+  transform: skewX(-20deg);
+  transition: left 0.7s ease;
+}
+.btn-shine:hover::after {
+  left: 150%;
+}
+
 .card-glow {
   position: relative;
   overflow: hidden;
