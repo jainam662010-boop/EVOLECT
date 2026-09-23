@@ -221,7 +221,7 @@ section{padding:96px 0;}
 .final-cta-actions{margin-top:32px;display:flex;flex-wrap:wrap;gap:16px;}
 
 .page-links{margin-top:56px;display:grid;grid-template-columns:1fr;gap:14px;}
-@media (min-width:700px){.page-links{grid-template-columns:repeat(3,1fr);}}
+@media (min-width:700px){.page-links{grid-template-columns:repeat(2,1fr);}}
 .page-link-card{border:1px solid var(--line-dark);border-radius:var(--radius-card);padding:22px;text-decoration:none;color:var(--text-on-black);display:flex;flex-direction:column;gap:10px;transition:border-color .15s ease,transform .15s ease;}
 .page-link-card:hover{border-color:var(--violet);transform:translateY(-2px);}
 .page-link-card .plc-tag{font-size:.76rem;font-weight:700;color:var(--violet);}
@@ -310,3 +310,27 @@ footer{border-top:1px solid var(--line-dark);padding:56px 0 32px;}
   .phone{transform:none;}
   .vstate,.filter-demo,.step-visual,.wpanel,.mgr-form,.flowline,.flow{padding:22px 18px;}
 }
+
+/* ---- liquid glass (CSS only) ---- */
+/* ponytail: frosted surfaces + one animated sheen. Drop if it janks on low-end phones. */
+body{background:
+  radial-gradient(640px 420px at 85% -5%, rgba(143,107,255,.13), transparent 60%),
+  radial-gradient(520px 400px at -10% 32%, rgba(143,107,255,.08), transparent 60%),
+  var(--black);}
+header.site-nav{background:linear-gradient(180deg,rgba(24,24,27,.72),rgba(6,6,6,.72));backdrop-filter:blur(18px) saturate(1.3);-webkit-backdrop-filter:blur(18px) saturate(1.3);}
+.phone-card,.wpanel,.step-visual,.filter-demo,.vstate,.app-preview,.mgr-form,.flowline,.flow,.mgr-preview,.page-link-card{
+  background:linear-gradient(135deg,rgba(255,255,255,.08),rgba(255,255,255,.02) 55%,rgba(143,107,255,.07));
+  backdrop-filter:blur(16px) saturate(1.25);
+  -webkit-backdrop-filter:blur(16px) saturate(1.25);
+  border:1px solid rgba(255,255,255,.1);
+  box-shadow:0 12px 40px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.14);
+}
+.section-light .wpanel,.section-light .filter-demo,.section-light .step-visual,.section-light .app-preview,.section-light .phone-card{
+  background:linear-gradient(135deg,rgba(255,255,255,.8),rgba(255,255,255,.5) 60%,rgba(143,107,255,.09));
+  border-color:rgba(23,20,12,.1);
+  box-shadow:0 12px 32px rgba(23,20,12,.12), inset 0 1px 0 rgba(255,255,255,.8);
+}
+.btn-primary{box-shadow:inset 0 1px 0 rgba(255,255,255,.25), 0 6px 20px rgba(122,84,245,.4);}
+.phone-screen::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.09) 45%,transparent 60%);background-size:250% 100%;animation:sheen 7s ease-in-out infinite;}
+@keyframes sheen{0%,100%{background-position:120% 0;}50%{background-position:-20% 0;}}
+@media (prefers-reduced-motion: reduce){.phone-screen::after{animation:none;display:none;}}

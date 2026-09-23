@@ -3,6 +3,7 @@ export const IG_URL = "https://instagram.com/evolect_page";
 export const BUILDER_URL = "https://instagram.com/thats.jainam";
 
 export const NAV_LINKS = [
+  { href: "/", label: "Home" },
   { href: "/how-it-works", label: "How it works" },
   { href: "/volunteers", label: "For Volunteers" },
   { href: "/event-managers", label: "For Event Managers" },

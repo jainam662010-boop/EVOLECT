@@ -37,7 +37,7 @@ export function Navbar() {
           <ul className="nav-links">
             {NAV_LINKS.map((l) => (
               <li key={l.href}>
-                <Link href={l.href} className={pathname === l.href ? "active" : ""}>
+                <Link href={l.href} className={pathname === l.href || (l.href !== "/" && (pathname ?? "").endsWith(l.href)) ? "active" : ""}>
                   {l.label}
                 </Link>
               </li>
