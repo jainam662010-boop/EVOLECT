@@ -300,6 +300,13 @@ footer{border-top:1px solid var(--line-dark);padding:56px 0 32px;}
 /* ponytail: let vertical scroll pass, swipe reads horizontal delta */
 .phone-screen,.stepper,.app-preview,.vstate,.vsteps,.wpanel,.workflow-tabs,.filter-demo{touch-action:pan-y;}
 
+/* ---- 3D tab transitions (0.35s slide + tilt, direction-aware) ---- */
+/* ponytail: key-remount retriggers entry animation. No lib. */
+.stepper,.app-body,.vstate,.wpanel{perspective:800px;}
+.tab-enter{animation:tab-in .35s cubic-bezier(.2,.7,.3,1);}
+@keyframes tab-in{from{opacity:0;transform:translateX(var(--tdx,28px)) rotateY(-8deg);}to{opacity:1;transform:translateX(0) rotateY(0);}}
+@media (prefers-reduced-motion: reduce){.tab-enter{animation:none;}}
+
 /* ---- phone-screen polish (<=640px): flatten tilt, tighten spacing ---- */
 /* ponytail: single breakpoint, remove when real device testing says otherwise */
 @media (max-width:640px){

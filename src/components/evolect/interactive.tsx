@@ -82,9 +82,15 @@ export function PageLinks({ links }: { links: { tag: string; title: string; desc
 
 export function HowSteps() {
   const [active, setActive] = useState(0);
+  const [dir, setDir] = useState(1);
+  const go = (n: number) => {
+    const c = Math.max(0, Math.min(HOW_STEPS.length - 1, n));
+    setDir(c >= active ? 1 : -1);
+    setActive(c);
+  };
   const swipe = useSwipe(
-    () => setActive((i) => Math.min(HOW_STEPS.length - 1, i + 1)),
-    () => setActive((i) => Math.max(0, i - 1))
+    () => go(active + 1),
+    () => go(active - 1)
   );
   return (
     <div {...swipe}>
@@ -99,7 +105,7 @@ export function HowSteps() {
               role="tab"
               aria-selected={i === active}
               className={`step-btn${i === active ? " active" : ""}`}
-              onClick={() => setActive(i)}
+              onClick={() => go(i)}
             >
               <span className="s-num">{s.n}</span>
               <span>
@@ -109,7 +115,7 @@ export function HowSteps() {
             </button>
           ))}
         </div>
-        <div className="step-visual" role="tabpanel" aria-live="polite">
+        <div key={active} className="step-visual tab-enter" role="tabpanel" aria-live="polite" style={{ "--tdx": `${dir * 28}px` } as React.CSSProperties}>
           <p className="eyebrow">Step {HOW_STEPS[active].n}</p>
           <h3 style={{ fontSize: "1.5rem" }}>{HOW_STEPS[active].title}</h3>
           <p style={{ marginTop: 14, color: "var(--text-on-black-mute)", fontSize: ".98rem", maxWidth: 420 }}>
@@ -123,9 +129,15 @@ export function HowSteps() {
 
 export function VerificationFlow() {
   const [idx, setIdx] = useState(0);
+  const [dir, setDir] = useState(1);
+  const go = (n: number) => {
+    const c = Math.max(0, Math.min(VERIFY_STATES.length - 1, n));
+    setDir(c >= idx ? 1 : -1);
+    setIdx(c);
+  };
   const swipe = useSwipe(
-    () => setIdx((i) => Math.min(VERIFY_STATES.length - 1, i + 1)),
-    () => setIdx((i) => Math.max(0, i - 1))
+    () => go(idx + 1),
+    () => go(idx - 1)
   );
   return (
     <div {...swipe}>
@@ -137,23 +149,23 @@ export function VerificationFlow() {
             role="tab"
             aria-selected={i === idx}
             className={`vstep${i === idx ? " active" : ""}${i < idx ? " done" : ""}`}
-            onClick={() => setIdx(i)}
+            onClick={() => go(i)}
           >
             {s.label}
           </button>
         ))}
       </div>
-      <div className="vstate" role="tabpanel" aria-live="polite">
+      <div key={idx} className="vstate tab-enter" role="tabpanel" aria-live="polite" style={{ "--tdx": `${dir * 28}px` } as React.CSSProperties}>
         <h4>{VERIFY_STATES[idx].title}</h4>
         <p>{VERIFY_STATES[idx].desc}</p>
         <div className="vactions">
-          <button className="btn btn-outline" disabled={idx === 0} onClick={() => setIdx((i) => Math.max(0, i - 1))}>
+          <button className="btn btn-outline" disabled={idx === 0} onClick={() => go(idx - 1)}>
             Back
           </button>
           <button
             className="btn btn-primary"
             disabled={idx === VERIFY_STATES.length - 1}
-            onClick={() => setIdx((i) => Math.min(VERIFY_STATES.length - 1, i + 1))}
+            onClick={() => go(idx + 1)}
           >
             {idx === VERIFY_STATES.length - 1 ? "Verified" : "Continue"}
           </button>
@@ -208,20 +220,26 @@ export function VolunteerFilters() {
 
 export function ManagerTabs() {
   const [active, setActive] = useState(0);
+  const [dir, setDir] = useState(1);
+  const go = (n: number) => {
+    const c = Math.max(0, Math.min(MANAGER_TABS.length - 1, n));
+    setDir(c >= active ? 1 : -1);
+    setActive(c);
+  };
   const swipe = useSwipe(
-    () => setActive((i) => Math.min(MANAGER_TABS.length - 1, i + 1)),
-    () => setActive((i) => Math.max(0, i - 1))
+    () => go(active + 1),
+    () => go(active - 1)
   );
   return (
     <div {...swipe}>
       <div className="workflow-tabs" role="tablist" aria-label="Event manager workflow">
         {MANAGER_TABS.map((t, i) => (
-          <button key={t.title} role="tab" aria-selected={i === active} className={`wtab${i === active ? " active" : ""}`} onClick={() => setActive(i)}>
+          <button key={t.title} role="tab" aria-selected={i === active} className={`wtab${i === active ? " active" : ""}`} onClick={() => go(i)}>
             {t.title}
           </button>
         ))}
       </div>
-      <div className="wpanel active" role="tabpanel" aria-live="polite">
+      <div key={active} className="wpanel active tab-enter" role="tabpanel" aria-live="polite" style={{ "--tdx": `${dir * 28}px` } as React.CSSProperties}>
         <div>
           <p className="eyebrow">Step {active + 1}</p>
           <h4>{MANAGER_TABS[active].title}</h4>
@@ -330,9 +348,15 @@ export function ManagerForm() {
 export function AppTabs({ tabs, note }: { tabs: string[]; note: string }) {
   const [active, setActive] = useState(1);
   const items = tabs.length ? tabs : VOL_TABS;
+  const [dir, setDir] = useState(1);
+  const go = (n: number) => {
+    const c = Math.max(0, Math.min(items.length - 1, n));
+    setDir(c >= active ? 1 : -1);
+    setActive(c);
+  };
   const swipe = useSwipe(
-    () => setActive((i) => Math.min(items.length - 1, i + 1)),
-    () => setActive((i) => Math.max(0, i - 1))
+    () => go(active + 1),
+    () => go(active - 1)
   );
   return (
     <div className="app-preview" {...swipe}>
@@ -341,13 +365,13 @@ export function AppTabs({ tabs, note }: { tabs: string[]; note: string }) {
       </p>
       <div className="app-tabs" role="tablist" aria-label="App destinations">
         {items.map((t, i) => (
-          <button key={t} role="tab" aria-selected={i === active} className={`app-tab${i === active ? " active" : ""}`} onClick={() => setActive(i)}>
+          <button key={t} role="tab" aria-selected={i === active} className={`app-tab${i === active ? " active" : ""}`} onClick={() => go(i)}>
             {t}
           </button>
         ))}
       </div>
       <div className="app-body" role="tabpanel" aria-live="polite">
-        <div className="app-screen">
+        <div key={active} className="app-screen tab-enter" style={{ "--tdx": `${dir * 28}px` } as React.CSSProperties}>
           <div className="phone-card">
             <span className="pc-title">{items[active]} · example view</span>
             <span className="pc-meta">{note}</span>
