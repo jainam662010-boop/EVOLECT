@@ -5,7 +5,7 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   output: "export",
   images: { unoptimized: true },
-  // basePath: "/evolect",
+  basePath: "/EVOLECT",
 };
 
 export default nextConfig;
