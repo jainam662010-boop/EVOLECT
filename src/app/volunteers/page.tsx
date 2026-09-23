@@ -3,7 +3,7 @@ import { Navbar } from "@/components/evolect/Navbar";
 import { Footer } from "@/components/evolect/Footer";
 import { Reveal } from "@/components/evolect/Reveal";
 import { PhonePreview } from "@/components/evolect/PhonePreview";
-import { AppTabs, PageLinks, VolunteerFilters } from "@/components/evolect/interactive";
+import { AppTabs, PageLinks, Tilt, VolunteerFilters } from "@/components/evolect/interactive";
 import { VOL_TABS } from "@/lib/evolect-data";
 
 export default function Volunteers() {
@@ -12,7 +12,7 @@ export default function Volunteers() {
       <Navbar />
       <main id="main">
         <section className="page-hero">
-          <div className="wrap hero-grid">
+          <Tilt className="wrap hero-grid">
             <Reveal>
               <p className="eyebrow">For volunteers</p>
               <h1>Find opportunities that fit you.</h1>
@@ -46,7 +46,7 @@ export default function Volunteers() {
                 ]}
               />
             </Reveal>
-          </div>
+          </Tilt>
         </section>
 
         <section>
@@ -113,7 +113,6 @@ export default function Volunteers() {
                   links={[
                     { tag: "Process", title: "From profile to participation", desc: "See the five steps end to end.", href: "/how-it-works" },
                     { tag: "The other side", title: "How event managers find you", desc: "Requirements, requests and selection.", href: "/event-managers" },
-                    { tag: "Pricing", title: "What it costs", desc: "Volunteering is planned to stay free.", href: "/pricing" },
                   ]}
                 />
               </div>

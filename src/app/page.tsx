@@ -5,7 +5,7 @@ import { Navbar } from "@/components/evolect/Navbar";
 import { Footer } from "@/components/evolect/Footer";
 import { Reveal } from "@/components/evolect/Reveal";
 import { PhonePreview } from "@/components/evolect/PhonePreview";
-import { PageLinks } from "@/components/evolect/interactive";
+import { PageLinks, Tilt } from "@/components/evolect/interactive";
 import { FLOWLINE, IG_URL } from "@/lib/evolect-data";
 
 export default function EvolectHome() {
@@ -14,7 +14,7 @@ export default function EvolectHome() {
       <Navbar />
       <main id="main">
         <section className="hero" id="top">
-          <div className="wrap hero-grid">
+          <Tilt className="wrap hero-grid">
             <Reveal>
               <p className="eyebrow">Volunteering, matched properly</p>
               <h1>Find where your time can make a difference.</h1>
@@ -67,7 +67,7 @@ export default function EvolectHome() {
                 ]}
               />
             </Reveal>
-          </div>
+          </Tilt>
         </section>
 
         <section id="platform">
@@ -143,7 +143,6 @@ export default function EvolectHome() {
                   links={[
                     { tag: "For volunteers", title: "Find opportunities that fit you", desc: "See how discovery, filtering and applying is meant to work.", href: "/volunteers" },
                     { tag: "For event managers", title: "Build your volunteer team", desc: "Create events, review requests, and select the right people.", href: "/event-managers" },
-                    { tag: "Pricing", title: "What it costs", desc: "Three tiers are planned. Pricing itself is still to be announced.", href: "/pricing" },
                   ]}
                 />
               </div>

@@ -1,16 +1,67 @@
 "use client";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import {
   EXAMPLE_EVENTS,
-  FAQS,
   FILTER_GROUPS,
   HOW_STEPS,
   MANAGER_TABS,
   VERIFY_STATES,
   VOL_TABS,
 } from "@/lib/evolect-data";
+
+// ponytail: touch-only swipe; buttons/dots stay the mouse + a11y path. No lib.
+export function useSwipe(onNext: () => void, onPrev: () => void) {
+  const x = useRef<number | null>(null);
+  return {
+    onTouchStart: (e: React.TouchEvent) => {
+      x.current = e.touches[0].clientX;
+    },
+    onTouchEnd: (e: React.TouchEvent) => {
+      if (x.current == null) return;
+      const dx = e.changedTouches[0].clientX - x.current;
+      x.current = null;
+      if (Math.abs(dx) < 40) return;
+      if (dx < 0) onNext();
+      else onPrev();
+    },
+  };
+}
+
+// ponytail: pointer parallax only (fine pointer, no reduced-motion). No lib.
+export function Tilt({ children, className, max = 8 }: { children: React.ReactNode; className?: string; max?: number }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const raf = useRef(0);
+  return (
+    <div
+      ref={ref}
+      className={className}
+      onPointerMove={(e) => {
+        const el = ref.current;
+        if (!el || e.pointerType !== "mouse" || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        if (raf.current) return;
+        const cx = e.clientX;
+        const cy = e.clientY;
+        raf.current = requestAnimationFrame(() => {
+          raf.current = 0;
+          const r = el.getBoundingClientRect();
+          el.style.setProperty("--px", `${(((cx - r.left) / r.width - 0.5) * 2 * max).toFixed(1)}px`);
+          el.style.setProperty("--py", `${(((cy - r.top) / r.height - 0.5) * 2 * max).toFixed(1)}px`);
+        });
+      }}
+      onPointerLeave={() => {
+        const el = ref.current;
+        if (!el) return;
+        el.style.setProperty("--px", "0px");
+        el.style.setProperty("--py", "0px");
+      }}
+      style={{ transform: "translate3d(var(--px, 0px), var(--py, 0px), 0)" }}
+    >
+      {children}
+    </div>
+  );
+}
 
 export function PageLinks({ links }: { links: { tag: string; title: string; desc: string; href: string }[] }) {
   return (
@@ -31,8 +82,12 @@ export function PageLinks({ links }: { links: { tag: string; title: string; desc
 
 export function HowSteps() {
   const [active, setActive] = useState(0);
+  const swipe = useSwipe(
+    () => setActive((i) => Math.min(HOW_STEPS.length - 1, i + 1)),
+    () => setActive((i) => Math.max(0, i - 1))
+  );
   return (
-    <div>
+    <div {...swipe}>
       <div className="progress-track" aria-hidden="true">
         <div className="progress-fill" style={{ width: `${((active + 1) / HOW_STEPS.length) * 100}%` }} />
       </div>
@@ -68,8 +123,12 @@ export function HowSteps() {
 
 export function VerificationFlow() {
   const [idx, setIdx] = useState(0);
+  const swipe = useSwipe(
+    () => setIdx((i) => Math.min(VERIFY_STATES.length - 1, i + 1)),
+    () => setIdx((i) => Math.max(0, i - 1))
+  );
   return (
-    <div>
+    <div {...swipe}>
       <p className="eyebrow">Interactive product preview</p>
       <div className="vsteps" role="tablist" aria-label="Verification states">
         {VERIFY_STATES.map((s, i) => (
@@ -149,8 +208,12 @@ export function VolunteerFilters() {
 
 export function ManagerTabs() {
   const [active, setActive] = useState(0);
+  const swipe = useSwipe(
+    () => setActive((i) => Math.min(MANAGER_TABS.length - 1, i + 1)),
+    () => setActive((i) => Math.max(0, i - 1))
+  );
   return (
-    <div>
+    <div {...swipe}>
       <div className="workflow-tabs" role="tablist" aria-label="Event manager workflow">
         {MANAGER_TABS.map((t, i) => (
           <button key={t.title} role="tab" aria-selected={i === active} className={`wtab${i === active ? " active" : ""}`} onClick={() => setActive(i)}>
@@ -267,8 +330,12 @@ export function ManagerForm() {
 export function AppTabs({ tabs, note }: { tabs: string[]; note: string }) {
   const [active, setActive] = useState(1);
   const items = tabs.length ? tabs : VOL_TABS;
+  const swipe = useSwipe(
+    () => setActive((i) => Math.min(items.length - 1, i + 1)),
+    () => setActive((i) => Math.max(0, i - 1))
+  );
   return (
-    <div className="app-preview">
+    <div className="app-preview" {...swipe}>
       <p className="eyebrow" style={{ padding: "18px 24px 0" }}>
         Interactive product preview
       </p>
@@ -293,27 +360,6 @@ export function AppTabs({ tabs, note }: { tabs: string[]; note: string }) {
           </div>
         </div>
       </div>
-    </div>
-  );
-}
-
-export function Faq() {
-  const [open, setOpen] = useState<number | null>(null);
-  return (
-    <div className="accordion">
-      {FAQS.map((f, i) => (
-        <div key={f.q} className="acc-item">
-          <button className="acc-btn" aria-expanded={open === i} aria-controls={`faq-${i}`} id={`faqbtn-${i}`} onClick={() => setOpen(open === i ? null : i)}>
-            <span>{f.q}</span>
-            <span className="icon" aria-hidden="true">
-              +
-            </span>
-          </button>
-          <div className="acc-panel" id={`faq-${i}`} role="region" aria-labelledby={`faqbtn-${i}`} style={{ maxHeight: open === i ? 200 : 0 }}>
-            <p>{f.a}</p>
-          </div>
-        </div>
-      ))}
     </div>
   );
 }

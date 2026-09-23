@@ -61,9 +61,8 @@ export default function HowItWorks() {
               <PageLinks
                 links={[
                   { tag: "For volunteers", title: "Find opportunities that fit you", desc: "Filter by location, date, skills and category.", href: "/volunteers" },
-                  { tag: "The other side", title: "Build your volunteer team", desc: "Create an event and review who is a fit.", href: "/event-managers" },
-                  { tag: "Pricing", title: "What it costs", desc: "Three planned tiers. Pricing to be announced.", href: "/pricing" },
-                ]}
+                { tag: "The other side", title: "Build your volunteer team", desc: "Create an event and review who is a fit.", href: "/event-managers" },
+              ]}
               />
             </Reveal>
           </div>

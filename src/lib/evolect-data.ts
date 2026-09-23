@@ -6,7 +6,6 @@ export const NAV_LINKS = [
   { href: "/how-it-works", label: "How it works" },
   { href: "/volunteers", label: "For Volunteers" },
   { href: "/event-managers", label: "For Event Managers" },
-  { href: "/pricing", label: "Pricing" },
 ];
 
 export const HOW_STEPS = [
@@ -54,10 +53,3 @@ export const MANAGER_TABS = [
 
 export const VOL_TABS = ["Home", "Explore", "My Events", "History", "Profile"];
 export const MGR_TABS = ["Home", "Explore", "My Events", "Requests", "Profile"];
-
-export const FAQS = [
-  { q: "Is there a free tier?", a: "Yes. The Volunteer tier is planned to be free for individuals discovering and taking part in events." },
-  { q: "When will pricing be announced?", a: "Pricing for the Event Manager and Organization tiers has not been finalized yet. This page will be updated once it is." },
-  { q: "Will pricing change based on verification?", a: "Verification is part of the trust model for every tier, not an add-on cost. Nothing about pricing has been decided beyond that." },
-  { q: "Who is the Organization tier for?", a: "It is planned for organizations running multiple events at once, rather than a single event manager working alone." },
-];

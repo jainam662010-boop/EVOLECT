@@ -95,12 +95,12 @@ section{padding:96px 0;}
   padding:12px;box-shadow:0 0 0 1px rgba(143,107,255,.08);
   transform-style:preserve-3d;
   will-change:transform;
-  transform:perspective(1400px) rotateY(-22deg) rotateX(6deg) translateY(0px);
+  transform:perspective(1400px) rotateY(calc(-22deg + var(--tx, 0deg))) rotateX(calc(6deg + var(--ty, 0deg))) translateY(0px);
 }
 .phone-notch{position:absolute;top:12px;left:50%;transform:translateX(-50%);width:76px;height:18px;background:#0A0A0A;border-radius:0 0 14px 14px;z-index:3;}
-.phone-screen{position:relative;width:100%;height:100%;background:var(--black);border-radius:26px;overflow:hidden;border:1px solid #1C1C1C;}
-.phone-view{position:absolute;inset:0;padding:30px 16px 16px;display:flex;flex-direction:column;gap:10px;opacity:0;transform:translateX(12px);transition:opacity .35s ease,transform .35s ease;pointer-events:none;}
-.phone-view.active{opacity:1;transform:translateX(0);pointer-events:auto;}
+.phone-screen{position:relative;width:100%;height:100%;background:var(--black);border-radius:26px;overflow:hidden;border:1px solid #1C1C1C;perspective:600px;touch-action:pan-y;}
+.phone-view{position:absolute;inset:0;padding:30px 16px 16px;display:flex;flex-direction:column;gap:10px;opacity:0;transform:translateX(12px) rotateY(8deg);transition:opacity .35s ease,transform .35s ease;pointer-events:none;}
+.phone-view.active{opacity:1;transform:translateX(0) rotateY(0);pointer-events:auto;}
 .phone-topbar{font-size:.62rem;font-weight:700;letter-spacing:.02em;color:var(--text-on-black-mute);text-transform:uppercase;margin-bottom:2px;}
 .phone-card{background:var(--black-raised);border:1px solid var(--line-dark);border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:6px;}
 .phone-card .pc-title{font-size:.78rem;font-weight:700;color:var(--text-on-black);}
@@ -214,35 +214,6 @@ section{padding:96px 0;}
 .manager-row .m-status{font-size:.72rem;font-weight:700;color:var(--text-on-black-mute);border:1px solid var(--line-dark);padding:4px 10px;border-radius:8px;}
 .section-light .manager-row .m-status{color:var(--text-on-white-mute);border-color:var(--line-light);}
 
-/* ---- pricing ---- */
-.pricing-grid{display:grid;grid-template-columns:1fr;gap:18px;}
-@media (min-width:860px){.pricing-grid{grid-template-columns:repeat(3,1fr);gap:0;}}
-.price-card{border:1px solid var(--line-dark);border-radius:var(--radius-card);padding:32px 26px;display:flex;flex-direction:column;gap:16px;}
-.section-light .price-card{border-color:var(--line-light);}
-@media (min-width:860px){.price-card{border-radius:0;border-right:none;}
-  .price-card:first-child{border-top-left-radius:var(--radius-container);border-bottom-left-radius:var(--radius-container);}
-  .price-card:last-child{border-right:1px solid var(--line-dark);border-top-right-radius:var(--radius-container);border-bottom-right-radius:var(--radius-container);}
-  .section-light .price-card:last-child{border-right-color:var(--line-light);}
-}
-.price-for{font-size:.78rem;font-weight:600;color:var(--text-on-black-mute);}
-.section-light .price-for{color:var(--text-on-white-mute);}
-.price-card h3{font-size:1.5rem;margin-top:2px;}
-.price-value{font-family:var(--font-body);font-size:1.02rem;font-weight:600;color:var(--violet);margin-top:4px;}
-.price-desc{font-size:.92rem;color:var(--text-on-black-mute);line-height:1.55;margin-top:4px;}
-.section-light .price-desc{color:var(--text-on-white-mute);}
-
-/* ---- accordion (pricing faq) ---- */
-.accordion{border-top:1px solid var(--line-dark);}
-.section-light .accordion{border-color:var(--line-light);}
-.acc-item{border-bottom:1px solid var(--line-dark);}
-.section-light .acc-item{border-color:var(--line-light);}
-.acc-btn{all:unset;box-sizing:border-box;width:100%;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:22px 4px;cursor:pointer;font-weight:600;font-size:1rem;}
-.acc-btn .icon{transition:transform .2s ease;color:var(--violet);}
-.acc-btn[aria-expanded="true"] .icon{transform:rotate(45deg);}
-.acc-panel{max-height:0;overflow:hidden;transition:max-height .25s ease;}
-.acc-panel p{padding:0 4px 20px;color:var(--text-on-black-mute);font-size:.94rem;max-width:640px;}
-.section-light .acc-panel p{color:var(--text-on-white-mute);}
-
 /* ---- final cta / footer ---- */
 .final-cta-inner{border-top:1px solid var(--line-light);padding-top:56px;}
 .final-cta h2{font-size:clamp(2rem,5.2vw,3rem);max-width:680px;}
@@ -325,6 +296,9 @@ footer{border-top:1px solid var(--line-dark);padding:56px 0 32px;}
 .app-tab.active{background:var(--black-raised-2);color:var(--text-on-black);}
 .app-body{padding:24px;display:grid;gap:12px;min-height:280px;}
 .app-screen{display:grid;gap:12px;align-content:start;}
+
+/* ponytail: let vertical scroll pass, swipe reads horizontal delta */
+.phone-screen,.stepper,.app-preview,.vstate,.vsteps,.wpanel,.workflow-tabs,.filter-demo{touch-action:pan-y;}
 
 /* ---- phone-screen polish (<=640px): flatten tilt, tighten spacing ---- */
 /* ponytail: single breakpoint, remove when real device testing says otherwise */

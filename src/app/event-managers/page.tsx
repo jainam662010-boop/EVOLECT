@@ -90,7 +90,6 @@ export default function EventManagers() {
                   links={[
                     { tag: "Process", title: "From profile to participation", desc: "See the five steps end to end.", href: "/how-it-works" },
                     { tag: "The other side", title: "How volunteers find events", desc: "Discovery, filtering and applying.", href: "/volunteers" },
-                    { tag: "Pricing", title: "What it costs", desc: "Starter and Scale tiers are planned.", href: "/pricing" },
                   ]}
                 />
               </div>
