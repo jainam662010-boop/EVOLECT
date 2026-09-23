@@ -305,7 +305,11 @@ footer{border-top:1px solid var(--line-dark);padding:56px 0 32px;}
 .stepper,.app-body,.vstate,.wpanel{perspective:800px;}
 .tab-enter{animation:tab-in .35s cubic-bezier(.2,.7,.3,1);}
 @keyframes tab-in{from{opacity:0;transform:translateX(var(--tdx,28px)) rotateY(-8deg);}to{opacity:1;transform:translateX(0) rotateY(0);}}
-@media (prefers-reduced-motion: reduce){.tab-enter{animation:none;}}
+/* ponytail: exit clone reuses panel classes, overlays, unmounts after 380ms. */
+.tab-wrap{position:relative;perspective:800px;min-width:0;}
+.tab-wrap>.tab-exit{position:absolute;inset:0;z-index:1;pointer-events:none;animation:tab-out .35s cubic-bezier(.2,.7,.3,1) forwards;}
+@keyframes tab-out{from{opacity:1;transform:translateX(0) rotateY(0);}to{opacity:0;transform:translateX(calc(var(--tdx,28px) * -1)) rotateY(8deg);}}
+@media (prefers-reduced-motion: reduce){.tab-enter,.tab-wrap>.tab-exit{animation:none;}}
 
 /* ---- phone-screen polish (<=640px): flatten tilt, tighten spacing ---- */
 /* ponytail: single breakpoint, remove when real device testing says otherwise */
