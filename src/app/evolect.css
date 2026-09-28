@@ -355,4 +355,52 @@ header.site-nav{background:linear-gradient(180deg,rgba(24,24,27,.72),rgba(6,6,6,
 .btn-primary{box-shadow:inset 0 1px 0 rgba(255,255,255,.25), 0 6px 20px rgba(122,84,245,.4);}
 .phone-screen::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.09) 45%,transparent 60%);background-size:250% 100%;animation:sheen 7s ease-in-out infinite;}
 @keyframes sheen{0%,100%{background-position:120% 0;}50%{background-position:-20% 0;}}
-@media (prefers-reduced-motion: reduce){.phone-screen::after{animation:none;display:none;}}
+
+/* ---- animation pass 2: stagger, scroll rail, micro-feedback ---- */
+/* ponytail: nth-child delays instead of a JS stagger lib; add --i vars only if lists get long. */
+
+/* list items cascade once their Reveal flips in-view */
+.reveal-3d.in-view .side-list li,
+.reveal-3d.in-view .flowline li,
+.reveal-3d.in-view .page-links>*,
+.reveal-3d.in-view .two-sides .side{animation:intro-up .5s cubic-bezier(.2,.7,.3,1) both;}
+.reveal-3d.in-view .side-list li:nth-child(2),
+.reveal-3d.in-view .flowline li:nth-child(2),
+.reveal-3d.in-view .page-links>*:nth-child(2){animation-delay:.08s;}
+.reveal-3d.in-view .side-list li:nth-child(3),
+.reveal-3d.in-view .flowline li:nth-child(3){animation-delay:.16s;}
+.reveal-3d.in-view .flowline li:nth-child(4){animation-delay:.24s;}
+.reveal-3d.in-view .flowline li:nth-child(5){animation-delay:.32s;}
+.reveal-3d.in-view .two-sides .side:last-child{animation-delay:.12s;}
+
+/* scroll rail on the sticky nav — native scroll timeline, silently skipped elsewhere */
+@keyframes scroll-grow{from{transform:scaleX(0);}to{transform:scaleX(1);}}
+@supports (animation-timeline:scroll()){
+  header.site-nav::after{content:"";position:absolute;left:0;bottom:-1px;width:100%;height:2px;background:linear-gradient(90deg,var(--violet),#C4B0FF);transform-origin:0 50%;z-index:2;animation:scroll-grow linear both;animation-timeline:scroll(root);}
+}
+
+/* nav link underline sweep */
+.nav-links a{position:relative;}
+.nav-links a::after{content:"";position:absolute;left:0;bottom:-6px;height:2px;width:100%;background:var(--violet);transform:scaleX(0);transform-origin:0 50%;transition:transform .25s cubic-bezier(.2,.7,.3,1);}
+.nav-links a:hover::after,.nav-links a.active::after{transform:scaleX(1);}
+
+/* arrow nudge + press feedback */
+.btn .icon-sm,.plc-arrow .icon-sm{transition:transform .2s cubic-bezier(.2,.7,.3,1);}
+.btn:hover .icon-sm,.page-link-card:hover .plc-arrow .icon-sm{transform:translate(3px,-3px);}
+.chip:active,.wtab:active,.vstep:active,.step-btn:active,.app-tab:active,.page-link-card:active{transform:scale(.97);}
+.chip,.wtab,.vstep,.app-tab,.step-btn,.page-link-card{transition:background-color .15s ease,border-color .15s ease,color .15s ease,transform .12s ease;}
+
+/* mobile menu items drop in */
+@keyframes intro-up-sm{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+.mobile-menu.open li{animation:intro-up-sm .3s ease both;}
+.mobile-menu.open li:nth-child(2){animation-delay:.04s;}
+.mobile-menu.open li:nth-child(3){animation-delay:.08s;}
+.mobile-menu.open li:nth-child(4){animation-delay:.12s;}
+.mobile-menu.open li:nth-child(5){animation-delay:.16s;}
+
+@media (prefers-reduced-motion: reduce){
+  .reveal-3d.in-view .side-list li,.reveal-3d.in-view .flowline li,.reveal-3d.in-view .page-links>*,.reveal-3d.in-view .two-sides .side,
+  .mobile-menu.open li,header.site-nav::after{animation:none;}
+  .nav-links a::after{display:none;}
+  .btn .icon-sm,.plc-arrow .icon-sm{transition:none;}
+}
