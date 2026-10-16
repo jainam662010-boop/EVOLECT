@@ -4,5 +4,5 @@ out/
 *.log
 .DS_Store
 
-EVOLECT/
+/EVOLECT/
 tsconfig.tsbuildinfo
