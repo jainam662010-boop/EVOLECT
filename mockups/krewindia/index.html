@@ -1,0 +1,1613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="web_standard" name="shell-type"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,600;0,700;0,800;1,600;1,700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    @layer base {
+      html, body { margin: 0; padding: 0; }
+      body { overscroll-behavior: none; }
+      main > :first-child { margin-top: 0 !important; }
+      main > :last-child { margin-bottom: 0 !important; }
+    }
+    ::-webkit-scrollbar { display: none; }
+  </style>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#070235",
+            "primary-container": "#1e1b4b",
+            "on-primary": "#ffffff",
+            "on-primary-container": "#8683ba",
+            "primary-fixed": "#e3dfff",
+            "primary-fixed-dim": "#c4c1fb",
+            "secondary": "#a04100",
+            "secondary-container": "#fe6b00",
+            "on-secondary": "#ffffff",
+            "secondary-fixed": "#ffdbcc",
+            "secondary-fixed-dim": "#ffb693",
+            "tertiary": "#000f07",
+            "tertiary-container": "#002819",
+            "on-tertiary": "#ffffff",
+            "tertiary-fixed": "#85f8c4",
+            "tertiary-fixed-dim": "#68dba9",
+            "on-tertiary-container": "#179c6e",
+            "surface": "#faf8ff",
+            "surface-dim": "#d2d9f4",
+            "surface-bright": "#faf8ff",
+            "surface-container-lowest": "#ffffff",
+            "surface-container-low": "#f2f3ff",
+            "surface-container": "#eaedff",
+            "surface-container-high": "#e2e7ff",
+            "surface-container-highest": "#dae2fd",
+            "on-surface": "#131b2e",
+            "on-surface-variant": "#47464f",
+            "outline": "#787680",
+            "outline-variant": "#c8c5d0"
+          },
+          fontFamily: {
+            "headline-xl": ["Hanken Grotesk", "sans-serif"],
+            "headline-lg": ["Hanken Grotesk", "sans-serif"],
+            "headline-md": ["Hanken Grotesk", "sans-serif"],
+            "headline-sm": ["Hanken Grotesk", "sans-serif"],
+            "stat-counter": ["Hanken Grotesk", "sans-serif"],
+            "body-lg": ["Manrope", "sans-serif"],
+            "body-md": ["Manrope", "sans-serif"],
+            "body-sm": ["Manrope", "sans-serif"],
+            "label-lg": ["Manrope", "sans-serif"],
+            "label-md": ["Manrope", "sans-serif"],
+            "label-sm": ["Manrope", "sans-serif"]
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- ============================================================ -->
+  <!-- KREWINDIA MOTION LAYER — cursor, spotlight, reveal, tilt     -->
+  <!-- ============================================================ -->
+  <style id="motion-styles">
+    :root {
+      --ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
+      --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+      --ease-swift: cubic-bezier(0.76, 0, 0.24, 1);
+    }
+
+    /* ---------- Preloader wipe ---------- */
+    #preloader {
+      position: fixed; inset: 0; z-index: 999;
+      display: flex; align-items: center; justify-content: center;
+      background: #070235;
+      border-radius: 0 0 50% 50% / 0 0 14vh 14vh;
+      transition: transform .85s var(--ease-swift), border-radius .85s var(--ease-swift), visibility 0s linear .9s;
+      visibility: visible;
+    }
+    body.is-loaded #preloader { transform: translateY(-103%); visibility: hidden; }
+    .pl-inner { display: flex; flex-direction: column; align-items: center; gap: 18px; }
+    .pl-logo {
+      font-family: 'Hanken Grotesk', sans-serif; font-weight: 800; letter-spacing: -0.02em;
+      color: #fff; font-size: 28px; opacity: 0; transform: translateY(26px) scale(.9);
+      animation: plRise .7s var(--ease-out-expo) .05s forwards;
+    }
+    .pl-logo em { font-style: normal; color: #fe6b00; }
+    .pl-bar { width: 168px; height: 3px; border-radius: 99px; background: rgba(255,255,255,.14); overflow: hidden; }
+    .pl-bar i {
+      display: block; height: 100%; width: 0%;
+      background: linear-gradient(90deg, #fe6b00, #c4c1fb, #85f8c4);
+      animation: plFill 1.05s var(--ease-out-expo) .15s forwards;
+      border-radius: 99px;
+    }
+    @keyframes plRise { to { opacity: 1; transform: none; } }
+    @keyframes plFill { to { width: 100%; } }
+    body:not(.is-loaded) { overflow: hidden; height: 100vh; }
+
+    /* ---------- Scroll progress bar ---------- */
+    #scroll-progress {
+      position: fixed; top: 0; left: 0; height: 3px; width: 100%;
+      z-index: 100; transform-origin: 0 50%; transform: scaleX(0);
+      background: linear-gradient(90deg, #fe6b00, #c4c1fb 55%, #85f8c4);
+      pointer-events: none;
+    }
+
+    /* ---------- Custom cursor (mouse) ---------- */
+    .cursor-dot, .cursor-ring {
+      position: fixed; top: 0; left: 0; border-radius: 50%;
+      pointer-events: none; z-index: 9998;
+      transform: translate(-50%, -50%);
+    }
+    .cursor-dot { width: 8px; height: 8px; background: #fe6b00; box-shadow: 0 0 14px rgba(254,107,0,.65); }
+    .cursor-ring {
+      width: 38px; height: 38px; border: 1.5px solid rgba(254,107,0,.55);
+      transition: width .28s var(--ease-spring), height .28s var(--ease-spring),
+                  background-color .25s, border-color .25s, opacity .25s;
+    }
+    .cursor-ring.is-hover {
+      width: 58px; height: 58px; background: rgba(196,193,251,.12);
+      border-color: rgba(196,193,251,.85);
+    }
+    .cursor-dot.is-press { scale: 2.1; }
+    .cursor-hidden { opacity: 0; }
+    @media (hover: none), (max-width: 767px) {
+      .cursor-dot, .cursor-ring { display: none; }
+    }
+
+    /* ---------- Spotlight follows pointer / finger ---------- */
+    #spotlight {
+      position: fixed; inset: 0; z-index: 2;
+      pointer-events: none; opacity: 0;
+      transition: opacity .8s ease;
+      background: radial-gradient(
+        560px circle at var(--sx, 50%) var(--sy, 32%),
+        rgba(254,107,0,.075), rgba(196,193,251,.055) 42%, transparent 68%
+      );
+    }
+    body.spot-on #spotlight { opacity: 1; }
+
+    /* ---------- Reveal on scroll (huge entrance) ---------- */
+    [data-reveal] {
+      opacity: 0;
+      translate: 0 56px;
+      scale: .97;
+      filter: blur(8px);
+      transition:
+        opacity .9s var(--ease-out-expo),
+        translate .9s var(--ease-out-expo),
+        scale .9s var(--ease-out-expo),
+        filter .9s var(--ease-out-expo);
+      transition-delay: var(--rd, 0ms);
+      will-change: opacity, translate, scale, filter;
+    }
+    [data-reveal].revealed {
+      opacity: 1; translate: 0 0; scale: 1; filter: blur(0);
+    }
+
+    /* ---------- 3D tilt cards + glare ---------- */
+    .tilt-card {
+      position: relative;
+      transition: transform .5s var(--ease-out-expo), box-shadow .4s ease;
+      transform-style: preserve-3d;
+      will-change: transform;
+    }
+    .glare {
+      position: absolute; inset: 0; border-radius: inherit;
+      pointer-events: none; opacity: 0; z-index: 5;
+      background: radial-gradient(
+        300px circle at var(--gx, 50%) var(--gy, 40%),
+        rgba(255,255,255,.38), transparent 60%
+      );
+      transition: opacity .35s ease;
+    }
+    .tilt-card.is-glowing .glare { opacity: 1; }
+
+    /* ---------- Magnetic buttons ---------- */
+    [data-magnetic] {
+      transition: translate .2s var(--ease-spring), scale .2s var(--ease-spring);
+      will-change: translate;
+    }
+
+    /* ---------- Shine sweep on CTAs ---------- */
+    .btn-shine { position: relative; overflow: hidden; isolation: isolate; }
+    .btn-shine::after {
+      content: ""; position: absolute; top: 0; left: -130%;
+      width: 55%; height: 100%; transform: skewX(-20deg);
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.5), transparent);
+      transition: left .55s ease; pointer-events: none; z-index: 1;
+    }
+    .btn-shine:hover::after, .btn-shine:focus-visible::after { left: 165%; }
+
+    /* ---------- Ripple (mouse click + phone tap) ---------- */
+    .ripple-host { position: relative; overflow: hidden; }
+    .ripple {
+      position: absolute; border-radius: 9999px; pointer-events: none;
+      background: radial-gradient(circle, rgba(255,255,255,.55) 0%, rgba(255,255,255,0) 70%);
+      transform: translate(-50%, -50%) scale(0);
+      animation: rippleAnim .65s ease-out forwards;
+    }
+    .ripple.on-light { background: radial-gradient(circle, rgba(30,27,75,.18) 0%, rgba(30,27,75,0) 70%); }
+    @keyframes rippleAnim { to { transform: translate(-50%, -50%) scale(9); opacity: 0; } }
+
+    /* ---------- Touch press physics on cards ---------- */
+    .tilt-card { transition-property: transform, box-shadow, scale; }
+    .tilt-card.is-pressed { scale: .968 !important; }
+
+    /* ---------- Floating orbs (parallax + idle float) ---------- */
+    .orb {
+      transition: translate 1s var(--ease-out-expo);
+      animation: floaty 9s ease-in-out infinite;
+      will-change: translate, transform;
+    }
+    .orb:nth-of-type(2n) { animation-duration: 12s; animation-delay: -4s; }
+    @keyframes floaty {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-22px) scale(1.04); }
+    }
+
+    /* ---------- Header shrink + hide on scroll down ---------- */
+    #top-header { transition: transform .45s var(--ease-out-expo); }
+    #top-header .hd-shell { transition: height .35s var(--ease-out-expo); }
+    body.scrolled #top-header .hd-shell { height: 4.25rem; }
+    body.hd-away #top-header { transform: translateY(-110%); }
+
+    /* ---------- Nav links ---------- */
+    .nav-link {
+      display: inline-flex; align-items: center;
+      padding-bottom: 4px; border-bottom: 2px solid transparent;
+      transition: color .2s ease, border-color .25s ease, transform .2s var(--ease-spring);
+    }
+    .nav-link:hover { transform: translateY(-2px); }
+    .nav-link.is-active { color: #070235; border-color: #fe6b00; font-weight: 700; }
+
+    /* ---------- Icon wiggle on feature rows ---------- */
+    .feature-row .material-symbols-outlined { transition: transform .3s var(--ease-spring); }
+    .feature-row.is-hovered .material-symbols-outlined {
+      animation: wiggle .45s var(--ease-spring);
+    }
+    @keyframes wiggle {
+      0%, 100% { transform: rotate(0deg) scale(1); }
+      30% { transform: rotate(-10deg) scale(1.15); }
+      70% { transform: rotate(9deg) scale(1.1); }
+    }
+
+    /* ---------- Logo flag spin ---------- */
+    @keyframes flagWave {
+      0%, 100% { transform: rotate(0deg) scale(1); }
+      50% { transform: rotate(-9deg) scale(1.12); }
+    }
+    header a:hover .select-none { display: inline-block; animation: flagWave .9s ease-in-out infinite; }
+    .footer-logo:hover .select-none { display: inline-block; animation: flagWave .9s ease-in-out infinite; }
+
+    /* ---------- Hero badge breathing pulse ---------- */
+    @keyframes badgePulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(254,107,0,0); }
+      50% { box-shadow: 0 0 0 5px rgba(254,107,0,.12); }
+    }
+    .hero-badge { animation: badgePulse 2.6s ease-in-out infinite; }
+
+    /* ---------- Slot counter flash ---------- */
+    @keyframes slotFlash {
+      0% { opacity: 0; translate: 0 4px; }
+      100% { opacity: 1; translate: 0 0; }
+    }
+    .slot-flash { animation: slotFlash .35s ease-out; }
+
+    /* ---------- City pill hover ---------- */
+    .city-pill { transition: transform .18s var(--ease-spring), background-color .2s, color .2s; }
+    .city-pill:hover { transform: translateY(-2px) scale(1.05); }
+
+    /* ---------- Announcement bar ticker (edge of screen) ---------- */
+    @keyframes tickerPulse { 0%,100% { translate: 0 0; } 50% { translate: 3px 0; } }
+    .dispatch-dot { animation: tickerPulse 1.4s ease-in-out infinite; }
+
+    /* ---------- Reduced motion: everything lands instantly ---------- */
+    @media (prefers-reduced-motion: reduce) {
+      #preloader { display: none; }
+      body:not(.is-loaded) { overflow: auto; height: auto; }
+      [data-reveal] { opacity: 1 !important; translate: 0 0 !important; scale: 1 !important; filter: none !important; transition: none !important; }
+      .orb, .hero-badge, .pl-bar i, .pl-logo, .dispatch-dot { animation: none !important; }
+      .cursor-dot, .cursor-ring { display: none; }
+      * { scroll-behavior: auto !important; }
+    }
+  </style>
+</head>
+<body class="bg-surface font-body-md text-on-surface antialiased selection:bg-secondary-fixed selection:text-secondary">
+
+  <!-- MOTION UI CHROME -->
+  <div id="preloader" aria-hidden="true">
+    <div class="pl-inner">
+      <span class="pl-logo">Krew<em>India</em> 🇮🇳</span>
+      <span class="pl-bar"><i></i></span>
+    </div>
+  </div>
+  <div id="scroll-progress" aria-hidden="true"></div>
+  <div id="spotlight" aria-hidden="true"></div>
+  <div class="cursor-ring" id="cursor-ring" aria-hidden="true"></div>
+  <div class="cursor-dot" id="cursor-dot" aria-hidden="true"></div>
+
+  <!-- TOP HEADER / NAVIGATION -->
+  <header id="top-header" class="fixed top-0 w-full z-50 bg-surface/85 backdrop-blur-xl border-b border-surface-container-high shadow-[0_1px_8px_rgba(30,27,75,0.04)]">
+    <div class="hd-shell h-20 max-w-7xl mx-auto px-6 lg:px-12 flex items-center justify-between gap-6">
+      <a class="flex items-center gap-3 shrink-0 focus:outline-none" href="#">
+        <span class="font-headline-md font-bold tracking-tight text-primary flex items-center gap-2">
+          KrewIndia <span class="text-lg leading-none select-none">🇮🇳</span>
+        </span>
+      </a>
+
+      <nav class="hidden lg:flex items-center gap-8">
+        <a class="nav-link font-label-lg text-on-surface-variant" data-nav="for-volunteers" href="#for-volunteers">For Volunteers</a>
+        <a class="nav-link font-label-lg text-on-surface-variant" data-nav="for-organizers" href="#for-organizers">For Organizers</a>
+        <a class="nav-link font-label-lg text-on-surface-variant" data-nav="workflow" href="#workflow">How It Works</a>
+        <a class="nav-link font-label-lg text-on-surface-variant" data-nav="pricing" href="#pricing">Pricing &amp; Plans</a>
+        <a class="nav-link font-label-lg text-on-surface-variant" data-nav="testimonials" href="#testimonials">Community</a>
+      </nav>
+
+      <div class="flex items-center gap-4 shrink-0">
+        <a class="hidden sm:inline-flex items-center justify-center font-label-lg font-semibold text-on-surface hover:text-primary px-3 py-2 transition-colors" href="#">Log In</a>
+        <a data-magnetic class="btn-shine inline-flex items-center justify-center font-label-lg font-bold bg-secondary-container hover:bg-secondary text-on-secondary px-5 py-2.5 rounded-lg shadow-sm hover:shadow transition-all" href="#get-started">
+          Host Event / Join
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN WRAPPER -->
+  <main class="w-full pt-20 bg-surface">
+
+    <!-- TOP BROADCAST ANNOUNCEMENT BAR -->
+    <div class="w-full bg-primary text-on-primary py-2.5 px-6">
+      <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3 text-body-sm font-medium">
+        <div class="flex items-center gap-2.5">
+          <span class="dispatch-dot inline-flex items-center justify-center w-2 h-2 rounded-full bg-secondary-container animate-ping"></span>
+          <span class="font-bold text-secondary-fixed tracking-wide uppercase text-xs">Live Ops Dispatch:</span>
+          <span class="text-surface-bright">98+ Stage &amp; Logistics Positions Open Across Pune, Mumbai, Bengaluru &amp; Goa</span>
+        </div>
+        <div class="flex items-center gap-4 text-surface-container-highest">
+          <span class="hidden md:inline-flex items-center gap-1.5">
+            <span class="material-symbols-outlined text-[16px] text-tertiary-fixed">verified_user</span> UIDAI &amp; College NSS Approved
+          </span>
+          <a class="underline hover:text-white font-semibold transition-colors" href="#open-roles">View 48h Shift Calls →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 1. HERO SECTION -->
+    <section class="relative w-full overflow-hidden bg-surface-container-low py-16 lg:py-24 border-b border-surface-container">
+      <div class="orb absolute -top-32 right-1/4 w-96 h-96 rounded-full bg-secondary-fixed/40 blur-3xl pointer-events-none"></div>
+      <div class="orb absolute bottom-0 -left-20 w-80 h-80 rounded-full bg-primary-fixed/50 blur-3xl pointer-events-none"></div>
+
+      <div class="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+
+          <!-- Left: Hero Headline & Core Action -->
+          <div class="lg:col-span-7 flex flex-col space-y-6" data-reveal-group>
+            <div class="inline-flex items-center gap-2 self-start px-3.5 py-1.5 rounded-full bg-surface-container-lowest border border-outline-variant/40 text-primary shadow-sm hero-badge">
+              <span class="material-symbols-outlined text-[18px] text-secondary-container">bolt</span>
+              <span class="font-label-sm font-bold uppercase tracking-wider">India's Unified Live Event Crew Backbone</span>
+            </div>
+
+            <h1 class="font-headline-xl text-4xl lg:text-5xl lg:leading-[1.12] text-primary tracking-tight font-extrabold" data-split-lines>
+              Turn Festival Sweat Into <span class="text-secondary-container underline decoration-secondary-fixed-dim decoration-4 underline-offset-8">Real-World</span> Career Capital.
+            </h1>
+
+            <p class="font-body-lg text-lg text-on-surface-variant max-w-2xl leading-relaxed">
+              The professional network connecting ambitious college leaders and event crew with major music concerts, marathons, and cultural fests. Earn tamper-proof digital credentials, get instant UPI stipends, and manage high-reliability festival teams.
+            </p>
+
+            <!-- Dual CTAs -->
+            <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-2">
+              <a data-magnetic class="btn-shine inline-flex items-center justify-center gap-2.5 bg-secondary-container hover:bg-secondary text-on-secondary font-label-lg font-bold px-7 py-3.5 rounded-lg shadow-md hover:shadow-lg transition-all" href="#open-roles">
+                <span>Explore Open Roles (Free)</span>
+                <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+              </a>
+              <a data-magnetic class="inline-flex items-center justify-center gap-2 bg-primary-container hover:bg-primary text-on-primary font-label-lg font-bold px-6 py-3.5 rounded-lg shadow-sm transition-all" href="#for-organizers">
+                <span class="material-symbols-outlined text-[18px]">stadium</span>
+                <span>Host &amp; Recruit (Organizer Studio)</span>
+              </a>
+            </div>
+
+            <!-- Trust proof badges -->
+            <div class="pt-4 flex flex-wrap items-center gap-y-2 gap-x-6 text-on-surface-variant font-body-sm" data-reveal-group>
+              <div class="flex items-center gap-1.5">
+                <div class="flex text-secondary-container">
+                  <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+                  <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+                  <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+                  <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+                  <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+                </div>
+                <span class="font-bold text-on-surface">4.9/5</span>
+                <span>(14,000+ crew members)</span>
+              </div>
+              <span class="hidden sm:inline text-outline-variant">•</span>
+              <div class="flex items-center gap-1.5">
+                <span class="material-symbols-outlined text-primary text-[18px]">verified</span>
+                <span class="font-semibold text-on-surface">250+ Premier Festivals</span>
+              </div>
+              <span class="hidden sm:inline text-outline-variant">•</span>
+              <div class="flex items-center gap-1.5">
+                <span class="material-symbols-outlined text-on-tertiary-container text-[18px]">how_to_reg</span>
+                <span class="font-semibold text-on-surface">Zero Ghost Shifts</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Interactive Dual Showcase Cards -->
+          <div class="lg:col-span-5 relative" data-reveal-group>
+            <div class="relative w-full flex flex-col gap-4">
+
+              <!-- Card 1: Volunteer Experience Dossier -->
+              <div class="tilt-card w-full bg-surface-container-lowest rounded-xl p-6 shadow-xl border border-surface-container-high relative z-10 transition-transform hover:-translate-y-1">
+                <div class="flex items-start justify-between gap-4 pb-4 border-b border-surface-container">
+                  <div class="flex items-center gap-3">
+                    <div class="w-12 h-12 rounded-full bg-primary-container text-on-primary flex items-center justify-center font-bold text-lg">
+                      RV
+                    </div>
+                    <div>
+                      <div class="flex items-center gap-1.5">
+                        <span class="font-headline-sm font-bold text-primary">Rohan Verma</span>
+                        <span class="material-symbols-outlined text-[18px] text-on-tertiary-container" style="font-variation-settings: 'FILL' 1;">verified</span>
+                      </div>
+                      <span class="font-body-sm text-on-surface-variant">COEP Tech Pune • Verified Tier 3 Lead</span>
+                    </div>
+                  </div>
+                  <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-tertiary-fixed text-on-tertiary-container font-bold text-xs">
+                    <span class="material-symbols-outlined text-[14px]">shield</span> UIDAI Verified
+                  </span>
+                </div>
+
+                <!-- Metrics Strip -->
+                <div class="grid grid-cols-3 gap-2 py-3 px-3.5 bg-surface-container-low rounded-lg text-center my-3">
+                  <div>
+                    <div class="font-headline-sm font-extrabold text-primary"><span data-count="142" data-duration="1600">0</span> hrs</div>
+                    <div class="font-label-sm text-xs text-on-surface-variant uppercase">Logged Time</div>
+                  </div>
+                  <div>
+                    <div class="font-headline-sm font-extrabold text-secondary"><span data-count="8" data-pad="2">0</span></div>
+                    <div class="font-label-sm text-xs text-on-surface-variant uppercase">Festivals</div>
+                  </div>
+                  <div>
+                    <div class="font-headline-sm font-extrabold text-on-tertiary-container"><span data-count="99.8" data-decimals="1">0</span>%</div>
+                    <div class="font-label-sm text-xs text-on-surface-variant uppercase">Punctuality</div>
+                  </div>
+                </div>
+
+                <!-- Shift History Badges -->
+                <div class="space-y-2 pt-1">
+                  <div class="flex items-center justify-between text-xs p-2 rounded bg-surface-container">
+                    <span class="flex items-center gap-2 text-on-surface font-semibold">
+                      <span class="material-symbols-outlined text-[16px] text-secondary">music_note</span> Bacardí NH7 Weekender
+                    </span>
+                    <span class="text-on-surface-variant font-medium">Main Stage Lead</span>
+                  </div>
+                  <div class="flex items-center justify-between text-xs p-2 rounded bg-surface-container">
+                    <span class="flex items-center gap-2 text-on-surface font-semibold">
+                      <span class="material-symbols-outlined text-[16px] text-secondary">local_activity</span> Sunburn Arena VIP Lounge
+                    </span>
+                    <span class="text-on-surface-variant font-medium">Crowd Sector Head</span>
+                  </div>
+                </div>
+
+                <div class="mt-4 pt-3 border-t border-surface-container flex items-center justify-between text-xs text-on-surface-variant">
+                  <span class="inline-flex items-center gap-1 text-primary font-semibold">
+                    <span class="material-symbols-outlined text-[16px]">school</span> AICTE &amp; NSS 60-Hour Credit Approved
+                  </span>
+                  <span class="font-mono text-xs">#KW-84920</span>
+                </div>
+              </div>
+
+              <!-- Card 2: Hot Shift Spotlight -->
+              <div class="tilt-card w-full bg-primary-container text-on-primary rounded-xl p-5 shadow-2xl relative z-20 sm:-mt-6 sm:ml-6 transition-transform hover:-translate-y-1 border border-primary">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-secondary-container text-on-secondary font-bold text-xs uppercase tracking-wider">
+                    <span class="inline-block w-1.5 h-1.5 rounded-full bg-white animate-ping"></span> Active Roster
+                  </span>
+                  <span class="text-xs text-primary-fixed-dim flex items-center gap-1">
+                    <span class="material-symbols-outlined text-[14px]">pin_drop</span> Mahalaxmi Lawns, Pune
+                  </span>
+                </div>
+                <div class="font-headline-sm font-bold text-white mb-0.5">
+                  Artist Hospitality &amp; Green Room Lead
+                </div>
+                <div class="text-xs text-primary-fixed mb-3">
+                  Sunburn Pune Arena • 14 of 20 Crew Slots Confirmed
+                </div>
+                <div class="flex flex-wrap gap-2 mb-4">
+                  <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-primary text-secondary-fixed text-xs font-semibold">
+                    <span class="material-symbols-outlined text-[14px]">payments</span> ₹1,500/day Stipend
+                  </span>
+                  <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-primary text-white text-xs font-semibold">
+                    <span class="material-symbols-outlined text-[14px]">badge</span> AAA Artist Pass
+                  </span>
+                  <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-primary text-tertiary-fixed text-xs font-semibold">
+                    <span class="material-symbols-outlined text-[14px]">restaurant</span> Hot Crew Meals
+                  </span>
+                </div>
+                <button data-magnetic class="btn-shine w-full flex items-center justify-center gap-2 bg-secondary-container hover:bg-secondary text-on-secondary py-2 rounded-lg font-bold text-sm transition-colors">
+                  <span>Fast-Track Apply with Passport</span>
+                  <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+                </button>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. PARTNER ECOSYSTEM & SOCIAL PROOF -->
+    <section class="w-full bg-surface-container py-12 border-b border-surface-container-high">
+      <div class="max-w-7xl mx-auto px-6 lg:px-12">
+        <p class="text-center font-label-sm font-bold uppercase tracking-widest text-on-surface-variant mb-6" data-reveal>
+          Powering India’s Premier Festival Directors, Marathons &amp; Collegiate Fests
+        </p>
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-9 gap-4 items-center" data-reveal-group>
+          <div class="flex items-center justify-center p-3 rounded-lg bg-surface-container-lowest shadow-sm font-headline-sm font-bold tracking-tight text-primary">
+            NH7 <span class="text-secondary text-xs ml-1">Weekender</span>
+          </div>
+          <div class="flex items-center justify-center p-3 rounded-lg bg-surface-container-lowest shadow-sm font-headline-sm font-extrabold tracking-widest text-primary">
+            SUNBURN
+          </div>
+          <div class="flex items-center justify-center p-3 rounded-lg bg-surface-container-lowest shadow-sm font-headline-sm text-secondary-container font-black">
+            Zoma<span class="text-primary font-normal">land</span>
+          </div>
+          <div class="flex items-center justify-center p-3 rounded-lg bg-surface-container-lowest shadow-sm font-headline-sm text-primary tracking-tight font-serif italic">
+            BluesFest
+          </div>
+          <div class="flex items-center justify-center p-3 rounded-lg bg-surface-container-lowest shadow-sm font-headline-sm text-primary font-bold">
+            MoodI <span class="text-xs text-on-surface-variant ml-1 font-normal">IITB</span>
+          </div>
+          <div class="flex items-center justify-center p-3 rounded-lg bg-surface-container-lowest shadow-sm font-headline-sm text-secondary font-semibold">
+            Sympulse
+          </div>
+          <div class="flex items-center justify-center p-3 rounded-lg bg-surface-container-lowest shadow-sm font-headline-sm text-primary tracking-tight">
+            PuneRun
+          </div>
+          <div class="flex items-center justify-center p-3 rounded-lg bg-surface-container-lowest shadow-sm font-headline-sm text-primary font-bold">
+            GOONJ
+          </div>
+          <div class="flex items-center justify-center p-3 rounded-lg bg-surface-container-lowest shadow-sm font-headline-sm text-secondary-container font-bold">
+            TFI <span class="text-xs text-on-surface-variant ml-0.5">India</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. DUAL-SIDED VALUE PROPOSITIONS -->
+    <section class="w-full bg-surface py-20 lg:py-28" id="for-volunteers">
+      <div class="max-w-7xl mx-auto px-6 lg:px-12">
+        <div class="text-center max-w-3xl mx-auto mb-16" data-reveal-group>
+          <span class="font-label-md font-bold uppercase tracking-wider text-secondary">Two Sides. One Unified Platform.</span>
+          <h2 class="font-headline-xl text-3xl lg:text-4xl text-primary font-extrabold mt-2 mb-4">
+            Built for Both Sides of Indian Live Events
+          </h2>
+          <p class="font-body-lg text-on-surface-variant leading-relaxed">
+            Whether you are an ambitious student seeking career leverage through hands-on production or an event producer coordinating 250 runners across 4 festival stages, KrewIndia eliminates the chaos.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch" data-reveal-group>
+
+          <!-- SIDE A: For Volunteers & Students -->
+          <div class="tilt-card bg-surface-container-low rounded-2xl p-8 lg:p-10 flex flex-col justify-between shadow-sm border border-surface-container relative overflow-hidden">
+            <div class="absolute -top-12 -right-12 w-48 h-48 bg-secondary-fixed/30 rounded-full blur-2xl pointer-events-none"></div>
+            <div>
+              <div class="inline-flex items-center gap-2 px-3 py-1 rounded bg-secondary-fixed text-on-secondary-fixed font-bold text-xs uppercase mb-4">
+                <span class="material-symbols-outlined text-[16px]">school</span> For Volunteers &amp; Students
+              </div>
+              <h3 class="font-headline-lg text-2xl lg:text-3xl text-primary font-bold mb-3">
+                Turn your festival passion into career leverage.
+              </h3>
+              <p class="font-body-md text-on-surface-variant mb-8 leading-relaxed">
+                No more vague recommendations or unacknowledged 14-hour days. Build an unstoppable, verified operational portfolio that top agencies and employers respect.
+              </p>
+
+              <div class="space-y-6" data-reveal-group>
+                <div class="feature-row flex items-start gap-4">
+                  <div class="w-10 h-10 rounded-lg bg-surface-container-lowest text-secondary-container flex items-center justify-center shrink-0 shadow-sm">
+                    <span class="material-symbols-outlined text-[22px]">theater_comedy</span>
+                  </div>
+                  <div>
+                    <h4 class="font-headline-sm font-bold text-primary mb-1">Real-World Stage &amp; Ops Experience</h4>
+                    <p class="font-body-sm text-on-surface-variant leading-relaxed">Gain immediate on-ground exposure to backstage artist liaison, crowd logistics, sound engineering rigs, and marathon medical hubs.</p>
+                  </div>
+                </div>
+
+                <div class="feature-row flex items-start gap-4">
+                  <div class="w-10 h-10 rounded-lg bg-surface-container-lowest text-secondary-container flex items-center justify-center shrink-0 shadow-sm">
+                    <span class="material-symbols-outlined text-[22px]">qr_code_scanner</span>
+                  </div>
+                  <div>
+                    <h4 class="font-headline-sm font-bold text-primary mb-1">Tamper-Proof Digital Passport</h4>
+                    <p class="font-body-sm text-on-surface-variant leading-relaxed">QR-verified shift logs digitally signed by accredited festival directors. Direct 1-click shareable badge for LinkedIn and hiring managers.</p>
+                  </div>
+                </div>
+
+                <div class="feature-row flex items-start gap-4">
+                  <div class="w-10 h-10 rounded-lg bg-surface-container-lowest text-secondary-container flex items-center justify-center shrink-0 shadow-sm">
+                    <span class="material-symbols-outlined text-[22px]">featured_seasonal_and_gifts</span>
+                  </div>
+                  <div>
+                    <h4 class="font-headline-sm font-bold text-primary mb-1">Perks That Actually Matter</h4>
+                    <p class="font-body-sm text-on-surface-variant leading-relaxed">Guaranteed access wristbands, hot backstage catering, official dry-fit crew kit, and direct UPI travel stipends transferred promptly.</p>
+                  </div>
+                </div>
+
+                <div class="feature-row flex items-start gap-4">
+                  <div class="w-10 h-10 rounded-lg bg-surface-container-lowest text-secondary-container flex items-center justify-center shrink-0 shadow-sm">
+                    <span class="material-symbols-outlined text-[22px]">verified</span>
+                  </div>
+                  <div>
+                    <h4 class="font-headline-sm font-bold text-primary mb-1">College Academic NSS Credits</h4>
+                    <p class="font-body-sm text-on-surface-variant leading-relaxed">Pre-formatted AICTE, UGC, and NSS credit appraisal dossiers approved across premier engineering and management institutes in India.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="pt-8 mt-6 border-t border-surface-container">
+              <a data-magnetic class="inline-flex items-center gap-2 font-label-lg font-bold text-secondary-container hover:text-secondary" href="#open-roles">
+                <span>View Open Shifts in Pune &amp; Mumbai</span>
+                <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- SIDE B: For Organizers & Directors -->
+          <div class="tilt-card bg-primary-container text-on-primary rounded-2xl p-8 lg:p-10 flex flex-col justify-between shadow-xl relative overflow-hidden border border-primary" id="for-organizers">
+            <div class="absolute -bottom-12 -right-12 w-48 h-48 bg-secondary-container/20 rounded-full blur-2xl pointer-events-none"></div>
+            <div>
+              <div class="inline-flex items-center gap-2 px-3 py-1 rounded bg-primary text-secondary-fixed font-bold text-xs uppercase mb-4">
+                <span class="material-symbols-outlined text-[16px]">campaign</span> For Event Organizers &amp; Directors
+              </div>
+              <h3 class="font-headline-lg text-2xl lg:text-3xl text-white font-bold mb-3">
+                End no-shows and chaotic WhatsApp groups.
+              </h3>
+              <p class="font-body-md text-primary-fixed mb-8 leading-relaxed">
+                Transform your crew operations into a reliable, coordinated machine. Staff, manage, track, and credential hundreds of volunteers without losing your sanity.
+              </p>
+
+              <div class="space-y-6" data-reveal-group>
+                <div class="feature-row flex items-start gap-4">
+                  <div class="w-10 h-10 rounded-lg bg-primary text-secondary-container flex items-center justify-center shrink-0">
+                    <span class="material-symbols-outlined text-[22px]">fingerprint</span>
+                  </div>
+                  <div>
+                    <h4 class="font-headline-sm font-bold text-white mb-1">Aadhaar/UIDAI Verified Talent</h4>
+                    <p class="font-body-sm text-primary-fixed leading-relaxed">Every applicant's identity is pre-screened with Aadhaar OTP authentication, previous reliability index score, and peer reviews.</p>
+                  </div>
+                </div>
+
+                <div class="feature-row flex items-start gap-4">
+                  <div class="w-10 h-10 rounded-lg bg-primary text-secondary-container flex items-center justify-center shrink-0">
+                    <span class="material-symbols-outlined text-[22px]">how_to_reg</span>
+                  </div>
+                  <div>
+                    <h4 class="font-headline-sm font-bold text-white mb-1">Live QR Gate Check-in &amp; Kiosks</h4>
+                    <p class="font-body-sm text-primary-fixed leading-relaxed">Geo-fenced mobile gate scanners ensure crew is on-site before issuing sector wristbands. Complete real-time audit trail of every shift.</p>
+                  </div>
+                </div>
+
+                <div class="feature-row flex items-start gap-4">
+                  <div class="w-10 h-10 rounded-lg bg-primary text-secondary-container flex items-center justify-center shrink-0">
+                    <span class="material-symbols-outlined text-[22px]">workspace_premium</span>
+                  </div>
+                  <div>
+                    <h4 class="font-headline-sm font-bold text-white mb-1">Automated 1-Click Credential Dispatch</h4>
+                    <p class="font-body-sm text-primary-fixed leading-relaxed">Say farewell to manual certificate creation. Auto-render and dispatch tamper-proof certificates directly to volunteer emails within seconds.</p>
+                  </div>
+                </div>
+
+                <div class="feature-row flex items-start gap-4">
+                  <div class="w-10 h-10 rounded-lg bg-primary text-secondary-container flex items-center justify-center shrink-0">
+                    <span class="material-symbols-outlined text-[22px]">forum</span>
+                  </div>
+                  <div>
+                    <h4 class="font-headline-sm font-bold text-white mb-1">Sector Task Allocation &amp; Broadcast Sync</h4>
+                    <p class="font-body-sm text-primary-fixed leading-relaxed">Broadcast urgent sector shifts directly to push notifications and WhatsApp—without exposing personal numbers to 500-member group chats.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="pt-8 mt-6 border-t border-primary">
+              <a data-magnetic class="inline-flex items-center gap-2 font-label-lg font-bold text-secondary-fixed hover:text-white transition-colors" href="#organizer-suite">
+                <span>Explore Organizer Studio Live Suite</span>
+                <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. HOW IT WORKS (THE 4-STEP EVENT LIFECYCLE) -->
+    <section class="w-full bg-surface-container-low py-20 border-y border-surface-container" id="workflow">
+      <div class="max-w-7xl mx-auto px-6 lg:px-12">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-16" data-reveal-group>
+          <div>
+            <span class="font-label-md font-bold uppercase tracking-wider text-secondary">Standardized Event Flow</span>
+            <h2 class="font-headline-xl text-3xl lg:text-4xl text-primary font-extrabold mt-1">
+              The 4-Step Event Lifecycle
+            </h2>
+          </div>
+          <p class="font-body-md text-on-surface-variant max-w-md mt-4 md:mt-0 leading-relaxed">
+            How KrewIndia replaces chaotic email threads and informal WhatsApp referrals with a high-trust credentialing pipeline.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" data-reveal-group>
+          <div class="tilt-card bg-surface-container-lowest p-6 rounded-xl shadow-sm flex flex-col justify-between border border-surface-container-high">
+            <div>
+              <div class="font-headline-lg text-2xl font-mono font-bold text-secondary-container mb-3">01</div>
+              <h3 class="font-headline-sm font-bold text-primary mb-2">Discover &amp; Filter Roles</h3>
+              <p class="font-body-sm text-on-surface-variant leading-relaxed">
+                Explore verified festival gigs, marathon course marshals, and university symposiums in Pune, Mumbai, Bangalore, and Goa without messy social media noise.
+              </p>
+            </div>
+            <div class="pt-6 flex items-center gap-2 font-label-sm font-bold text-on-tertiary-container">
+              <span class="material-symbols-outlined text-[16px]">filter_alt</span> Multi-City Filter
+            </div>
+          </div>
+
+          <div class="tilt-card bg-surface-container-lowest p-6 rounded-xl shadow-sm flex flex-col justify-between border border-surface-container-high">
+            <div>
+              <div class="font-headline-lg text-2xl font-mono font-bold text-secondary-container mb-3">02</div>
+              <h3 class="font-headline-sm font-bold text-primary mb-2">1-Click Passport Apply</h3>
+              <p class="font-body-sm text-on-surface-variant leading-relaxed">
+                No repetitive forms. Submit your unified Krew Passport loaded with past logged hours, organizer endorsements, and first-aid badges.
+              </p>
+            </div>
+            <div class="pt-6 flex items-center gap-2 font-label-sm font-bold text-secondary">
+              <span class="material-symbols-outlined text-[16px]">touch_app</span> Instant Dispatch
+            </div>
+          </div>
+
+          <div class="tilt-card bg-surface-container-lowest p-6 rounded-xl shadow-sm flex flex-col justify-between border border-surface-container-high">
+            <div>
+              <div class="font-headline-lg text-2xl font-mono font-bold text-secondary-container mb-3">03</div>
+              <h3 class="font-headline-sm font-bold text-primary mb-2">On-Site QR Check-in</h3>
+              <p class="font-body-sm text-on-surface-variant leading-relaxed">
+                Arrive at the event security gate, scan your dynamic terminal QR, receive sector credentials, and instantly join your team’s walkie broadcast channel.
+              </p>
+            </div>
+            <div class="pt-6 flex items-center gap-2 font-label-sm font-bold text-primary">
+              <span class="material-symbols-outlined text-[16px]">pin_drop</span> Geo-Stamped Presence
+            </div>
+          </div>
+
+          <div class="tilt-card bg-surface-container-lowest p-6 rounded-xl shadow-sm flex flex-col justify-between border border-surface-container-high">
+            <div>
+              <div class="font-headline-lg text-2xl font-mono font-bold text-secondary-container mb-3">04</div>
+              <h3 class="font-headline-sm font-bold text-primary mb-2">Instant Verified Credential</h3>
+              <p class="font-body-sm text-on-surface-variant leading-relaxed">
+                Festival closes, shift signs off automatically. Director-stamped certificates arrive in your vault and permanent verified hours lock into your profile.
+              </p>
+            </div>
+            <div class="pt-6 flex items-center gap-2 font-label-sm font-bold text-on-tertiary-container">
+              <span class="material-symbols-outlined text-[16px]">verified</span> Tamper-Proof Stamp
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. ORGANIZER STUDIO & LIVE DASHBOARD SHOWCASE -->
+    <section class="w-full bg-surface py-20" id="organizer-suite">
+      <div class="max-w-7xl mx-auto px-6 lg:px-12">
+        <div class="bg-primary rounded-2xl p-8 lg:p-12 text-on-primary shadow-2xl relative overflow-hidden">
+          <div class="orb absolute -right-20 -top-20 w-80 h-80 rounded-full bg-secondary-container/15 blur-3xl pointer-events-none"></div>
+
+          <div class="max-w-3xl mb-10" data-reveal-group>
+            <span class="font-label-md font-bold uppercase tracking-wider text-secondary-fixed">
+              Organizer Studio Command Suite
+            </span>
+            <h2 class="font-headline-xl text-3xl lg:text-4xl text-white font-extrabold mt-2 mb-4">
+              Say Goodbye to 500-Person WhatsApp Chaos
+            </h2>
+            <p class="font-body-lg text-primary-fixed leading-relaxed">
+              Managing 80 college volunteers over an unmoderated WhatsApp group is a recipe for missed roll-calls, late artist shuttles, and frantic phone tag. KrewIndia puts complete command on one unified screen.
+            </p>
+          </div>
+
+          <!-- Metrics Strip -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-10" data-reveal-group>
+            <div class="p-4 rounded-xl bg-primary-container/90 border border-primary-container backdrop-blur-md">
+              <div class="font-headline-xl text-2xl font-bold text-secondary-fixed"><span data-count="80">0</span>% Faster</div>
+              <div class="font-body-sm text-primary-fixed">Crew Selection &amp; Verification</div>
+            </div>
+            <div class="p-4 rounded-xl bg-primary-container/90 border border-primary-container backdrop-blur-md">
+              <div class="font-headline-xl text-2xl font-bold text-tertiary-fixed"><span data-count="99.4" data-decimals="1">0</span>%</div>
+              <div class="font-body-sm text-primary-fixed">Turnout Reliability Rate</div>
+            </div>
+            <div class="p-4 rounded-xl bg-primary-container/90 border border-primary-container backdrop-blur-md">
+              <div class="font-headline-xl text-2xl font-bold text-white"><span data-count="100">0</span>% Automated</div>
+              <div class="font-body-sm text-primary-fixed">Certificate &amp; Stipend Issuance</div>
+            </div>
+          </div>
+
+          <!-- Studio Mockup Window -->
+          <div class="w-full bg-surface-container-lowest text-on-surface rounded-xl shadow-2xl overflow-hidden border border-surface-container-high" data-reveal>
+            <!-- Toolbar -->
+            <div class="bg-surface-container-high px-5 py-3 flex flex-wrap items-center justify-between gap-4 border-b border-surface-container">
+              <div class="flex items-center gap-3">
+                <span class="w-3 h-3 rounded-full bg-secondary-container inline-block"></span>
+                <span class="font-headline-sm font-bold text-primary">Live Roster: Pune Winter Fest 2025</span>
+                <span class="px-2.5 py-0.5 rounded-full bg-surface text-secondary font-semibold text-xs">124 Applications</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="font-body-sm text-on-surface-variant">Gate Status:</span>
+                <span class="inline-flex items-center gap-1 font-bold text-xs text-on-tertiary-container bg-tertiary-fixed px-2.5 py-1 rounded">
+                  <span class="w-1.5 h-1.5 rounded-full bg-on-tertiary-container animate-ping"></span> Kiosks Online
+                </span>
+              </div>
+            </div>
+
+            <!-- Table Data Mockup -->
+            <div class="overflow-x-auto">
+              <table class="w-full text-left font-body-sm">
+                <thead class="bg-surface-container font-label-sm uppercase text-xs text-on-surface-variant border-b border-surface-container-high">
+                  <tr>
+                    <th class="py-3 px-4">Volunteer</th>
+                    <th class="py-3 px-4">Experience &amp; Badges</th>
+                    <th class="py-3 px-4">Sector Assignment</th>
+                    <th class="py-3 px-4">Gate QR Scan</th>
+                    <th class="py-3 px-4 text-right">Action</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-surface-container">
+                  <tr class="hover:bg-surface-container-low transition-colors">
+                    <td class="py-3 px-4 flex items-center gap-3">
+                      <div class="w-8 h-8 rounded-full bg-primary-fixed text-primary flex items-center justify-center font-bold text-xs">AS</div>
+                      <div>
+                        <div class="font-bold text-primary">Aarav Sharma</div>
+                        <div class="text-on-surface-variant text-xs">Pune Univ • 5.0 Rating (9 Events)</div>
+                      </div>
+                    </td>
+                    <td class="py-3 px-4">
+                      <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-tertiary-fixed text-on-tertiary-container font-semibold text-xs">
+                        <span class="material-symbols-outlined text-[14px]">medical_services</span> First-Aid Certified
+                      </span>
+                    </td>
+                    <td class="py-3 px-4">
+                      <span class="font-semibold text-on-surface">Main Stage / Sound Pit</span>
+                    </td>
+                    <td class="py-3 px-4">
+                      <span class="inline-flex items-center gap-1 text-on-tertiary-container font-semibold text-xs">
+                        <span class="material-symbols-outlined text-[14px]">check_circle</span> 13:42 Gate 3 Checked In
+                      </span>
+                    </td>
+                    <td class="py-3 px-4 text-right">
+                      <button data-magnetic class="px-2.5 py-1 rounded bg-secondary-container text-on-secondary font-bold text-xs">Confirm Shift</button>
+                    </td>
+                  </tr>
+
+                  <tr class="hover:bg-surface-container-low transition-colors">
+                    <td class="py-3 px-4 flex items-center gap-3">
+                      <div class="w-8 h-8 rounded-full bg-secondary-fixed text-secondary flex items-center justify-center font-bold text-xs">PK</div>
+                      <div>
+                        <div class="font-bold text-primary">Pooja Kulkarni</div>
+                        <div class="text-on-surface-variant text-xs">Symbiosis SCMC • 4.8 Rating</div>
+                      </div>
+                    </td>
+                    <td class="py-3 px-4">
+                      <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-primary-fixed text-primary font-semibold text-xs">
+                        <span class="material-symbols-outlined text-[14px]">translate</span> Multi-Lingual VIP
+                      </span>
+                    </td>
+                    <td class="py-3 px-4">
+                      <span class="font-semibold text-on-surface">Headliner Artist Lounge</span>
+                    </td>
+                    <td class="py-3 px-4">
+                      <span class="inline-flex items-center gap-1 text-on-tertiary-container font-semibold text-xs">
+                        <span class="material-symbols-outlined text-[14px]">check_circle</span> 14:05 Gate 1 Checked In
+                      </span>
+                    </td>
+                    <td class="py-3 px-4 text-right">
+                      <button data-magnetic class="px-2.5 py-1 rounded bg-secondary-container text-on-secondary font-bold text-xs">Confirm Shift</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Footer Toolbar -->
+            <div class="p-3 bg-surface-container-high flex items-center justify-between text-xs text-on-surface-variant">
+              <span>Showing 2 of 124 candidate profiles</span>
+              <div class="flex items-center gap-3">
+                <button data-magnetic class="px-3 py-1 rounded bg-surface font-semibold text-on-surface hover:bg-surface-container border border-surface-container-highest">Download NSS CSV</button>
+                <button data-magnetic class="btn-shine px-3 py-1 rounded bg-primary text-white font-semibold">1-Click WhatsApp Broadcast</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. ACTIVE OPEN ROLES FEED -->
+    <section class="w-full py-20 bg-surface-container-low border-b border-surface-container" id="open-roles">
+      <div class="max-w-7xl mx-auto px-6 lg:px-12">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-10" data-reveal-group>
+          <div>
+            <span class="font-label-sm font-bold uppercase tracking-widest text-secondary">HOT SHIFTS ACTIVE</span>
+            <h2 class="font-headline-xl text-3xl lg:text-4xl text-primary font-extrabold mt-1">Featured Volunteer Positions</h2>
+          </div>
+          <div class="flex items-center gap-2 mt-4 md:mt-0">
+            <span class="text-xs font-semibold text-on-surface-variant">City:</span>
+            <button class="city-pill px-3 py-1 rounded-full bg-primary text-white font-bold text-xs">All Cities</button>
+            <button class="city-pill px-3 py-1 rounded-full bg-surface-container font-semibold text-xs text-on-surface-variant hover:text-primary">Pune</button>
+            <button class="city-pill px-3 py-1 rounded-full bg-surface-container font-semibold text-xs text-on-surface-variant hover:text-primary">Mumbai</button>
+            <button class="city-pill px-3 py-1 rounded-full bg-surface-container font-semibold text-xs text-on-surface-variant hover:text-primary">Bengaluru</button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" data-reveal-group>
+
+          <!-- Card 1 -->
+          <div class="tilt-card bg-surface-container-lowest rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between border border-surface-container-high">
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <span class="px-2.5 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-bold text-xs">Live Concert Arena</span>
+                <span class="font-bold text-xs text-secondary slot-flash" data-slots="12">12 Slots Left</span>
+              </div>
+              <h3 class="font-headline-sm font-bold text-primary">Main Stage Crowd Logistics Marshal</h3>
+              <p class="font-body-sm text-on-surface-variant mt-1 leading-relaxed">Sunburn Arena Tour • Mahalaxmi Racecourse, Mumbai</p>
+
+              <div class="my-4 space-y-2 font-body-sm text-xs">
+                <div class="flex items-center gap-2 text-on-surface">
+                  <span class="material-symbols-outlined text-[16px] text-on-surface-variant">calendar_today</span>
+                  <span>Nov 15 - 16 • 2:00 PM - 11:30 PM</span>
+                </div>
+                <div class="flex items-center gap-2 text-on-surface">
+                  <span class="material-symbols-outlined text-[16px] text-on-surface-variant">payments</span>
+                  <span class="font-bold text-primary">₹1,500 / day stipend</span>
+                </div>
+                <div class="flex items-center gap-2 text-on-surface">
+                  <span class="material-symbols-outlined text-[16px] text-on-surface-variant">verified</span>
+                  <span>Stage Access &amp; Event Certification</span>
+                </div>
+              </div>
+            </div>
+            <div class="pt-4 border-t border-surface-container flex items-center justify-between">
+              <span class="text-xs font-semibold text-on-tertiary-container bg-surface-container px-2 py-1 rounded">Includes Meals &amp; T-Shirt</span>
+              <button data-magnetic class="btn-shine bg-secondary-container hover:bg-secondary text-on-secondary px-4 py-1.5 rounded-lg font-bold text-xs shadow transition-colors">
+                Apply Now
+              </button>
+            </div>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="tilt-card bg-surface-container-lowest rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between border border-surface-container-high">
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <span class="px-2.5 py-0.5 rounded-full bg-surface-container-high text-primary font-bold text-xs">Athletics Circuit</span>
+                <span class="font-bold text-xs text-on-tertiary-container slot-flash" data-slots="25">25 Slots Left</span>
+              </div>
+              <h3 class="font-headline-sm font-bold text-primary">Hydration &amp; Medical First-Response Lead</h3>
+              <p class="font-body-sm text-on-surface-variant mt-1 leading-relaxed">Pune International Marathon • Balewadi Stadium, Pune</p>
+
+              <div class="my-4 space-y-2 font-body-sm text-xs">
+                <div class="flex items-center gap-2 text-on-surface">
+                  <span class="material-symbols-outlined text-[16px] text-on-surface-variant">calendar_today</span>
+                  <span>Dec 07 • 4:30 AM - 12:00 PM</span>
+                </div>
+                <div class="flex items-center gap-2 text-on-surface">
+                  <span class="material-symbols-outlined text-[16px] text-on-surface-variant">payments</span>
+                  <span class="font-bold text-primary">₹1,200 / day + Finisher Medal</span>
+                </div>
+                <div class="flex items-center gap-2 text-on-surface">
+                  <span class="material-symbols-outlined text-[16px] text-on-surface-variant">school</span>
+                  <span>NSS &amp; First-Aid Accredited Record</span>
+                </div>
+              </div>
+            </div>
+            <div class="pt-4 border-t border-surface-container flex items-center justify-between">
+              <span class="text-xs font-semibold text-on-tertiary-container bg-surface-container px-2 py-1 rounded">Hot Breakfast Provided</span>
+              <button data-magnetic class="btn-shine bg-secondary-container hover:bg-secondary text-on-secondary px-4 py-1.5 rounded-lg font-bold text-xs shadow transition-colors">
+                Apply Now
+              </button>
+            </div>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="tilt-card bg-surface-container-lowest rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between border border-surface-container-high">
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <span class="px-2.5 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-bold text-xs">College Cultural Fest</span>
+                <span class="font-bold text-xs text-secondary slot-flash" data-slots="8">8 Slots Left</span>
+              </div>
+              <h3 class="font-headline-sm font-bold text-primary">Speaker Liaison &amp; VIP Artist Manager</h3>
+              <p class="font-body-sm text-on-surface-variant mt-1 leading-relaxed">Mood Indigo 2025 • IIT Bombay Campus, Powai</p>
+
+              <div class="my-4 space-y-2 font-body-sm text-xs">
+                <div class="flex items-center gap-2 text-on-surface">
+                  <span class="material-symbols-outlined text-[16px] text-on-surface-variant">calendar_today</span>
+                  <span>Dec 22 - 25 • 9:00 AM - 7:00 PM</span>
+                </div>
+                <div class="flex items-center gap-2 text-on-surface">
+                  <span class="material-symbols-outlined text-[16px] text-on-surface-variant">payments</span>
+                  <span class="font-bold text-primary">₹1,800 / day stipend</span>
+                </div>
+                <div class="flex items-center gap-2 text-on-surface">
+                  <span class="material-symbols-outlined text-[16px] text-on-surface-variant">hub</span>
+                  <span>Dean Endorsement &amp; AICTE Hours</span>
+                </div>
+              </div>
+            </div>
+            <div class="pt-4 border-t border-surface-container flex items-center justify-between">
+              <span class="text-xs font-semibold text-on-tertiary-container bg-surface-container px-2 py-1 rounded">All-Access Fest Kit</span>
+              <button data-magnetic class="btn-shine bg-secondary-container hover:bg-secondary text-on-secondary px-4 py-1.5 rounded-lg font-bold text-xs shadow transition-colors">
+                Apply Now
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. TRANSPARENT PRICING & PLANS FOR ORGANIZERS -->
+    <section class="w-full bg-surface py-20 lg:py-28" id="pricing">
+      <div class="max-w-7xl mx-auto px-6 lg:px-12">
+        <div class="text-center max-w-3xl mx-auto mb-16" data-reveal-group>
+          <span class="font-label-md font-bold uppercase tracking-wider text-secondary">Transparent Event Licensing</span>
+          <h2 class="font-headline-xl text-3xl lg:text-4xl text-primary font-extrabold mt-2 mb-4">
+            Fair, Predictable Plans for Every Festival Scale
+          </h2>
+          <p class="font-body-lg text-on-surface-variant leading-relaxed">
+            Always completely free for student volunteers and field crew. Simple, event-based or annual licensing for organizers and festival production houses.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch" data-reveal-group>
+
+          <!-- Tier 1: Volunteers -->
+          <div class="tilt-card bg-surface-container-lowest p-6 rounded-xl shadow-sm flex flex-col justify-between border border-surface-container-high">
+            <div>
+              <div class="font-headline-sm font-bold text-primary mb-1">Volunteers &amp; Crew</div>
+              <p class="font-body-sm text-on-surface-variant mb-4">For students, marshals, and festival enthusiasts building their career.</p>
+              <div class="mb-6">
+                <span class="font-headline-xl text-3xl font-extrabold text-primary">₹0</span>
+                <span class="font-body-sm text-on-surface-variant">/ Always Free</span>
+              </div>
+              <ul class="space-y-3 font-body-sm text-on-surface-variant mb-6 text-xs">
+                <li class="flex items-center gap-2"><span class="material-symbols-outlined text-[16px] text-on-tertiary-container">check</span> Unlimited gig applications</li>
+                <li class="flex items-center gap-2"><span class="material-symbols-outlined text-[16px] text-on-tertiary-container">check</span> Verified Krew Digital Passport</li>
+                <li class="flex items-center gap-2"><span class="material-symbols-outlined text-[16px] text-on-tertiary-container">check</span> Tamper-proof digital certificates</li>
+                <li class="flex items-center gap-2"><span class="material-symbols-outlined text-[16px] text-on-tertiary-container">check</span> Direct UPI travel stipend payout</li>
+                <li class="flex items-center gap-2"><span class="material-symbols-outlined text-[16px] text-on-tertiary-container">check</span> Shareable LinkedIn web dossier</li>
+              </ul>
+            </div>
+            <a data-magnetic class="btn-shine text-center py-2.5 rounded-lg bg-surface-container text-primary font-bold text-sm hover:bg-surface-container-high transition-colors inline-block" href="#get-started">
+              Create Free Volunteer ID
+            </a>
+          </div>
+
+          <!-- Tier 2: College & Community -->
+          <div class="tilt-card bg-surface-container-lowest p-6 rounded-xl shadow-sm flex flex-col justify-between border border-surface-container-high">
+            <div>
+              <div class="font-headline-sm font-bold text-primary mb-1">College &amp; Community</div>
+              <p class="font-body-sm text-on-surface-variant mb-4">Ideal for departmental fests, university cultural weeks, and club 10K runs.</p>
+              <div class="mb-6">
+                <span class="font-headline-xl text-3xl font-extrabold text-primary">₹1,999</span>
+                <span class="font-body-sm text-on-surface-variant">/ single event</span>
+                <div class="text-xs text-on-surface-variant mt-0.5">or ₹14,999 annual pass</div>
+              </div>
+              <ul class="space-y-3 font-body-sm text-on-surface-variant mb-6 text-xs">
+                <li class="flex items-center gap-2"><span class="material-symbols-outlined text-[16px] text-on-tertiary-container">check</span> Up to 50 crew members</li>
+                <li class="flex items-center gap-2"><span class="material-symbols-outlined text-[16px] text-on-tertiary-container">check</span> Custom role application builder</li>
+                <li class="flex items-center gap-2"><span class="material-symbols-outlined text-[16px] text-on-tertiary-container">check</span> Basic QR gate check-in scanner</li>
+                <li class="flex items-center gap-2"><span class="material-symbols-outlined text-[16px] text-on-tertiary-container">check</span> College NSS batch export</li>
+                <li class="flex items-center gap-2"><span class="material-symbols-outlined text-[16px] text-on-tertiary-container">check</span> Standard email credentials</li>
+              </ul>
+            </div>
+            <a data-magnetic class="btn-shine text-center py-2.5 rounded-lg bg-surface-container text-primary font-bold text-sm hover:bg-surface-container-high transition-colors inline-block" href="#get-started">
+              Start Single Fest
+            </a>
+          </div>
+
+          <!-- Tier 3: Pro Festivals & Marathons (FEATURED) -->
+          <div class="tilt-card bg-primary text-on-primary p-6 rounded-xl shadow-xl flex flex-col justify-between relative transform lg:-translate-y-2 border border-primary">
+            <div class="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full bg-secondary-container text-on-secondary font-bold text-xs uppercase tracking-wider shadow">
+              Most Popular
+            </div>
+            <div>
+              <div class="font-headline-sm font-bold text-white mb-1 mt-2">Pro Festivals &amp; Marathons</div>
+              <p class="font-body-sm text-primary-fixed mb-4">For multi-stage concerts, city marathons, and stadium events.</p>
+              <div class="mb-6">
+                <span class="font-headline-xl text-3xl font-extrabold text-white">₹4,999</span>
+                <span class="font-body-sm text-primary-fixed">/ month</span>
+              </div>
+              <ul class="space-y-3 font-body-sm text-primary-fixed mb-6 text-xs">
+                <li class="flex items-center gap-2"><span class="material-symbols-outlined text-[16px] text-tertiary-fixed">check</span> Unlimited crew rosters</li>
+                <li class="flex items-center gap-2"><span class="material-symbols-outlined text-[16px] text-tertiary-fixed">check</span> Live multi-gate QR check-in kiosks</li>
+                <li class="flex items-center gap-2"><span class="material-symbols-outlined text-[16px] text-tertiary-fixed">check</span> Automated 1-click certificate issuer</li>
+                <li class="flex items-center gap-2"><span class="material-symbols-outlined text-[16px] text-tertiary-fixed">check</span> WhatsApp shift alerts &amp; broadcast</li>
+                <li class="flex items-center gap-2"><span class="material-symbols-outlined text-[16px] text-tertiary-fixed">check</span> Sector task &amp; VIP lead routing</li>
+              </ul>
+            </div>
+            <a data-magnetic class="btn-shine text-center py-2.5 rounded-lg bg-secondary-container hover:bg-secondary text-on-secondary font-bold text-sm shadow-md transition-colors inline-block" href="#get-started">
+              Deploy Pro Studio
+            </a>
+          </div>
+
+          <!-- Tier 4: Enterprise Agency -->
+          <div class="tilt-card bg-surface-container-lowest p-6 rounded-xl shadow-sm flex flex-col justify-between border border-surface-container-high">
+            <div>
+              <div class="font-headline-sm font-bold text-primary mb-1">Enterprise Agency</div>
+              <p class="font-body-sm text-on-surface-variant mb-4">For national live production houses, ticketing firms, and marathon circuits.</p>
+              <div class="mb-6">
+                <span class="font-headline-xl text-3xl font-extrabold text-primary">Custom</span>
+                <span class="font-body-sm text-on-surface-variant">/ Annual Circuit</span>
+              </div>
+              <ul class="space-y-3 font-body-sm text-on-surface-variant mb-6 text-xs">
+                <li class="flex items-center gap-2"><span class="material-symbols-outlined text-[16px] text-on-tertiary-container">check</span> Pan-India multi-city tour routing</li>
+                <li class="flex items-center gap-2"><span class="material-symbols-outlined text-[16px] text-on-tertiary-container">check</span> Custom director cryptographic sigs</li>
+                <li class="flex items-center gap-2"><span class="material-symbols-outlined text-[16px] text-on-tertiary-container">check</span> Guaranteed turnout SLA backup</li>
+                <li class="flex items-center gap-2"><span class="material-symbols-outlined text-[16px] text-on-tertiary-container">check</span> Direct BookMyShow/Paytm API sync</li>
+              </ul>
+            </div>
+            <a data-magnetic class="btn-shine text-center py-2.5 rounded-lg bg-surface-container text-primary font-bold text-sm hover:bg-surface-container-high transition-colors inline-block" href="#get-started">
+              Contact Enterprise Sales
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. COMMUNITY TESTIMONIALS -->
+    <section class="w-full bg-surface-container-low py-20 border-t border-surface-container" id="testimonials">
+      <div class="max-w-7xl mx-auto px-6 lg:px-12">
+        <div class="text-center max-w-2xl mx-auto mb-16" data-reveal-group>
+          <span class="font-label-sm font-bold uppercase tracking-widest text-secondary">FIELD-TESTED VOICES</span>
+          <h2 class="font-headline-xl text-3xl font-extrabold text-primary mt-1">Heard From the Pit &amp; Production Vans</h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6" data-reveal-group>
+          <div class="tilt-card bg-surface-container-lowest p-6 rounded-xl shadow-sm border border-surface-container flex flex-col justify-between">
+            <p class="font-body-sm text-on-surface-variant leading-relaxed italic mb-6">
+              "KrewIndia eliminated the nightmare of 30% volunteer no-shows at NH7 Weekender. Every kid on our stage crew was vetted, punctual, and eager to handle high-pressure artist environments."
+            </p>
+            <div class="flex items-center gap-3 pt-3 border-t border-surface-container">
+              <div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-bold text-sm">SJ</div>
+              <div>
+                <div class="font-bold text-primary text-sm">Sameer Joshi</div>
+                <div class="text-xs text-on-surface-variant">Festival Director, OML Entertainment</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tilt-card bg-surface-container-lowest p-6 rounded-xl shadow-sm border border-surface-container flex flex-col justify-between">
+            <p class="font-body-sm text-on-surface-variant leading-relaxed italic mb-6">
+              "Getting college academic approval used to take 3 months of physical paperwork. With KrewIndia’s verified tamper-proof dossier, our NSS credits were cleared in 48 hours."
+            </p>
+            <div class="flex items-center gap-3 pt-3 border-t border-surface-container">
+              <div class="w-10 h-10 rounded-full bg-secondary-container text-white flex items-center justify-center font-bold text-sm">AS</div>
+              <div>
+                <div class="font-bold text-primary text-sm">Ananya Sen</div>
+                <div class="text-xs text-on-surface-variant">Fest General Secretary, IIT Kharagpur</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tilt-card bg-surface-container-lowest p-6 rounded-xl shadow-sm border border-surface-container flex flex-col justify-between">
+            <p class="font-body-sm text-on-surface-variant leading-relaxed italic mb-6">
+              "I started as a water station marshal and now coordinate VIP green rooms at Sunburn. My Krew passport got me my first paid event production job straight after graduation."
+            </p>
+            <div class="flex items-center gap-3 pt-3 border-t border-surface-container">
+              <div class="w-10 h-10 rounded-full bg-tertiary-fixed text-primary flex items-center justify-center font-bold text-sm">RV</div>
+              <div>
+                <div class="font-bold text-primary text-sm">Rohan Verma</div>
+                <div class="text-xs text-on-surface-variant">Stage Ops Lead, COEP Pune</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. FINAL HIGH-IMPACT CTA BANNER -->
+    <section class="w-full bg-surface py-20" id="get-started">
+      <div class="max-w-7xl mx-auto px-6 lg:px-12">
+        <div class="bg-primary text-on-primary rounded-3xl p-10 lg:p-16 text-center relative overflow-hidden shadow-2xl">
+          <div class="orb absolute -top-24 -left-24 w-80 h-80 rounded-full bg-secondary-container/20 blur-3xl pointer-events-none"></div>
+          <div class="orb absolute -bottom-24 -right-24 w-80 h-80 rounded-full bg-primary-fixed-dim/20 blur-3xl pointer-events-none"></div>
+
+          <div class="max-w-3xl mx-auto relative z-10" data-reveal-group>
+            <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondary-container text-white font-bold text-xs uppercase mb-4">
+              Join Bharat's Event Revolution 🇮🇳
+            </span>
+            <h2 class="font-headline-xl text-3xl lg:text-5xl font-extrabold text-white mb-6">
+              Ready to Run India's Next Big Experience?
+            </h2>
+            <p class="font-body-lg text-primary-fixed text-base lg:text-lg mb-8 leading-relaxed">
+              Join 14,000+ volunteer leads or deploy Organizer Studio for your next music festival, city marathon, or university cultural fest.
+            </p>
+
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <a data-magnetic class="btn-shine w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-secondary-container hover:bg-secondary text-white font-bold px-8 py-4 rounded-xl shadow-lg transition-all text-base" href="#open-roles">
+                <span>Join as a Volunteer (Free)</span>
+                <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+              </a>
+              <a data-magnetic class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-primary-container hover:bg-primary text-white font-bold px-8 py-4 rounded-xl border border-outline-variant/30 transition-all text-base" href="#pricing">
+                <span>Deploy Organizer Studio</span>
+              </a>
+            </div>
+
+            <div class="pt-8 flex flex-wrap items-center justify-center gap-6 text-xs text-primary-fixed-dim">
+              <span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-[16px] text-tertiary-fixed">check_circle</span> No credit card required for volunteers</span>
+              <span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-[16px] text-tertiary-fixed">check_circle</span> UIDAI &amp; ISO 27001 Audited</span>
+              <span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-[16px] text-tertiary-fixed">check_circle</span> Active across 12+ Indian Cities</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="w-full bg-surface-container-low pt-16 pb-12 border-t border-surface-container">
+    <div class="max-w-7xl mx-auto px-6 lg:px-12">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-y-10 gap-x-8 pb-12 border-b border-surface-container" data-reveal-group>
+
+        <div class="lg:col-span-2 space-y-4 pr-0 lg:pr-8">
+          <div class="flex items-center gap-2 footer-logo">
+            <span class="font-headline-sm font-bold text-primary tracking-tight text-xl">KrewIndia 🇮🇳</span>
+          </div>
+          <p class="font-body-md text-on-surface-variant text-sm leading-relaxed max-w-sm">
+            India's dedicated operational backbone and career network for festival crews, marathon marshals, and verified event producers.
+          </p>
+          <div class="flex items-center gap-3 pt-2">
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface text-tertiary text-xs font-semibold shadow-sm border border-surface-container-high">
+              <span class="material-symbols-outlined text-[16px] text-on-tertiary-container">verified</span> UIDAI &amp; ISO Audited
+            </span>
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface text-on-surface text-xs font-semibold shadow-sm border border-surface-container-high">
+              <span class="material-symbols-outlined text-[16px] text-secondary">lock</span> Tamper-Proof
+            </span>
+          </div>
+        </div>
+
+        <div>
+          <div class="font-bold text-primary mb-4 text-sm uppercase tracking-wider">For Volunteers</div>
+          <ul class="space-y-2.5 text-sm text-on-surface-variant">
+            <li><a class="hover:text-primary transition-colors" href="#for-volunteers">Verified Credentials</a></li>
+            <li><a class="hover:text-primary transition-colors" href="#open-roles">Festival Roster 2025</a></li>
+            <li><a class="hover:text-primary transition-colors" href="#open-roles">Direct UPI Stipends</a></li>
+            <li><a class="hover:text-primary transition-colors" href="#workflow">Digital Passport</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="font-bold text-primary mb-4 text-sm uppercase tracking-wider">For Organizers</div>
+          <ul class="space-y-2.5 text-sm text-on-surface-variant">
+            <li><a class="hover:text-primary transition-colors" href="#for-organizers">Organizer Studio Roster</a></li>
+            <li><a class="hover:text-primary transition-colors" href="#pricing">Licensing Plans</a></li>
+            <li><a class="hover:text-primary transition-colors" href="#organizer-suite">Live QR Gate Check-in</a></li>
+            <li><a class="hover:text-primary transition-colors" href="#organizer-suite">1-Click Auto Certificates</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="font-bold text-primary mb-4 text-sm uppercase tracking-wider">Top Indian Hubs</div>
+          <ul class="space-y-2.5 text-sm text-on-surface-variant">
+            <li><span class="text-on-surface font-semibold">Pune</span> (NH7 &amp; College Fests)</li>
+            <li><span class="text-on-surface font-semibold">Mumbai</span> (Sunburn &amp; Marathons)</li>
+            <li><span class="text-on-surface font-semibold">Bengaluru</span> (Tech Summits &amp; Music)</li>
+            <li><span class="text-on-surface font-semibold">Goa</span> (EDM Arenas &amp; Expos)</li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-on-surface-variant">
+        <p>© 2025 KrewIndia Technologies Private Limited. All rights reserved. Bharat's Sovereign Event Crew Infrastructure.</p>
+        <div class="flex items-center gap-6">
+          <a class="hover:text-primary transition-colors" href="#">Privacy Policy</a>
+          <a class="hover:text-primary transition-colors" href="#">Terms of Service</a>
+          <a class="hover:text-primary transition-colors" href="#">UIDAI Compliance</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============================================================ -->
+  <!-- MOTION ENGINE — pointer follow, tilt, reveal, counters       -->
+  <!-- ============================================================ -->
+  <script>
+  (function () {
+    "use strict";
+
+    var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var noHover = window.matchMedia("(hover: none)").matches;
+    var lerp = function (a, b, t) { return a + (b - a) * t; };
+    var clamp = function (v, min, max) { return Math.max(min, Math.min(max, v)); };
+
+    /* ---------------- Preloader ---------------- */
+    function boot() {
+      requestAnimationFrame(function () {
+        document.body.classList.add("is-loaded");
+        setTimeout(function () {
+          var pl = document.getElementById("preloader");
+          if (pl && pl.parentNode) pl.parentNode.removeChild(pl);
+        }, 1100);
+      });
+    }
+    if (document.readyState === "complete") { setTimeout(boot, 350); }
+    else { window.addEventListener("load", function () { setTimeout(boot, 350); }); }
+    setTimeout(boot, 2800); // safety: never trap the user behind the loader
+
+    /* ---------------- Pointer state (mouse + touch) ---------------- */
+    var curDot = document.getElementById("cursor-dot");
+    var curRing = document.getElementById("cursor-ring");
+
+    var pointer = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+    var ringPos = { x: pointer.x, y: pointer.y };
+    var spotPos = { x: pointer.x, y: window.innerHeight * 0.35 };
+
+    function setPointer(x, y) {
+      pointer.x = x; pointer.y = y;
+      document.body.classList.add("spot-on");
+      if (!noHover) {
+        curDot.style.left = x + "px";
+        curDot.style.top = y + "px";
+      }
+    }
+
+    window.addEventListener("mousemove", function (e) { setPointer(e.clientX, e.clientY); }, { passive: true });
+    window.addEventListener("touchstart", function (e) {
+      var t = e.touches[0]; if (t) setPointer(t.clientX, t.clientY);
+    }, { passive: true });
+    window.addEventListener("touchmove", function (e) {
+      var t = e.touches[0]; if (t) setPointer(t.clientX, t.clientY);
+    }, { passive: true });
+
+    window.addEventListener("pointerdown", function () { if (curDot) curDot.classList.add("is-press"); }, { passive: true });
+    window.addEventListener("pointerup", function () { if (curDot) curDot.classList.remove("is-press"); }, { passive: true });
+
+    // cursor ring grows over interactive elements
+    if (!noHover) {
+      window.addEventListener("mouseover", function (e) {
+        if (e.target.closest("a, button, .tilt-card")) curRing.classList.add("is-hover");
+      }, { passive: true });
+      window.addEventListener("mouseout", function (e) {
+        if (e.target.closest("a, button, .tilt-card")) curRing.classList.remove("is-hover");
+      }, { passive: true });
+    }
+
+    /* ---------------- Global rAF loop: ring, spotlight, orbs ---------------- */
+    var spotlight = document.getElementById("spotlight");
+    var orbs = Array.prototype.slice.call(document.querySelectorAll(".orb"));
+
+    function frame() {
+      ringPos.x = lerp(ringPos.x, pointer.x, 0.22);
+      ringPos.y = lerp(ringPos.y, pointer.y, 0.22);
+      spotPos.x = lerp(spotPos.x, pointer.x, 0.14);
+      spotPos.y = lerp(spotPos.y, pointer.y, 0.14);
+
+      if (curRing && !noHover) {
+        curRing.style.left = ringPos.x + "px";
+        curRing.style.top = ringPos.y + "px";
+      }
+      spotlight.style.setProperty("--sx", spotPos.x.toFixed(1) + "px");
+      spotlight.style.setProperty("--sy", spotPos.y.toFixed(1) + "px");
+
+      // orb parallax (desktop only, skip while reduced-motion)
+      if (!reduceMotion) {
+        var nx = (pointer.x / window.innerWidth) - 0.5;
+        var ny = (pointer.y / window.innerHeight) - 0.5;
+        for (var i = 0; i < orbs.length; i++) {
+          var d = 14 + i * 6;
+          orbs[i].style.translate = (nx * -d).toFixed(1) + "px " + (ny * -d).toFixed(1) + "px";
+        }
+      }
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+
+    /* ---------------- Magnetic buttons (mouse only) ---------------- */
+    if (!noHover && !reduceMotion) {
+      Array.prototype.forEach.call(document.querySelectorAll("[data-magnetic]"), function (el) {
+        var strength = 8;
+        el.addEventListener("mousemove", function (e) {
+          var r = el.getBoundingClientRect();
+          var relX = (e.clientX - (r.left + r.width / 2)) / r.width;   // -0.5 .. 0.5
+          var relY = (e.clientY - (r.top + r.height / 2)) / r.height;
+          el.style.translate =
+            clamp(relX * strength * 2, -strength, strength) + "px " +
+            clamp(relY * strength * 2, -strength, strength) + "px";
+          el.style.scale = "1.03";
+        });
+        el.addEventListener("mouseleave", function () {
+          el.style.translate = "0px 0px";
+          el.style.scale = "1";
+        });
+      });
+    }
+
+    /* ---------------- 3D tilt + glare on cards ---------------- */
+    var tiltCards = Array.prototype.slice.call(document.querySelectorAll(".tilt-card"));
+    tiltCards.forEach(function (card) {
+      var glare = document.createElement("span");
+      glare.className = "glare";
+      card.appendChild(glare);
+      // keep custom ripple working despite overflow needs
+      card.classList.add("ripple-host");
+
+      var MAX_TILT = 4.5;
+      var awaitingFrame = false;
+
+      function handleMove(x, y) {
+        var r = card.getBoundingClientRect();
+        var px = (x - r.left) / r.width;
+        var py = (y - r.top) / r.height;
+        card.style.setProperty("--gx", (px * 100).toFixed(1) + "%");
+        card.style.setProperty("--gy", (py * 100).toFixed(1) + "%");
+        if (noHover || reduceMotion) return;
+        if (awaitingFrame) { card._tx = px; card._ty = py; return; }
+        awaitingFrame = true;
+        card._tx = px; card._ty = py;
+        requestAnimationFrame(function () {
+          awaitingFrame = false;
+          var rx = (0.5 - card._ty) * MAX_TILT * 2;
+          var ry = (card._tx - 0.5) * MAX_TILT * 2;
+          card.style.transform = "perspective(900px) rotateX(" + rx.toFixed(2) + "deg) rotateY(" + ry.toFixed(2) + "deg)";
+        });
+      }
+
+      card.addEventListener("mousemove", function (e) {
+        card.classList.add("is-glowing");
+        handleMove(e.clientX, e.clientY);
+      });
+      card.addEventListener("mouseleave", function () {
+        card.classList.remove("is-glowing");
+        card.style.transform = "";
+      });
+
+      // phone: press physics + glare under the finger
+      card.addEventListener("touchstart", function (e) {
+        var t = e.touches[0]; if (!t) return;
+        card.classList.add("is-pressed");
+        card.classList.add("is-glowing");
+        handleMove(t.clientX, t.clientY);
+      }, { passive: true });
+      card.addEventListener("touchend", function () {
+        card.classList.remove("is-pressed");
+        card.classList.remove("is-glowing");
+        card.style.transform = "";
+      }, { passive: true });
+    });
+
+    /* ---------------- Ripple on tap / click ---------------- */
+    window.addEventListener("pointerdown", function (e) {
+      var el = e.target.closest("a, button");
+      if (!el || reduceMotion) return;
+      if (el.offsetParent === null && el !== document.body) return; // hidden elements
+      el.classList.add("ripple-host");
+      var r = el.getBoundingClientRect();
+      var flip = el.classList.contains("bg-surface-container") || el.classList.contains("bg-surface");
+      var span = document.createElement("span");
+      span.className = "ripple" + (flip ? " on-light" : "");
+      var size = Math.max(r.width, r.height) / 3;
+      span.style.width = span.style.height = size + "px";
+      span.style.left = (e.clientX - r.left) + "px";
+      span.style.top = (e.clientY - r.top) + "px";
+      el.appendChild(span);
+      setTimeout(function () { if (span.parentNode) span.parentNode.removeChild(span); }, 700);
+    }, { passive: true });
+
+    /* ---------------- Scroll reveals (huge entrances) ---------------- */
+    // tag group children with stagger
+    Array.prototype.forEach.call(document.querySelectorAll("[data-reveal-group]"), function (group) {
+      if (group.hasAttribute("data-reveal-tagged")) return;
+      group.setAttribute("data-reveal-tagged", "");
+      Array.prototype.forEach.call(group.children, function (child, i) {
+        child.setAttribute("data-reveal", "");
+        child.style.setProperty("--rd", (i * 90) + "ms");
+      });
+    });
+
+    var revealables = document.querySelectorAll("[data-reveal]");
+    if ("IntersectionObserver" in window && !reduceMotion) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("revealed");
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: "0px 0px -6% 0px" });
+      Array.prototype.forEach.call(revealables, function (el) { io.observe(el); });
+
+      /* ---------------- Count-up numbers ---------------- */
+      var cio = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          var el = entry.target;
+          cio.unobserve(el);
+          var end = parseFloat(el.getAttribute("data-count"));
+          var dec = parseInt(el.getAttribute("data-decimals") || "0", 10);
+          var pad = parseInt(el.getAttribute("data-pad") || "0", 10);
+          var dur = parseInt(el.getAttribute("data-duration") || "1400", 10);
+          var t0 = performance.now();
+          function tick(t) {
+            var p = clamp((t - t0) / dur, 0, 1);
+            var eased = 1 - Math.pow(1 - p, 3);
+            var val = end * eased;
+            var text = dec ? val.toFixed(dec) : Math.round(val).toString();
+            if (pad) text = text.padStart(pad, "0");
+            el.textContent = text;
+            if (p < 1) requestAnimationFrame(tick);
+          }
+          requestAnimationFrame(tick);
+        });
+      }, { threshold: 0.6 });
+      Array.prototype.forEach.call(document.querySelectorAll("[data-count]"), function (el) { cio.observe(el); });
+    } else {
+      // no IO or reduced motion: show everything, final values
+      Array.prototype.forEach.call(revealables, function (el) { el.classList.add("revealed"); });
+      Array.prototype.forEach.call(document.querySelectorAll("[data-count]"), function (el) {
+        var end = parseFloat(el.getAttribute("data-count"));
+        var pad = parseInt(el.getAttribute("data-pad") || "0", 10);
+        el.textContent = pad ? String(end).padStart(pad, "0") : end;
+      });
+    }
+
+    /* ---------------- Header: shrink / hide on scroll + progress ---------------- */
+    var lastY = window.scrollY;
+    var headerDirty = false;
+    function onScroll() {
+      var y = window.scrollY;
+      document.body.classList.toggle("scrolled", y > 32);
+
+      if (y > 380 && y > lastY + 6) document.body.classList.add("hd-away");
+      else if (y < lastY - 6 || y <= 380) document.body.classList.remove("hd-away");
+      lastY = y;
+
+      var doc = document.documentElement;
+      var max = doc.scrollHeight - window.innerHeight;
+      var bar = document.getElementById("scroll-progress");
+      if (bar) bar.style.transform = "scaleX(" + (max > 0 ? clamp(y / max, 0, 1) : 0) + ")";
+      headerDirty = false;
+    }
+    window.addEventListener("scroll", function () {
+      if (!headerDirty) { headerDirty = true; requestAnimationFrame(onScroll); }
+    }, { passive: true });
+    onScroll();
+
+    /* ---------------- Scroll-spy nav ---------------- */
+    var navLinks = Array.prototype.slice.call(document.querySelectorAll(".nav-link"));
+    if ("IntersectionObserver" in window) {
+      var spy = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          var id = entry.target.id;
+          navLinks.forEach(function (link) {
+            link.classList.toggle("is-active", link.getAttribute("data-nav") === id);
+          });
+        });
+      }, { rootMargin: "-38% 0px -55% 0px" });
+      ["for-volunteers", "for-organizers", "workflow", "pricing", "testimonials"].forEach(function (id) {
+        var sec = document.getElementById(id);
+        if (sec) spy.observe(sec);
+      });
+    }
+
+    /* ---------------- Feature-row icon wiggle ---------------- */
+    Array.prototype.forEach.call(document.querySelectorAll(".feature-row"), function (row) {
+      row.addEventListener("mouseenter", function () { row.classList.add("is-hovered"); });
+      row.addEventListener("animationend", function (e) {
+        if (e.target && e.target.classList && e.target.classList.contains("material-symbols-outlined")) {
+          row.classList.remove("is-hovered");
+        }
+      });
+    });
+
+    /* ---------------- Slot counter live flash (ambience) ---------------- */
+    setInterval(function () {
+      var slots = Array.prototype.slice.call(document.querySelectorAll("[data-slots]"));
+      if (!slots.length) return;
+      var el = slots[Math.floor(Math.random() * slots.length)];
+      var n = parseInt(el.getAttribute("data-slots"), 10);
+      if (n > 1) n -= 1;
+      el.setAttribute("data-slots", String(n));
+      el.classList.remove("slot-flash");
+      void el.offsetWidth; // restart animation
+      el.textContent = n + " Slots Left";
+      el.classList.add("slot-flash");
+    }, 22000);
+
+  })();
+  </script>
+</body>
+</html>

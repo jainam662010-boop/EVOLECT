@@ -21,6 +21,8 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build
+      - name: Publish design mockups
+        run: cp -r mockups out/mockups
       - uses: actions/upload-pages-artifact@v3
         with:
           path: ./out
