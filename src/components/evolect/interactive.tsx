@@ -303,7 +303,7 @@ export function ManagerForm() {
   const [location, setLocation] = useState("Pune");
   const [date, setDate] = useState("");
   const [need, setNeed] = useState("");
-  const [skills, setSkills] = useState("Logistics");
+  const [skills, setSkills] = useState("Operations");
   const [desc, setDesc] = useState("");
   const [preview, setPreview] = useState(false);
   const inputCls = "mgr-field";
@@ -320,7 +320,7 @@ export function ManagerForm() {
       >
         <div className={inputCls}>
           <label htmlFor="mgr-name">Event name</label>
-          <input id="mgr-name" value={name} onChange={(e) => setName(e.target.value)} placeholder="Example: weekend volunteer drive" autoComplete="off" />
+          <input id="mgr-name" value={name} onChange={(e) => setName(e.target.value)} placeholder="Example: open-air concert crew" autoComplete="off" />
         </div>
         <div className="mgr-2col">
           <div className={inputCls}>
@@ -337,22 +337,23 @@ export function ManagerForm() {
         </div>
         <div className="mgr-2col">
           <div className={inputCls}>
-            <label htmlFor="mgr-need">Volunteer requirements</label>
-            <input id="mgr-need" value={need} onChange={(e) => setNeed(e.target.value)} placeholder="Example: 10 volunteers" autoComplete="off" />
+            <label htmlFor="mgr-need">Crew required</label>
+            <input id="mgr-need" value={need} onChange={(e) => setNeed(e.target.value)} placeholder="Example: 6 crew across 3 roles" autoComplete="off" />
           </div>
           <div className={inputCls}>
-            <label htmlFor="mgr-skills">Skills</label>
+            <label htmlFor="mgr-skills">Role types</label>
             <select id="mgr-skills" value={skills} onChange={(e) => setSkills(e.target.value)}>
-              <option>Logistics</option>
-              <option>Teaching</option>
-              <option>Design</option>
-              <option>First aid</option>
+              <option>Operations</option>
+              <option>Registration</option>
+              <option>Front-of-house</option>
+              <option>Backstage</option>
+              <option>Guest handling</option>
             </select>
           </div>
         </div>
         <div className={inputCls}>
           <label htmlFor="mgr-desc">Description</label>
-          <textarea id="mgr-desc" value={desc} onChange={(e) => setDesc(e.target.value)} placeholder="Example: what volunteers will do on the day" />
+          <textarea id="mgr-desc" value={desc} onChange={(e) => setDesc(e.target.value)} placeholder="Example: what the crew will do on the day" />
         </div>
         <div style={{ display: "flex", flexWrap: "wrap", gap: 12 }}>
           <button type="submit" className="btn btn-primary">

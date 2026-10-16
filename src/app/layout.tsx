@@ -15,9 +15,9 @@ const body = Public_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Evolect: Find where your time can make a difference.",
+  title: "Evolect — The people behind every great event.",
   description:
-    "Evolect connects volunteers with events that need them and gives event managers a simpler way to find and coordinate people. Starting in Pune. Building for India.",
+    "Evolect connects event organizers with the event crew they need to bring live experiences to life. Starting in Pune. Building for India.",
 };
 
 export const viewport: Viewport = {

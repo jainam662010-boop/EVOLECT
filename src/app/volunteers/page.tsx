@@ -14,14 +14,14 @@ export default function Volunteers() {
         <section className="page-hero">
           <Tilt className="wrap hero-grid">
             <Reveal>
-              <p className="eyebrow">For volunteers</p>
-              <h1>Find opportunities that fit you.</h1>
+              <p className="eyebrow">For event crew</p>
+              <h1>Find roles that fit you.</h1>
               <p className="lede">
-                Set your location, availability and interests, and see events built around them instead of
-                scrolling through everything.
+                Set your availability, skills and interests, and see event roles built around them — front-of-house,
+                registration, backstage, operations — instead of scrolling through everything.
               </p>
               <p className="tag-line" style={{ marginTop: 16 }}>
-                Your time is limited. Spend it on something that fits.
+                Your weekend is limited. Spend it where it counts.
               </p>
             </Reveal>
             <Reveal>
@@ -29,17 +29,17 @@ export default function Volunteers() {
                 group="vol"
                 screens={[
                   {
-                    topbar: "Explore",
+                    topbar: "Explore roles",
                     cards: [
-                      { title: "Example event: community volunteering", meta: "Pune · Example date", pill: "Example requirement", icon: "pin" },
-                      { title: "Example event: weekend activity", meta: "Sat · Example time", pill: "Teaching", icon: "cal" },
+                      { title: "Example role: registration lead", meta: "Pune · Example date · concert", pill: "2 roles open", icon: "pin" },
+                      { title: "Example role: front-of-house", meta: "Sat · Example time · college fest", pill: "Evening", icon: "cal" },
                     ],
                   },
                   {
-                    topbar: "Event details",
+                    topbar: "Role details",
                     cards: [
-                      { title: "Example event: weekend activity", meta: "Pune · Example location", icon: "pin" },
-                      { title: "Skills needed", meta: "Example skills", icon: "users" },
+                      { title: "Example role: front-of-house", meta: "Pune · Example venue", icon: "pin" },
+                      { title: "What you will do", meta: "Guide audience · manage queues · help points", icon: "users" },
                       { title: "Apply", meta: "Verification required", pill: "Verified only", ghost: true, icon: "check" },
                     ],
                   },
@@ -78,7 +78,7 @@ export default function Volunteers() {
               </div>
             </Reveal>
             <Reveal>
-              <AppTabs tabs={VOL_TABS} note="Example content for volunteers in Pune." />
+              <AppTabs tabs={VOL_TABS} note="Example roles for event crew in Pune." />
             </Reveal>
           </div>
         </section>
@@ -93,7 +93,7 @@ export default function Volunteers() {
                   <ul className="side-list">
                     <li><MapPin className="icon icon-sm" aria-hidden="true" /> Location and distance</li>
                     <li><Calendar className="icon icon-sm" aria-hidden="true" /> Date and time commitment</li>
-                    <li><Check className="icon icon-sm" aria-hidden="true" /> Skills and interests</li>
+                    <li><Check className="icon icon-sm" aria-hidden="true" /> Role type, skills and event category</li>
                   </ul>
                 </div>
                 <div className="side">
@@ -112,7 +112,7 @@ export default function Volunteers() {
                 <PageLinks
                   links={[
                     { tag: "Process", title: "From profile to participation", desc: "See the five steps end to end.", href: "/how-it-works" },
-                    { tag: "The other side", title: "How event managers find you", desc: "Requirements, requests and selection.", href: "/event-managers" },
+                    { tag: "The other side", title: "How organizers find crew", desc: "Roles, applications and selection.", href: "/event-managers" },
                   ]}
                 />
               </div>
