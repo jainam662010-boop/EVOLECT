@@ -1,15 +1,223 @@
 "use client";
+import Link from "next/link";
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import {
   AudioLines, Briefcase, Check, ChevronDown, Clapperboard, ClipboardCheck,
   SlidersHorizontal, Star, Truck, UserCheck, Users,
 } from "lucide-react";
-import Image from "next/image";
 import {
   img, PROBLEM_BEATS, ROLE_GALLERY, SHOWCASE_APPLICATIONS, SHOWCASE_EVENT,
-  SHOWCASE_FILTERS, SHOWCASE_OPPORTUNITIES, SHOWCASE_ROLES, TRUST_POINTS,
-  WORKFLOW_STAGES,
+  SHOWCASE_FILTERS, SHOWCASE_OPPORTUNITIES, SHOWCASE_ROLES, STORY_CAPTIONS,
+  STORY_CHIPS, TRUST_POINTS, WORKFLOW_STAGES,
 } from "@/lib/evolect-data";
+
+/* ---------- scroll progress rail (violet) ---------- */
+export function ScrollProgress() {
+  const ref = useRef<HTMLSpanElement>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    let ticking = false;
+    const render = () => {
+      ticking = false;
+      const max = document.documentElement.scrollHeight - innerHeight;
+      el.style.transform = `scaleX(${max > 0 ? window.scrollY / max : 0})`;
+    };
+    const req = () => { if (!ticking) { ticking = true; requestAnimationFrame(render); } };
+    addEventListener("scroll", req, { passive: true });
+    addEventListener("resize", req);
+    render();
+    return () => { removeEventListener("scroll", req); removeEventListener("resize", req); };
+  }, []);
+  return (
+    <div className="scroll-progress" aria-hidden="true">
+      <span ref={ref} />
+    </div>
+  );
+}
+
+/* ---------- Scene 1: cinematic scroll story (sticky camera push) ---------- */
+const SCATTER = [[10, 22, -9], [72, 16, 7], [18, 70, 6], [78, 66, -6], [46, 84, 4]];
+const ORGANIZED = [[-1.9, -1], [1.9, -1], [-2.3, 0.9], [2.3, 0.9], [0, 2.1]];
+const CAP_WINDOWS: [number, number][] = [[0, 0.16], [0.2, 0.36], [0.4, 0.58], [0.64, 1]];
+
+export function StoryScene() {
+  const storyRef = useRef<HTMLElement>(null);
+  const stickRef = useRef<HTMLDivElement>(null);
+  const worldRef = useRef<HTMLDivElement>(null);
+  const beamsRef = useRef<HTMLDivElement>(null);
+  const teamRef = useRef<HTMLDivElement>(null);
+  const hubRef = useRef<HTMLDivElement>(null);
+  const cueRef = useRef<HTMLDivElement>(null);
+  const capRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const chipRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const lineRefs = useRef<(SVGLineElement | null)[]>([]);
+
+  useEffect(() => {
+    const story = storyRef.current, stick = stickRef.current, world = worldRef.current,
+      beamsBox = beamsRef.current, team = teamRef.current, hub = hubRef.current, cue = cueRef.current;
+    if (!story || !stick || !world || !beamsBox || !team || !hub || !cue) return;
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const clamp = (x: number, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+    const ease = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+
+    // build the 12 venue arch frames
+    const frames: HTMLDivElement[] = [];
+    for (let i = 0; i < 12; i++) {
+      const f = document.createElement("div");
+      f.className = "frame";
+      f.style.transform = `translateZ(${-i * 320}px)`;
+      world.appendChild(f);
+      frames.push(f);
+    }
+    const beams = Array.from(beamsBox.querySelectorAll<HTMLElement>("i"));
+    const caps = capRefs.current.filter(Boolean) as HTMLDivElement[];
+    const chips = chipRefs.current.filter(Boolean) as HTMLDivElement[];
+    const lines = lineRefs.current.filter(Boolean) as SVGLineElement[];
+
+    let ticking = false;
+    const render = () => {
+      ticking = false;
+      const W = stick.clientWidth, H = stick.clientHeight;
+      const p = clamp((window.scrollY - story.offsetTop) / (story.offsetHeight - H));
+
+      // camera pushes into the venue, lights come up
+      const push = ease(clamp(p / 0.7));
+      world.style.transform = `translateZ(${push * 2300}px)`;
+      const lit = clamp((p - 0.05) / 0.4);
+      frames.forEach((f, i) => f.style.setProperty("--l", String(clamp(lit * 1.6 - i * 0.08))));
+      stick.style.setProperty("--l", String(lit));
+      beamsBox.style.setProperty("--b", String(lit * 0.9));
+      beams.forEach((b, i) => {
+        b.style.transform = `rotate(${(i < 2 ? 1 : -1) * (18 - lit * 12) + (i % 2 ? -4 : 4) * Math.sin(p * 5 + i)}deg)`;
+      });
+      cue.style.setProperty("--s", String(clamp(1 - p * 12)));
+
+      // captions cross-fade on their windows
+      caps.forEach((c, i) => {
+        const [s, e] = CAP_WINDOWS[i];
+        const fin = clamp((p - s) / 0.05), fout = i < 3 ? clamp((e - p) / 0.04) : 1;
+        const o = i === 0 ? clamp((0.16 - p) / 0.05) : Math.min(fin, fout);
+        c.style.opacity = String(o);
+        c.style.visibility = (i === 0 ? p < 0.16 : o > 0.01) ? "visible" : "hidden";
+        c.style.transform = `translateY(${(1 - o) * 24}px)`;
+      });
+
+      // role chips: scattered -> organized -> linked to the hub
+      const show = clamp((p - 0.2) / 0.06);
+      team.style.setProperty("--t", String(show));
+      const tidy = ease(clamp((p - 0.42) / 0.2));
+      const link = clamp((p - 0.62) / 0.12);
+      hub.style.setProperty("--h", String(link));
+      const cw = chips[0]?.offsetWidth || 150, ch = chips[0]?.offsetHeight || 56;
+      const u = Math.min(W / 6.4, 170), dy = W < 760 ? 0.78 : 1;
+      chips.forEach((el, i) => {
+        // small screens: pull the scatter inward so chips stay on-canvas
+        const m = W < 760;
+        const sx = ((m ? 16 + SCATTER[i][0] * 0.68 : SCATTER[i][0]) / 100) * W;
+        const sy = ((m ? 14 + SCATTER[i][1] * 0.55 : SCATTER[i][1]) / 100) * H;
+        const ox = W / 2 + ORGANIZED[i][0] * u * (W < 760 ? 0.62 : 1);
+        const oy = H * 0.46 + ORGANIZED[i][1] * ch * 1.6 * dy;
+        const x = sx + (ox - sx) * tidy, y = sy + (oy - sy) * tidy;
+        const rot = SCATTER[i][2] * (1 - tidy), z = (1 - tidy) * (i % 2 ? -90 : 60);
+        el.style.transform = `translate3d(${x - cw / 2}px,${y - ch / 2}px,0) rotate(${rot}deg) scale(${1 + z / 600})`;
+        el.style.opacity = String(clamp((p - 0.2 - i * 0.012) / 0.05));
+        const ln = lines[i];
+        if (ln) {
+          ln.setAttribute("x2", String((x / W) * 100));
+          ln.setAttribute("y2", String((y / H) * 100));
+          ln.style.opacity = String(link * 0.7);
+        }
+      });
+    };
+    const req = () => { if (!ticking) { ticking = true; requestAnimationFrame(render); } };
+    addEventListener("scroll", req, { passive: true });
+    addEventListener("resize", req);
+    render();
+    return () => {
+      removeEventListener("scroll", req);
+      removeEventListener("resize", req);
+      frames.forEach((f) => f.remove());
+    };
+  }, []);
+
+  return (
+    <section className="story" id="top" ref={storyRef} aria-label="Evolect story">
+      <div className="stick" ref={stickRef}>
+        <div className="story-bg" aria-hidden="true">
+          <Image src={img("/img/hero-crowd.jpg")} alt="" fill priority sizes="100vw" quality={80} />
+        </div>
+        <div className="cam" aria-hidden="true">
+          <div className="world" ref={worldRef}>
+            <div className="floor" />
+            <div className="stage" />
+          </div>
+        </div>
+        <div className="beams" ref={beamsRef} aria-hidden="true">
+          <i style={{ left: "8%" }} /><i style={{ left: "30%" }} /><i style={{ left: "50%" }} /><i style={{ left: "72%" }} />
+        </div>
+        <div className="haze" aria-hidden="true" />
+        <div className="vig" aria-hidden="true" />
+
+        <div className="team" ref={teamRef} aria-hidden="true">
+          <svg className="team-lines" viewBox="0 0 100 100" preserveAspectRatio="none">
+            {STORY_CHIPS.map((c, i) => (
+              <line key={c.b} x1="50" y1="46" x2="50" y2="46" ref={(el) => { lineRefs.current[i] = el; }} />
+            ))}
+          </svg>
+          <div className="hub" ref={hubRef}>Your<br />event</div>
+          {STORY_CHIPS.map((c, i) => (
+            <div key={c.b} className="schip" ref={(el) => { chipRefs.current[i] = el; }}>
+              <b>{c.b}</b><span>{c.s}</span>
+            </div>
+          ))}
+        </div>
+
+        {STORY_CAPTIONS.map((c, i) => (
+          <div
+            key={c.title}
+            className={`cap${c.side === "r" ? " r" : ""}`}
+            ref={(el) => { capRefs.current[i] = el; }}
+          >
+            {i === 0 ? (
+              <>
+                <p className="hero-wordmark story-mark i1" aria-hidden="true">EVOLECT</p>
+                <h1 className="cap-title i1">{c.title}</h1>
+                <p className="cap-lede i2">{c.lede}</p>
+                <div className="row i3">
+                  <a href="#workflow" className="btn btn-primary">Explore Evolect</a>
+                  <Link href="/event-managers" className="btn btn-outline">I&apos;m an organizer</Link>
+                  <Link href="/volunteers" className="btn btn-outline">I&apos;m crew</Link>
+                </div>
+              </>
+            ) : (
+              <>
+                <h2 className="cap-title">{c.title}</h2>
+                {c.lede ? <p className="cap-lede">{c.lede}</p> : null}
+              </>
+            )}
+          </div>
+        ))}
+
+        <div className="scroll-cue" ref={cueRef} aria-hidden="true">Scroll</div>
+
+        {/* reduced-motion fallback: static, fully readable */}
+        <div className="static">
+          <p className="hero-wordmark" aria-hidden="true">EVOLECT</p>
+          <h1 className="hero-kicker">{STORY_CAPTIONS[0].title}</h1>
+          <p className="hero-sub">{STORY_CAPTIONS[0].lede}</p>
+          <p className="hero-local">
+            <span className="dot" aria-hidden="true" />
+            <span>Starting in Pune. Building for India.</span>
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+}
 
 /* ---------- staged headline: server-renderable word reveal ---------- */
 export function Staged({

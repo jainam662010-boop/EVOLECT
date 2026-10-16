@@ -7,46 +7,19 @@ import { Footer } from "@/components/evolect/Footer";
 import { Reveal } from "@/components/evolect/Reveal";
 import { PageLinks, VerificationFlow } from "@/components/evolect/interactive";
 import {
-  CueArrow, ProductShowcase, RoleGallery, SceneProblem, SceneWorkflow, Staged, TrustGrid,
+  ProductShowcase, RoleGallery, SceneProblem, SceneWorkflow, ScrollProgress, StoryScene, TrustGrid,
 } from "@/components/evolect/scenes";
 import { IG_URL, SIDE_CREW, SIDE_ORGANIZER, img } from "@/lib/evolect-data";
 
 export default function EvolectHome() {
   return (
     <>
+      <div className="page-fade" aria-hidden="true" />
+      <ScrollProgress />
       <Navbar />
       <main id="main">
-        {/* ---- Scene 1: cinematic opening ---- */}
-        <section className="scene-hero" id="top">
-          <div className="scene-hero-media">
-            <Image
-              src={img("/img/hero-crowd.jpg")}
-              alt="A festival crowd face to face with a glowing stage at night"
-              fill
-              priority
-              sizes="100vw"
-              quality={82}
-            />
-          </div>
-          <div className="wrap hero-inner">
-            <p className="hero-wordmark" aria-hidden="true">EVOLECT</p>
-            <h1 className="hero-kicker">
-              <Staged text="The people behind every great event." />
-            </h1>
-            <p className="hero-sub">
-              Evolect connects event organizers with the people they need to bring live experiences to
-              life — comedy shows, concerts, festivals, college fests and conferences.
-            </p>
-            <p className="hero-local">
-              <span className="dot" aria-hidden="true" />
-              <span>Starting in Pune. Building for India.</span>
-            </p>
-            <a className="hero-cue" href="#challenge">
-              <span className="cue-ring"><CueArrow /></span>
-              <span>See the problem</span>
-            </a>
-          </div>
-        </section>
+        {/* ---- Scene 1: cinematic scroll story ---- */}
+        <StoryScene />
 
         {/* ---- Scene 2: the event problem ---- */}
         <section className="scene" id="challenge">

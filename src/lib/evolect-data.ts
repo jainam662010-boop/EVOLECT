@@ -17,6 +17,38 @@ export const NAV_LINKS = [
   { href: "/event-managers", label: "For Organizers" },
 ];
 
+// ---- Scene 1: cinematic scroll story (sticky camera push) ----
+export const STORY_CHIPS = [
+  { b: "Registration", s: "Check-in desk" },
+  { b: "Guest management", s: "Lists and arrivals" },
+  { b: "Backstage", s: "Artist and crew flow" },
+  { b: "Operations", s: "Run of show" },
+  { b: "Logistics", s: "Gear and transport" },
+];
+
+export const STORY_CAPTIONS = [
+  {
+    side: "l",
+    title: "The people behind every great event.",
+    lede: "Evolect connects event organizers with the people they need to bring live experiences to life.",
+  },
+  {
+    side: "r",
+    title: "Behind every event, a team.",
+    lede: "Registration, guest management, backstage, operations and logistics — the work you never see, and the reason the night works.",
+  },
+  {
+    side: "l",
+    title: "From scattered details to a coordinated team.",
+    lede: "Bring event staffing and team coordination into one structured workflow.",
+  },
+  {
+    side: "r",
+    title: "The right people. The right event. One connected workflow.",
+    lede: "",
+  },
+];
+
 // ---- Scene 2: the event problem (scroll beats, sticky visual) ----
 export const PROBLEM_BEATS = [
   {
