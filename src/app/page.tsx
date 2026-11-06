@@ -30,7 +30,7 @@ export default function EvolectHome() {
                 A great event takes more than a great idea.
               </h2>
               <p className="scene-lede">
-                From the audience side, a live event looks effortless. Behind the stage, it only works when a
+                From the audience side, a live event looks effortless. In reality, it only works when a
                 whole team of people — most of them found in a hurry — shows up and delivers.
               </p>
             </Reveal>
@@ -70,8 +70,8 @@ export default function EvolectHome() {
             <Reveal>
               <div className="film-strip">
                 <figure>
-                  <Image src={img("/img/backstage.jpg") } alt="Backstage tents, rigging and staging built before a festival main stage" fill sizes="(min-width:860px) 33vw, 100vw" quality={78} />
-                  <figcaption>Backstage build, hours before doors</figcaption>
+                  <Image src={img("/img/festival-energy.jpg") } alt="A dense festive crowd mid-performance at an Indian festival" fill sizes="(min-width:860px) 33vw, 100vw" quality={78} />
+                  <figcaption>Full house as the night picks up</figcaption>
                 </figure>
                 <figure>
                   <Image src={img("/img/crew-lights.jpg") } alt="A stage crew member adjusting a lighting rig before a concert" fill sizes="(min-width:860px) 33vw, 100vw" quality={78} />

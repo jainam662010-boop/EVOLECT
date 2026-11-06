@@ -18,7 +18,7 @@ export default function Volunteers() {
               <h1>Find roles that fit you.</h1>
               <p className="lede">
                 Set your availability, skills and interests, and see event roles built around them — front-of-house,
-                registration, backstage, operations — instead of scrolling through everything.
+                registration, operations — instead of scrolling through everything.
               </p>
               <p className="tag-line" style={{ marginTop: 16 }}>
                 Your weekend is limited. Spend it where it counts.
@@ -73,7 +73,7 @@ export default function Volunteers() {
                 <p className="eyebrow">The app concept</p>
                 <h2>Five destinations, nothing more.</h2>
                 <p className="lede" style={{ marginTop: 14 }}>
-                  The volunteer side stays focused: Home, Explore, My Events, History and Profile.
+                  The crew side stays focused: Home, Explore, My Events, History and Profile.
                 </p>
               </div>
             </Reveal>

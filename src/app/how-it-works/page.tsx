@@ -60,8 +60,8 @@ export default function HowItWorks() {
             <Reveal>
               <PageLinks
                 links={[
-                  { tag: "For volunteers", title: "Find opportunities that fit you", desc: "Filter by location, date, skills and category.", href: "/volunteers" },
-                { tag: "The other side", title: "Build your volunteer team", desc: "Create an event and review who is a fit.", href: "/event-managers" },
+                  { tag: "For crew", title: "Find opportunities that fit you", desc: "Filter by location, date, skills and category.", href: "/volunteers" },
+                  { tag: "The other side", title: "Build your event team", desc: "Create an event and review who is a fit.", href: "/event-managers" },
               ]}
               />
             </Reveal>

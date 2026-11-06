@@ -437,19 +437,6 @@ header.site-nav{background:linear-gradient(180deg,rgba(24,24,27,.72),rgba(6,6,6,
 .hero-sub{margin-top:20px;max-width:560px;color:var(--text-on-black-mute);font-size:.98rem;line-height:1.65;}
 .hero-local{margin-top:16px;display:inline-flex;align-items:center;gap:10px;font-size:.85rem;color:var(--text-on-black-mute);}
 .hero-local .dot{width:7px;height:7px;border-radius:50%;background:var(--lilac);box-shadow:0 0 10px rgba(201,187,255,.7);flex-shrink:0;}
-.hero-cue{margin-top:44px;display:inline-flex;flex-direction:column;align-items:center;gap:10px;color:var(--text-on-black-mute);font-size:.8rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;}
-.hero-cue .cue-ring{width:52px;height:52px;border-radius:50%;border:1px solid var(--line-dark);display:flex;align-items:center;justify-content:center;color:var(--violet);transition:border-color .2s ease,transform .2s ease;}
-.hero-cue:hover .cue-ring{border-color:var(--violet);transform:translateY(3px);}
-.hero-cue .cue-ring svg{animation:cue-bob 1.8s ease-in-out infinite;}
-@keyframes cue-bob{0%,100%{transform:translateY(-2px);}50%{transform:translateY(3px);}}
-@media (prefers-reduced-motion: reduce){.hero-cue .cue-ring svg{animation:none;}}
-
-/* staged text reveal: server-rendered word spans, --d delay from markup */
-.st{overflow:clip;display:block;padding-bottom:.08em;}
-.st .w{display:inline-block;opacity:0;transform:translateY(.7em) rotate(1.5deg);
-  animation:st-in .72s cubic-bezier(.2,.7,.3,1) both;animation-delay:var(--d,0ms);}
-@keyframes st-in{to{opacity:1;transform:none;}}
-@media (prefers-reduced-motion: reduce){.st .w{opacity:1;transform:none;animation:none;}}
 
 /* ---- chapter furniture: shared eyebrow + section rhythm ---- */
 .scene{padding:110px 0;}
@@ -688,9 +675,6 @@ header.site-nav{background:linear-gradient(180deg,rgba(24,24,27,.72),rgba(6,6,6,
 /* ================================================================
    CINEMATIC REDESIGN — scene layer part 2
    ================================================================ */
-
-/* staged headline highlight */
-.st .hl{color:var(--violet);}
 
 /* ---- problem grid ---- */
 .problem-grid{display:grid;grid-template-columns:1fr;gap:34px;margin-top:48px;}

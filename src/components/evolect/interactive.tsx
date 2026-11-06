@@ -209,7 +209,7 @@ export function VerificationFlow() {
 }
 
 export function VolunteerFilters() {
-  const [sel, setSel] = useState<Record<string, string[]>>({ location: ["Pune"], date: ["This weekend"], skills: ["Teaching"], category: ["Community"] });
+  const [sel, setSel] = useState<Record<string, string[]>>({ location: ["Pune"], date: ["This weekend"], skills: ["Operations"], category: ["College fest"] });
   const toggle = (g: string, o: string) =>
     setSel((p) => {
       const cur = p[g] ?? [];
@@ -346,8 +346,8 @@ export function ManagerForm() {
               <option>Operations</option>
               <option>Registration</option>
               <option>Front-of-house</option>
-              <option>Backstage</option>
               <option>Guest handling</option>
+              <option>Logistics</option>
             </select>
           </div>
         </div>
@@ -363,7 +363,7 @@ export function ManagerForm() {
             type="button"
             className="btn btn-outline"
             onClick={() => {
-              setName(""); setLocation("Pune"); setDate(""); setNeed(""); setSkills("Logistics"); setDesc(""); setPreview(false);
+              setName(""); setLocation("Pune"); setDate(""); setNeed(""); setSkills("Operations"); setDesc(""); setPreview(false);
             }}
           >
             Reset

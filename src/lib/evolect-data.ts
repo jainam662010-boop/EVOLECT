@@ -21,7 +21,6 @@ export const NAV_LINKS = [
 export const STORY_CHIPS = [
   { b: "Registration", s: "Check-in desk" },
   { b: "Guest management", s: "Lists and arrivals" },
-  { b: "Backstage", s: "Artist and crew flow" },
   { b: "Operations", s: "Run of show" },
   { b: "Logistics", s: "Gear and transport" },
 ];
@@ -34,8 +33,8 @@ export const STORY_CAPTIONS = [
   },
   {
     side: "r",
-    title: "Behind every event, a team.",
-    lede: "Registration, guest management, backstage, operations and logistics — the work you never see, and the reason the night works.",
+    title: "Every event runs on a team.",
+    lede: "Registration, guest management, operations and logistics — a coordinated team is the reason the night works.",
   },
   {
     side: "l",
@@ -56,7 +55,7 @@ export const PROBLEM_BEATS = [
     img: "/img/stage-lights.jpg",
     alt: "Musicians on a lit stage during a night concert",
     title: "An event needs the right people.",
-    desc: "Registration, front-of-house, backstage, logistics — every live event leans on a team working in the background.",
+    desc: "Registration, guest management, front-of-house, logistics — every live event leans on a team working in the background.",
   },
   {
     id: "roles",
@@ -67,8 +66,8 @@ export const PROBLEM_BEATS = [
   },
   {
     id: "together",
-    img: "/img/backstage.jpg",
-    alt: "Backstage tents, rigging and a stage under construction before doors open",
+    img: "/img/festival-energy.jpg",
+    alt: "A dense festive crowd mid-performance at an Indian festival",
     title: "The team has to move together.",
     desc: "Chasing responses over group chats and calls turns coordination into the hardest part of the event.",
   },
@@ -144,21 +143,19 @@ export const SHOWCASE_ROLES = [
   { id: "ops", name: "Operations lead", need: "2 needed", status: "Confirmed", detail: "Owns the run-of-show on the ground, keeps sections of the venue moving, and flags blockers early." },
   { id: "reg", name: "Registration & check-in", need: "3 needed", status: "Shortlisted", detail: "Runs the entry desk: guest lists, wristband issue and queue flow at the gates." },
   { id: "foh", name: "Front-of-house", need: "4 needed", status: "Open", detail: "Guides the audience, watches crowd flow in the venue bowl, and answers the questions people always ask." },
-  { id: "backsta", name: "Backstage coordination", need: "2 needed", status: "Open", detail: "Keeps the backstage side orderly — artist movement, props and crew access points." },
 ];
 
 export const SHOWCASE_APPLICATIONS = [
   { name: "Crew applicant 01", role: "Operations lead", status: "pending", note: "Sample profile · 3 past events listed" },
   { name: "Crew applicant 02", role: "Registration & check-in", status: "shortlisted", note: "Sample profile · first-aid certificate claimed" },
   { name: "Crew applicant 03", role: "Front-of-house", status: "pending", note: "Sample profile · weekend availability" },
-  { name: "Crew applicant 04", role: "Backstage coordination", status: "pending", note: "Sample profile · verified profile" },
+  { name: "Crew applicant 04", role: "Logistics support", status: "pending", note: "Sample profile · verified profile" },
 ];
 
 export const SHOWCASE_OPPORTUNITIES = [
   { id: "o1", title: "Operations lead", kind: "Concert", meta: "Pune · Sample weekend", slots: "2 roles open" },
   { id: "o2", title: "Registration & check-in", kind: "Concert", meta: "Pune · Sample weekend", slots: "3 roles open" },
   { id: "o3", title: "Front-of-house", kind: "Festival", meta: "Within 20 km of Pune · Sample month", slots: "4 roles open" },
-  { id: "o4", title: "Backstage coordinator", kind: "Festival", meta: "Pune · Sample month", slots: "2 roles open" },
   { id: "o5", title: "Logistics support", kind: "Corporate", meta: "Pune · Sample weekday evening", slots: "1 role open" },
 ];
 
@@ -166,14 +163,13 @@ export const SHOWCASE_FILTERS = ["All", "Concert", "Festival", "Corporate"] as c
 
 // ---- Scene 6: the people behind the event ----
 export const ROLE_GALLERY = [
-  { id: "ops", name: "Event operations", sub: "Run-of-show, command & flow", desc: "Operations keep the event moving — schedules, section flow, and the hundred small decisions that happen between doors and load-out.", img: "/img/backstage.jpg", alt: "Staging and rigging behind a festival main stage" },
+  { id: "ops", name: "Event operations", sub: "Run-of-show, command & flow", desc: "Operations keep the event moving — schedules, section flow, and the hundred small decisions that happen between doors and load-out.", img: "/img/hero-crowd.jpg", alt: "Festival crowd silhouettes against a glowing stage" },
   { id: "reg", name: "Registration & check-in", sub: "Entry, guest lists, wristbands", desc: "The first ten minutes an attendee experiences. Queue flow, invitation handling and access tiers all live at this desk.", img: "/img/crowd-night.jpg", alt: "Evening festival crowd waiting at the entry side of a stage" },
   { id: "foh", name: "Front-of-house", sub: "Audience guidance & safety", desc: "Front-of-house keeps walkways, viewing sections and help points working so the audience can relax and enjoy.", img: "/img/stage-lights.jpg", alt: "Stage lights over an audience during a night concert" },
-  { id: "back", name: "Backstage coordination", sub: "Artists, props & access", desc: "Backstage order makes on-stage magic possible — artist movements, prop paths and controlled access points.", img: "/img/hero-crowd.jpg", alt: "Festival crowd silhouettes against a glowing stage" },
-  { id: "log", name: "Logistics", sub: "Crew, kit & vendor movement", desc: "Everything an event needs arrives because logistics quietly choreographs people, gear and vendors behind the scenes.", img: "/img/crew-lights.jpg", alt: "Stage crew adjusting a lighting rig before doors" },
+  { id: "log", name: "Logistics", sub: "Crew, kit & vendor movement", desc: "Everything an event needs arrives on time because logistics choreographs people, gear and vendor movement from gate to gate.", img: "/img/crew-lights.jpg", alt: "Stage crew adjusting a lighting rig before doors" },
   { id: "prod", name: "Production support", sub: "Sound, light & stage hands", desc: "Production support hands the technical crew what they need, when they need it — cables, cases and an extra pair of hands.", img: "/img/festival-energy.jpg", alt: "A dense festive crowd mid-performance at an Indian festival" },
   { id: "guest", name: "Guest management", sub: "VIPs, partners & hospitality", desc: "Guest handling keeps invited guests, partners and their teams looked after from arrival to the end of the show.", img: "/img/stage-lights.jpg", alt: "Warm lights over a concert stage" },
-  { id: "artist", name: "Artist coordination", sub: "Schedules, riders & handlers", desc: "Artists run to a clock no one else sees. Coordinators keep call times, green rooms and handoffs from slipping.", img: "/img/backstage.jpg", alt: "Backstage area between performance days" },
+  { id: "artist", name: "Artist coordination", sub: "Schedules, riders & handlers", desc: "Artists run to a clock no one else sees. Coordinators keep call times, green rooms and handoffs from slipping.", img: "/img/stage-lights.jpg", alt: "Performers on a lit stage during a night concert" },
 ];
 
 // ---- Scene 7: trust & accountability ----

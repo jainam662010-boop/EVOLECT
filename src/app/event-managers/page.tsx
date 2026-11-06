@@ -16,7 +16,7 @@ export default function EventManagers() {
               <p className="eyebrow">For event organizers</p>
               <h1>Build your event team.</h1>
               <p className="lede">
-                Define the roles your event needs — operations, registration, front-of-house, backstage,
+                Define the roles your event needs — operations, registration, front-of-house,
                 logistics — review who applies against those requirements, and choose your crew.
               </p>
               <p className="tag-line" style={{ marginTop: 16 }}>

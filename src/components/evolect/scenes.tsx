@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import {
-  AudioLines, Briefcase, Check, ChevronDown, Clapperboard, ClipboardCheck,
+  AudioLines, Briefcase, Check, ClipboardCheck,
   SlidersHorizontal, Star, Truck, UserCheck, Users,
 } from "lucide-react";
 import {
@@ -219,28 +219,6 @@ export function StoryScene() {
   );
 }
 
-/* ---------- staged headline: server-renderable word reveal ---------- */
-export function Staged({
-  text, accentFrom = Infinity, className = "", start = 120, step = 70,
-}: { text: string; accentFrom?: number; className?: string; start?: number; step?: number }) {
-  const words = text.split(" ");
-  return (
-    <span className={`st ${className}`} aria-label={text}>
-      {words.map((w, i) => (
-        <span
-          key={i}
-          className={`w${i >= accentFrom ? " hl" : ""}`}
-          style={{ "--d": `${start + i * step}ms` } as React.CSSProperties}
-          aria-hidden="true"
-        >
-          {w}
-          {i < words.length - 1 ? "\u00A0" : ""}
-        </span>
-      ))}
-    </span>
-  );
-}
-
 /* ---------- scroll hook: which block is in the center band ---------- */
 function useCenterBand(count: number) {
   const [idx, setIdx] = useState(0);
@@ -316,9 +294,9 @@ function StageVisual({ stage }: { stage: string }) {
             <div className="mini-tile"><b>Operations</b><span className="mini-count">×2</span></div>
             <div className="mini-tile"><b>Registration</b><span className="mini-count">×3</span></div>
             <div className="mini-tile"><b>Front-of-house</b><span className="mini-count">×4</span></div>
-            <div className="mini-tile"><b>Backstage</b><span className="mini-count">×2</span></div>
             <div className="mini-tile"><b>Logistics</b><span className="mini-count">×1</span></div>
             <div className="mini-tile"><b>Hospitality</b><span className="mini-count">×2</span></div>
+            <div className="mini-tile"><b>Guest management</b><span className="mini-count">×2</span></div>
           </div>
         </div>
       </div>
@@ -330,7 +308,7 @@ function StageVisual({ stage }: { stage: string }) {
         <div className="sv active">
           <div className="sp-section-label">Open roles · viewing as crew</div>
           <div className="mini-grid" style={{ gridTemplateColumns: "repeat(2,1fr)" }}>
-            {["Operations lead", "Registration & check-in", "Front-of-house", "Backstage coordination"].map((r) => (
+            {["Operations lead", "Registration & check-in", "Front-of-house", "Guest management"].map((r) => (
               <div key={r} className="mini-tile" style={{ textAlign: "left" }}><b>{r}</b>Pune · Sample dates</div>
             ))}
           </div>
@@ -425,7 +403,6 @@ const ROLE_DETAIL: Record<string, string> = {
   o1: "Runs the event floor: sections, flow and blockers between doors and load-out.",
   o2: "Guest lists, wristbands and queue flow at the entry desks.",
   o3: "Guides the audience through walkways, viewing sections and help points.",
-  o4: "Keeps backstage orderly: artist movement, props and crew access.",
   o5: "Moves kit, vendors and crew around the venue quietly and on time.",
 };
 
@@ -557,7 +534,7 @@ export function ProductShowcase() {
 
 /* ---------- Scene 6: role gallery ---------- */
 const ROLE_ICONS: Record<string, React.ComponentType<{ className?: string; "aria-hidden"?: boolean }>> = {
-  ops: SlidersHorizontal, reg: ClipboardCheck, foh: Users, back: Clapperboard,
+  ops: SlidersHorizontal, reg: ClipboardCheck, foh: Users,
   log: Truck, prod: AudioLines, guest: UserCheck, artist: Star,
 };
 
@@ -592,10 +569,6 @@ export function RoleGallery() {
 }
 
 /* ---------- small bits ---------- */
-export function CueArrow() {
-  return <ChevronDown className="icon" aria-hidden="true" />;
-}
-
 export function TrustGrid() {
   return (
     <div className="trust-points">

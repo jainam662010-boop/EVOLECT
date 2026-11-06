@@ -6,6 +6,9 @@ const nextConfig: NextConfig = {
   output: "export",
   images: { unoptimized: true },
   basePath: "/EVOLECT",
+  // keep the workspace root pinned to this project (a stray lockfile in the
+  // user's home directory otherwise makes Turbopack pick the wrong root)
+  turbopack: { root: __dirname },
 };
 
 export default nextConfig;
