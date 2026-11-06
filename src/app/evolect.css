@@ -791,10 +791,18 @@ html{scroll-behavior:smooth;scroll-padding-top:calc(72px + env(safe-area-inset-t
 }
 @media (prefers-reduced-motion: reduce){
   .story{height:auto;}
-  .story .stick{position:relative;height:auto;min-height:100svh;padding:140px 24px 80px;display:flex;flex-direction:column;justify-content:center;}
-  .cam,.team,.beams,.scroll-cue{display:none;}
-  .cap{display:none;}
-  .i1,.i2,.i3{animation:none;opacity:1;}
-  .static{display:grid;gap:0;justify-items:start;}
+  .story .stick{position:relative;height:auto;min-height:100svh;padding:140px 24px 80px;display:block;}
+  .cam,.team,.beams,.scroll-cue,.static{display:none;}
+  /* show captions in a simple vertical flow with gentle fade-in */
+  .cap{position:static;opacity:0;visibility:visible;margin:0 auto 60px;max-width:720px;text-align:center;}
+  .cap.r{left:auto;right:auto;text-align:center;}
+  .cap.r .cap-lede{margin-left:auto;margin-right:auto;}
+  .cap.r .row{justify-content:center;}
+  .cap .row{justify-content:center;}
+  .i1,.i2,.i3{animation:none;opacity:0;}
+  .cap.in-view .i1{animation:rise-reduced .8s ease .1s forwards;}
+  .cap.in-view .i2{animation:rise-reduced .8s ease .3s forwards;}
+  .cap.in-view .i3{animation:rise-reduced .8s ease .5s forwards;}
   .scroll-progress{display:none;}
 }
+@keyframes rise-reduced{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:none;}}

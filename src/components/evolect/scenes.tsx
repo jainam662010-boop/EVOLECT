@@ -144,6 +144,18 @@ export function StoryScene() {
     };
   }, []);
 
+  /* reduced-motion: simple scroll-reveal for captions (no rAF, no 3D) */
+  useEffect(() => {
+    const rm = matchMedia("(prefers-reduced-motion: reduce)");
+    if (!rm.matches) return;
+    const caps = capRefs.current.filter(Boolean) as HTMLDivElement[];
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add("in-view"); });
+    }, { rootMargin: "0px 0px -15% 0px", threshold: 0.1 });
+    caps.forEach((c) => io.observe(c));
+    return () => io.disconnect();
+  }, []);
+
   return (
     <section className="story" id="top" ref={storyRef} aria-label="Evolect story">
       <div className="stick" ref={stickRef}>
