@@ -162,7 +162,7 @@ export function StoryScene() {
     // Show captions as static flow with fade-in
     const caps = capRefs.current.filter(Boolean) as HTMLDivElement[];
     caps.forEach((c) => {
-      c.style.cssText = "position:static;opacity:0;visibility:visible;margin:0 auto 60px;max-width:720px;text-align:center;";
+      c.style.cssText = "display:block;position:static;opacity:0;visibility:visible;margin:0 auto 60px;max-width:720px;text-align:center;";
     });
     // Right-aligned captions -> center
     caps.forEach((c) => {
