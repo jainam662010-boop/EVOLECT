@@ -144,11 +144,44 @@ export function StoryScene() {
     };
   }, []);
 
-  /* reduced-motion: simple scroll-reveal for captions (no rAF, no 3D) */
+  /* reduced-motion: apply layout styles + simple scroll-reveal (no rAF, no 3D) */
   useEffect(() => {
     const rm = matchMedia("(prefers-reduced-motion: reduce)");
     if (!rm.matches) return;
+    const story = storyRef.current, stick = stickRef.current;
+    if (!story || !stick) return;
+
+    // Apply reduced-motion layout styles directly (bypasses CSS purging)
+    story.style.height = "auto";
+    stick.style.cssText = "position:relative;height:auto;min-height:100svh;padding:140px 24px 80px;display:block;";
+
+    // Hide 3D elements
+    const hide = stick.querySelectorAll(".cam,.team,.beams,.scroll-cue,.static");
+    hide.forEach((el) => { (el as HTMLElement).style.display = "none"; });
+
+    // Show captions as static flow with fade-in
     const caps = capRefs.current.filter(Boolean) as HTMLDivElement[];
+    caps.forEach((c) => {
+      c.style.cssText = "position:static;opacity:0;visibility:visible;margin:0 auto 60px;max-width:720px;text-align:center;";
+    });
+    // Right-aligned captions -> center
+    caps.forEach((c) => {
+      if (c.classList.contains("r")) {
+        c.style.textAlign = "center";
+        const lede = c.querySelector(".cap-lede");
+        if (lede) (lede as HTMLElement).style.margin = "0 auto 24px";
+        const row = c.querySelector(".row");
+        if (row) (row as HTMLElement).style.justifyContent = "center";
+      } else {
+        const row = c.querySelector(".row");
+        if (row) (row as HTMLElement).style.justifyContent = "center";
+      }
+    });
+    // Reset intro animations
+    const intros = stick.querySelectorAll(".i1,.i2,.i3");
+    intros.forEach((el) => { (el as HTMLElement).style.animation = "none"; (el as HTMLElement).style.opacity = "0"; });
+
+    // Scroll-reveal for captions
     const io = new IntersectionObserver((entries) => {
       entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add("in-view"); });
     }, { rootMargin: "0px 0px -15% 0px", threshold: 0.1 });
